@@ -1,0 +1,2 @@
+# AUREO
+Better discord version
