@@ -11,7 +11,7 @@
             --bg-dark: #0a0514; --bg-panel: #120a24; --bg-sidebar: #080410;
             --gold-primary: #d4af37; --gold-light: #f9d976; --gold-gradient: linear-gradient(135deg, #f9d976 0%, #b8860b 100%); 
             --text-main: #e0e0e0; --text-muted: #888; 
-            --green: #2ecc71; --red: #e74c3c; --orange: #f39c12;
+            --green: #2ecc71; --red: #e74c3c; --orange: #f39c12; --discord-blue: #5865F2;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
         
@@ -42,9 +42,18 @@
         #app-screen { display: none; width: 100vw; height: 100vh; background: var(--bg-dark); }
         .app-layout { display: flex; height: 100%; width: 100%; }
         
-        /* Sidebar */
-        .sidebar { width: 280px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); }
-        .server-header { padding: 20px; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; align-items: center; gap: 10px; }
+        /* Server Sidebar */
+        .server-sidebar { width: 72px; background: #05020a; display: flex; flex-direction: column; align-items: center; padding: 10px 0; gap: 10px; border-right: 1px solid rgba(255,255,255,0.05); }
+        .server-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-panel); display: flex; justify-content: center; align-items: center; font-weight: bold; cursor: pointer; transition: 0.2s; color: var(--gold-light); font-family: 'Cinzel'; border: 1px solid transparent; }
+        .server-icon:hover, .server-icon.active { border-radius: 16px; background: var(--gold-primary); color: black; border-color: var(--gold-light); }
+        .add-server-btn { width: 48px; height: 48px; border-radius: 50%; background: transparent; border: 2px dashed var(--green); color: var(--green); font-size: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
+        .add-server-btn:hover { background: var(--green); color: black; border-radius: 16px; }
+        
+        /* Channel Sidebar */
+        .sidebar { width: 240px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); }
+        .server-header { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .server-header:hover { background: rgba(255,255,255,0.02); }
+        .server-header span { font-weight: 600; color: white; font-size: 15px; }
         
         .sidebar-scroll { flex: 1; overflow-y: auto; padding: 15px 10px; display: flex; flex-direction: column; gap: 20px; }
         .sidebar-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; padding-left: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
@@ -54,25 +63,25 @@
         .channel:hover, .dm-user:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
         .channel.active, .dm-user.active { background: rgba(212,175,55,0.15); color: var(--gold-light); }
         
-        .dm-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; color: #000; font-weight: bold; font-size: 14px; object-fit: cover; }
+        .dm-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; color: #000; font-weight: bold; font-size: 14px; object-fit: cover; flex-shrink: 0;}
         
         /* User Panel */
-        .user-panel { padding: 15px; background: #05020a; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(212,175,55,0.1); }
+        .user-panel { padding: 10px 15px; background: #05020a; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(212,175,55,0.1); }
         .user-panel:hover { background: #0a0514; }
         .user-info { flex: 1; overflow: hidden; cursor: pointer; }
-        .user-name { font-size: 14px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .user-name { font-size: 13px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .user-status { font-size: 11px; color: var(--text-muted); }
-        .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
         .status-online { background: var(--green); }
         .status-idle { background: var(--orange); }
         .status-dnd { background: var(--red); }
         .status-offline { background: #747f8d; }
-        .settings-gear { color: var(--text-muted); cursor: pointer; font-size: 18px; }
+        .settings-gear { color: var(--text-muted); cursor: pointer; font-size: 16px; }
         .settings-gear:hover { color: white; }
         
         /* Main Chat Area */
         .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-panel); }
-        .chat-header { padding: 20px; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; align-items: center; gap: 10px; }
+        .chat-header { padding: 15px 20px; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; align-items: center; gap: 10px; }
         .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
         .message { display: flex; gap: 15px; }
         .msg-content { display: flex; flex-direction: column; }
@@ -84,7 +93,22 @@
         .chat-input-area { padding: 20px; }
         .chat-input { width: 100%; padding: 15px; background: #0a0514; border: none; border-radius: 8px; color: white; outline: none; font-size: 14px; }
         
-        /* Badges (SVG Icons) */
+        /* Friends Page */
+        .friends-page { display: flex; flex-direction: column; height: 100%; }
+        .friends-nav { display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .friends-nav-tab { font-size: 14px; padding: 4px 8px; border-radius: 4px; cursor: pointer; color: var(--text-muted); }
+        .friends-nav-tab:hover { background: rgba(255,255,255,0.05); color: white; }
+        .friends-nav-tab.active { background: rgba(255,255,255,0.1); color: white; }
+        .add-friend-btn { margin-left: auto; background: var(--discord-blue); color: white; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .add-friend-btn:hover { background: #4752c4; }
+        
+        .friends-content { padding: 20px; flex: 1; overflow-y: auto; }
+        .friend-card { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .friend-card:hover { background: rgba(255,255,255,0.02); border-radius: 8px; }
+        .friend-info { display: flex; align-items: center; gap: 12px; }
+        .btn-small { padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; font-size: 12px;}
+        
+        /* Badges */
         .badge-icon { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; }
         .badge-icon svg { width: 100%; height: 100%; }
 
@@ -98,18 +122,15 @@
         .close-btn { cursor: pointer; color: var(--text-muted); }
         .close-btn:hover { color: white; }
         
-        .settings-form label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; margin-top: 15px; }
-        .settings-form input, .settings-form select, .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; color: white; outline: none; }
-        
-        /* Friends List */
-        .friends-list { display: flex; flex-direction: column; gap: 10px; }
-        .friend-card { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: #0a0514; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
-        .friend-info { display: flex; align-items: center; gap: 10px; }
-        .btn-small { padding: 5px 10px; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; font-size: 12px;}
-        
+        /* Settings Form */
+        .settings-form label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; margin-top: 15px; font-weight: 600; text-transform: uppercase; }
+        .settings-form input[type="text"], .settings-form select, .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; color: white; outline: none; }
+        .file-upload-btn { background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); padding: 10px; border-radius: 6px; cursor: pointer; display: inline-block; margin-top: 5px; font-size: 12px; }
+        .file-upload-btn:hover { background: rgba(212,175,55,0.1); }
+
         /* Profile Banner */
-        .profile-banner { height: 120px; background: var(--gold-gradient); border-radius: 8px 8px 0 0; background-size: cover; background-position: center; }
-        .profile-pfp { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--bg-panel); margin-top: -40px; margin-left: 20px; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: black; background-size: cover; background-position: center; }
+        .profile-banner { height: 120px; background: var(--gold-gradient); border-radius: 8px 8px 0 0; background-size: cover; background-position: center; position: relative; }
+        .profile-pfp { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--bg-panel); margin-top: -40px; margin-left: 20px; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: black; background-size: cover; background-position: center; position: relative; z-index: 2;}
 
         /* Admin Panel Specifics */
         .admin-tab { display: flex; gap: 10px; margin-bottom: 20px; }
@@ -136,16 +157,18 @@
             <p class="brand-tagline" style="font-size: 10px; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase;">Where Conversation Shines</p>
         </div>
         <div class="error-msg" id="auth-error"></div>
+        
         <div id="login-form" class="form-section active-form">
-            <form onsubmit="handleLogin(event)">
+            <form id="form-login" onsubmit="handleLogin(event)">
                 <div class="input-group"><input type="text" id="login-username" required><label for="login-username">Username</label></div>
                 <div class="input-group"><input type="password" id="login-password" required><label for="login-password">Password</label></div>
                 <button type="submit" class="btn">Sign In</button>
             </form>
             <p class="toggle-text">New to AUREO? <span onclick="toggleForm('register')">Create an account</span></p>
         </div>
+        
         <div id="register-form" class="form-section hidden">
-            <form onsubmit="handleRegister(event)">
+            <form id="form-register" onsubmit="handleRegister(event)">
                 <div class="input-group"><input type="text" id="reg-username" required><label for="reg-username">Username</label></div>
                 <div class="input-group"><input type="text" id="reg-displayname" required><label for="reg-displayname">Display Name</label></div>
                 <div class="input-group"><input type="password" id="reg-password" required><label for="reg-password">Password</label></div>
@@ -169,31 +192,42 @@
     <!-- MAIN APP -->
     <div id="app-screen">
         <div class="app-layout">
-            <!-- Sidebar -->
+            <!-- Servers Sidebar -->
+            <div class="server-sidebar">
+                <div class="server-icon active" onclick="openHome()" title="Direct Messages">
+                    <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 18 L22 82 L34 82 L50 38 L66 82 L78 82 Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div style="width: 32px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 1px; margin: 5px 0;"></div>
+                <div id="server-list"></div>
+                <div class="add-server-btn" onclick="openModal('server-modal')">+</div>
+            </div>
+
+            <!-- Channel Sidebar -->
             <div class="sidebar">
-                <div class="server-header">
-                    <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="22" fill="#0a0514" stroke="#d4af37" stroke-width="2"/><path d="M50 18 L22 82 L34 82 L50 38 L66 82 L78 82 Z" fill="#d4af37"/></svg>
-                    <span style="font-family: Cinzel; font-weight: bold; color: var(--gold-light);">AUREO</span>
+                <div class="server-header" id="sidebar-server-name" onclick="openHome()">
+                    <span>Direct Messages</span>
                 </div>
                 
                 <div class="sidebar-scroll">
-                    <!-- Friends/DMs -->
-                    <div>
-                        <div class="sidebar-section-title" onclick="openModal('friends-modal')">Direct Messages <span style="font-size: 16px;">+</span></div>
-                        <div id="dm-list">
-                            <!-- DMs will be generated here -->
-                        </div>
+                    <div class="channel active" id="friends-tab" onclick="openFriends()">
+                        <span>👥</span> Friends
                     </div>
-                    <!-- Channels -->
-                    <div>
-                        <div class="sidebar-section-title">Channels</div>
-                        <div class="channel active" onclick="openChat('general', 'channel')"><span>#</span> general</div>
+                    
+                    <div id="dm-list-container">
+                        <div class="sidebar-section-title">Direct Messages</div>
+                        <div id="dm-list"></div>
+                    </div>
+                    
+                    <div id="channel-list-container" style="display: none;">
+                        <div class="sidebar-section-title">Text Channels <span style="font-size: 16px; cursor:pointer;" onclick="createChannel()">+</span></div>
+                        <div id="channel-list"></div>
                     </div>
                 </div>
 
                 <div id="admin-btn" onclick="openModal('admin-modal')">🛡️ Admin Panel</div>
                 
-                <!-- User Panel -->
                 <div class="user-panel">
                     <div class="dm-avatar" id="my-sidebar-avatar" onclick="openModal('settings-modal')" style="cursor:pointer;">U</div>
                     <div class="user-info" onclick="openModal('settings-modal')">
@@ -205,44 +239,71 @@
                 </div>
             </div>
 
-            <!-- Chat Area -->
+            <!-- Main Area -->
             <div class="chat-area">
-                <div class="chat-header">
-                    <span id="chat-icon" style="font-size: 20px; color: var(--text-muted);">#</span>
-                    <h2 id="chat-title" style="font-size: 16px; font-weight: 600; color: white;">general</h2>
+                <!-- Chat View -->
+                <div id="chat-view" style="display: none; height: 100%; flex-direction: column;">
+                    <div class="chat-header">
+                        <span id="chat-icon" style="font-size: 20px; color: var(--text-muted);">#</span>
+                        <h2 id="chat-title" style="font-size: 16px; font-weight: 600; color: white;">general</h2>
+                    </div>
+                    <div class="chat-messages" id="chat-messages"></div>
+                    <div class="chat-input-area">
+                        <form onsubmit="sendMessage(event)">
+                            <input type="text" class="chat-input" id="chat-input" placeholder="Message..." autocomplete="off">
+                        </form>
+                    </div>
                 </div>
-                <div class="chat-messages" id="chat-messages"></div>
-                <div class="chat-input-area">
-                    <form onsubmit="sendMessage(event)">
-                        <input type="text" class="chat-input" id="chat-input" placeholder="Message #general" autocomplete="off">
-                    </form>
+
+                <!-- Friends View -->
+                <div id="friends-view" class="friends-page">
+                    <div class="friends-nav">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-right: 10px;">
+                            <span style="font-size: 20px;">👥</span> <span style="font-weight: 600; color: white;">Friends</span>
+                        </div>
+                        <div class="friends-nav-tab active" onclick="switchFriendsTab('online')">Online</div>
+                        <div class="friends-nav-tab" onclick="switchFriendsTab('all')">All</div>
+                        <div class="friends-nav-tab" id="pending-tab-btn" onclick="switchFriendsTab('pending')">Pending</div>
+                        <button class="add-friend-btn" onclick="openModal('add-friend-modal')">Add Friend</button>
+                    </div>
+                    <div class="friends-content">
+                        <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <span style="font-size: 18px;">ℹ️</span>
+                            <span style="font-size: 14px; color: var(--text-main);">Looking for accounts you've blocked or ignored? Go to settings</span>
+                        </div>
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                            <input type="text" placeholder="Search" style="width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; outline: none;">
+                        </div>
+                        <div class="friends-list" id="friends-list-main"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SETTINGS MODAL (PROFILE CUSTOMIZATION) -->
+    <!-- SETTINGS MODAL -->
     <div class="modal-overlay" id="settings-modal">
         <div class="modal-content">
             <div class="modal-title">My Profile <span class="close-btn" onclick="closeModal('settings-modal')">✖</span></div>
             
-            <!-- Live Profile Preview -->
             <div class="profile-banner" id="preview-banner"></div>
             <div class="profile-pfp" id="preview-pfp">U</div>
             <div style="padding: 20px; display: flex; gap: 10px; align-items: center;" id="preview-badges"></div>
 
             <div class="settings-form">
-                <label>Profile Picture URL</label>
-                <input type="text" id="set-pfp" placeholder="https://example.com/image.png" oninput="updatePreview()">
+                <label>Profile Picture</label>
+                <input type="file" id="upload-pfp" accept="image/*" style="display: none;" onchange="handleFileUpload(event, 'pfp')">
+                <div class="file-upload-btn" onclick="document.getElementById('upload-pfp').click()">Upload Image</div>
                 
-                <label>Profile Banner URL</label>
-                <input type="text" id="set-banner" placeholder="https://example.com/banner.png" oninput="updatePreview()">
+                <label>Profile Banner</label>
+                <input type="file" id="upload-banner" accept="image/*" style="display: none;" onchange="handleFileUpload(event, 'banner')">
+                <div class="file-upload-btn" onclick="document.getElementById('upload-banner').click()">Upload Banner</div>
 
                 <label>Display Name</label>
-                <input type="text" id="set-displayname" onchange="saveProfile()">
+                <input type="text" id="set-displayname">
                 
                 <label>Status</label>
-                <select id="set-status" onchange="saveProfile()">
+                <select id="set-status">
                     <option value="Online">Online</option>
                     <option value="Idle">Idle</option>
                     <option value="DND">Do Not Disturb</option>
@@ -254,22 +315,31 @@
                 <textarea id="app-q1" rows="2" placeholder="Why do you want to be staff?"></textarea>
                 <textarea id="app-q2" rows="2" placeholder="How would you handle a rulebreaker?" style="margin-top: 10px;"></textarea>
                 <button class="btn" style="margin-top: 15px; font-size: 12px; padding: 10px;" onclick="submitApplication()">Submit Application</button>
+                
+                <button class="btn" style="margin-top: 20px; background: var(--green);" onclick="saveProfile()">Save Changes</button>
             </div>
         </div>
     </div>
 
-    <!-- FRIENDS MODAL -->
-    <div class="modal-overlay" id="friends-modal">
-        <div class="modal-content">
-            <div class="modal-title">Friends <span class="close-btn" onclick="closeModal('friends-modal')">✖</span></div>
-            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <input type="text" id="friend-search" placeholder="Enter exact username..." style="flex:1; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: white; border-radius: 5px;">
-                <button class="btn" style="width: auto; margin: 0; padding: 0 20px;" onclick="sendFriendRequest()">Add</button>
+    <!-- ADD FRIEND MODAL -->
+    <div class="modal-overlay" id="add-friend-modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-title">Add Friend <span class="close-btn" onclick="closeModal('add-friend-modal')">✖</span></div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">You can add friends with their exact AUREO username.</p>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="friend-search" placeholder="Enter exact username..." style="flex:1; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: white; border-radius: 5px; outline: none;">
+                <button class="btn" style="width: auto; margin: 0; padding: 0 20px; font-size: 14px;" onclick="sendFriendRequest()">Send Friend Request</button>
             </div>
-            <h3 style="font-size: 14px; color: var(--gold-light); margin-bottom: 10px;">Your Friends</h3>
-            <div class="friends-list" id="friends-list">
-                <!-- Friends populate here -->
-            </div>
+        </div>
+    </div>
+
+    <!-- CREATE SERVER MODAL -->
+    <div class="modal-overlay" id="server-modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="modal-title">Create a Server <span class="close-btn" onclick="closeModal('server-modal')">✖</span></div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">Your server is where you and your friends hang out. Make yours and start talking.</p>
+            <input type="text" id="new-server-name" placeholder="Server Name" style="width: 100%; padding: 12px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: white; border-radius: 5px; outline: none; margin-bottom: 20px;">
+            <button class="btn" onclick="createServer()">Create Server</button>
         </div>
     </div>
 
@@ -308,9 +378,14 @@
         };
 
         // --- STATE & DATABASE ---
-        let db = JSON.parse(localStorage.getItem('aureo_db_v2')) || { users: {}, messages: [], applications: [] };
+        let db = JSON.parse(localStorage.getItem('aureo_db_v5')) || { users: {}, messages: [], applications: [], servers: {} };
         let currentUser = null;
-        let activeChat = { type: 'channel', id: 'general' };
+        let activeView = { type: 'home', id: null };
+        let activeServerId = null;
+        let tempPfpBase64 = null;
+        let tempBannerBase64 = null;
+        let currentFriendsTab = 'online';
+        
         const ADMIN_USERNAME = 'Aureo';
 
         // --- AUTHENTICATION ---
@@ -353,7 +428,7 @@
                 document.getElementById('captcha-modal').style.display = 'none';
                 db.users[pendingRegUser.username] = {
                     username: pendingRegUser.username, displayName: pendingRegUser.displayName, password: pendingRegUser.password,
-                    badges: [], status: 'Online', friends: [], pfp: '', banner: ''
+                    badges: [], status: 'Online', friends: [], pendingIn: [], pendingOut: [], pfp: '', banner: '', servers: []
                 };
                 if (!db.ogLocked) db.users[pendingRegUser.username].badges.push('OG');
                 saveDB();
@@ -363,6 +438,12 @@
 
         function loginUser(username) {
             currentUser = db.users[username];
+            // Clean up undefined arrays for older accounts
+            if(!currentUser.pendingIn) currentUser.pendingIn = [];
+            if(!currentUser.pendingOut) currentUser.pendingOut = [];
+            if(!currentUser.servers) currentUser.servers = [];
+            if(!currentUser.friends) currentUser.friends = [];
+
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('app-screen').style.display = 'block';
             
@@ -370,13 +451,12 @@
             else document.getElementById('admin-btn').style.display = 'none';
 
             updateUI();
-            loadSidebar();
-            openChat('general', 'channel');
+            loadServers();
+            openHome();
         }
 
-        // --- UI UPDATES ---
+        // --- UI & NAVIGATION ---
         function updateUI() {
-            // Sidebar User Panel
             document.getElementById('my-name').innerText = currentUser.displayName;
             
             const myAvatar = document.getElementById('my-sidebar-avatar');
@@ -396,84 +476,233 @@
             else dot.classList.add('status-offline');
             document.getElementById('my-status-text').innerText = currentUser.status;
 
-            // Render Badges (Sidebar)
             renderBadges(currentUser.badges, 'my-badges-container');
-
-            // Settings Modal Population
-            document.getElementById('set-displayname').value = currentUser.displayName;
-            document.getElementById('set-status').value = currentUser.status;
-            document.getElementById('set-pfp').value = currentUser.pfp || '';
-            document.getElementById('set-banner').value = currentUser.banner || '';
-            updatePreview();
-
             document.getElementById('app-count').innerText = db.applications.length;
+            
+            // Update Pending Tab badge indicator
+            if(currentUser.pendingIn && currentUser.pendingIn.length > 0) {
+                document.getElementById('pending-tab-btn').innerText = `Pending (${currentUser.pendingIn.length})`;
+                document.getElementById('pending-tab-btn').style.color = 'var(--gold-light)';
+            } else {
+                document.getElementById('pending-tab-btn').innerText = 'Pending';
+                document.getElementById('pending-tab-btn').style.color = '';
+            }
         }
 
-        function renderBadges(badges, containerId) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
-            container.innerHTML = '';
-            badges.forEach(b => {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'badge-icon';
-                wrapper.title = b;
-                wrapper.innerHTML = BADGE_SVGS[b] || '';
-                container.appendChild(wrapper);
+        function loadServers() {
+            const list = document.getElementById('server-list');
+            list.innerHTML = '';
+            currentUser.servers.forEach(sid => {
+                const server = db.servers[sid];
+                if(!server) return;
+                const div = document.createElement('div');
+                div.className = `server-icon ${activeServerId === sid ? 'active' : ''}`;
+                div.innerText = server.name.charAt(0).toUpperCase();
+                div.title = server.name;
+                div.onclick = () => openServer(sid);
+                list.appendChild(div);
             });
         }
 
-        function updatePreview() {
-            const pfp = document.getElementById('set-pfp').value;
-            const banner = document.getElementById('set-banner').value;
+        function openHome() {
+            activeServerId = null;
+            activeView = { type: 'home', id: null };
+            loadServers();
             
-            const previewPfp = document.getElementById('preview-pfp');
-            if(pfp) {
-                previewPfp.style.backgroundImage = `url(${pfp})`;
-                previewPfp.innerText = '';
-            } else {
-                previewPfp.style.backgroundImage = 'none';
-                previewPfp.innerText = currentUser.displayName.charAt(0).toUpperCase();
-            }
-
-            const previewBanner = document.getElementById('preview-banner');
-            if(banner) {
-                previewBanner.style.backgroundImage = `url(${banner})`;
-            } else {
-                previewBanner.style.backgroundImage = 'var(--gold-gradient)';
-            }
-
-            renderBadges(currentUser.badges, 'preview-badges');
+            document.getElementById('sidebar-server-name').innerText = 'Direct Messages';
+            document.getElementById('channel-list-container').style.display = 'none';
+            document.getElementById('dm-list-container').style.display = 'block';
+            
+            document.getElementById('friends-tab').style.display = 'flex';
+            document.getElementById('friends-tab').classList.add('active');
+            
+            document.getElementById('friends-view').style.display = 'flex';
+            document.getElementById('chat-view').style.display = 'none';
+            
+            loadDMs();
         }
 
-        function saveProfile() {
-            currentUser.displayName = document.getElementById('set-displayname').value;
-            currentUser.status = document.getElementById('set-status').value;
-            currentUser.pfp = document.getElementById('set-pfp').value;
-            currentUser.banner = document.getElementById('set-banner').value;
-            saveDB();
-            updateUI();
-            loadSidebar(); 
+        function openFriends() {
+            activeView = { type: 'home', id: null };
+            document.getElementById('friends-tab').classList.add('active');
+            document.getElementById('friends-view').style.display = 'flex';
+            document.getElementById('chat-view').style.display = 'none';
+            switchFriendsTab(currentFriendsTab); // Refresh current tab
         }
 
-        // --- SIDEBAR & CHAT LOGIC ---
-        function loadSidebar() {
+        function switchFriendsTab(tab) {
+            currentFriendsTab = tab;
+            
+            // Update Tab UI
+            document.querySelectorAll('.friends-nav-tab').forEach(t => t.classList.remove('active'));
+            if(tab === 'online') document.querySelectorAll('.friends-nav-tab')[0].classList.add('active');
+            if(tab === 'all') document.querySelectorAll('.friends-nav-tab')[1].classList.add('active');
+            if(tab === 'pending') document.querySelectorAll('.friends-nav-tab')[2].classList.add('active');
+
+            const list = document.getElementById('friends-list-main');
+            list.innerHTML = '';
+
+            if (tab === 'pending') {
+                const incoming = currentUser.pendingIn || [];
+                const outgoing = currentUser.pendingOut || [];
+                
+                if (incoming.length === 0 && outgoing.length === 0) {
+                    list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No pending requests.</p>';
+                    return;
+                }
+
+                // Render Incoming
+                if (incoming.length > 0) {
+                    list.innerHTML += `<h3 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin: 10px 0;">Incoming Requests</h3>`;
+                    incoming.forEach(f => {
+                        const friend = db.users[f];
+                        if(!friend) return;
+                        let avatarStyle = friend.pfp ? `background-image: url(${friend.pfp}); background-size: cover; color: transparent;` : '';
+                        list.innerHTML += `
+                            <div class="friend-card">
+                                <div class="friend-info">
+                                    <div class="dm-avatar" style="${avatarStyle}">${friend.displayName.charAt(0).toUpperCase()}</div>
+                                    <div>
+                                        <div style="font-weight: bold; font-size: 14px; color: white;">${friend.displayName}</div>
+                                        <div style="font-size: 12px; color: var(--text-muted);">@${friend.username}</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-small btn-accept" onclick="acceptFriend('${friend.username}')">Accept</button>
+                                    <button class="btn-small btn-deny" onclick="declineFriend('${friend.username}')">Ignore</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                // Render Outgoing
+                if (outgoing.length > 0) {
+                    list.innerHTML += `<h3 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin: 20px 0 10px 0;">Outgoing Requests</h3>`;
+                    outgoing.forEach(f => {
+                        const friend = db.users[f];
+                        if(!friend) return;
+                        let avatarStyle = friend.pfp ? `background-image: url(${friend.pfp}); background-size: cover; color: transparent;` : '';
+                        list.innerHTML += `
+                            <div class="friend-card">
+                                <div class="friend-info">
+                                    <div class="dm-avatar" style="${avatarStyle}">${friend.displayName.charAt(0).toUpperCase()}</div>
+                                    <div>
+                                        <div style="font-weight: bold; font-size: 14px; color: white;">${friend.displayName}</div>
+                                        <div style="font-size: 12px; color: var(--text-muted);">@${friend.username}</div>
+                                    </div>
+                                </div>
+                                <span style="font-size: 12px; color: var(--text-muted);">Pending...</span>
+                            </div>
+                        `;
+                    });
+                }
+                return;
+            }
+
+            // Online / All Tab
+            if(currentUser.friends.length === 0) {
+                list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No friends yet.</p>';
+                return;
+            }
+            currentUser.friends.forEach(f => {
+                const friend = db.users[f];
+                if(!friend) return;
+                let avatarStyle = friend.pfp ? `background-image: url(${friend.pfp}); background-size: cover; color: transparent;` : '';
+                
+                list.innerHTML += `
+                    <div class="friend-card">
+                        <div class="friend-info">
+                            <div class="dm-avatar" style="${avatarStyle}">${friend.displayName.charAt(0).toUpperCase()}</div>
+                            <div>
+                                <div style="font-weight: bold; font-size: 14px; color: white;">${friend.displayName}</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">@${friend.username}</div>
+                            </div>
+                        </div>
+                        <button class="btn-small" style="background: #5865F2; color: white;" onclick="openDM('${friend.username}')">Message</button>
+                    </div>
+                `;
+            });
+        }
+
+        function openServer(sid) {
+            activeServerId = sid;
+            const server = db.servers[sid];
+            loadServers();
+            
+            document.getElementById('sidebar-server-name').innerText = server.name;
+            document.getElementById('friends-tab').style.display = 'none';
+            document.getElementById('dm-list-container').style.display = 'none';
+            document.getElementById('channel-list-container').style.display = 'block';
+            
+            if(server.channels.length > 0) {
+                openChannel(sid, server.channels[0].id);
+            } else {
+                document.getElementById('friends-view').style.display = 'flex';
+                document.getElementById('chat-view').style.display = 'none';
+            }
+            loadChannels();
+        }
+
+        function loadChannels() {
+            const list = document.getElementById('channel-list');
+            list.innerHTML = '';
+            if(!activeServerId) return;
+            const server = db.servers[activeServerId];
+            
+            server.channels.forEach(c => {
+                const div = document.createElement('div');
+                div.className = `channel ${activeView.type === 'channel' && activeView.id === c.id ? 'active' : ''}`;
+                div.innerHTML = `<span>#</span> ${c.name}`;
+                div.onclick = () => openChannel(activeServerId, c.id);
+                list.appendChild(div);
+            });
+        }
+
+        function openChannel(sid, cid) {
+            activeView = { type: 'channel', id: cid };
+            loadChannels();
+            
+            document.getElementById('friends-view').style.display = 'none';
+            document.getElementById('chat-view').style.display = 'flex';
+            
+            const server = db.servers[sid];
+            const channel = server.channels.find(c => c.id === cid);
+            document.getElementById('chat-icon').innerText = '#';
+            document.getElementById('chat-title').innerText = channel.name;
+            document.getElementById('chat-input').placeholder = `Message #${channel.name}`;
+            loadMessages();
+        }
+
+        function openDM(username) {
+            activeView = { type: 'dm', id: username };
+            loadDMs();
+            
+            document.getElementById('friends-tab').classList.remove('active');
+            document.getElementById('friends-view').style.display = 'none';
+            document.getElementById('chat-view').style.display = 'flex';
+            
+            const friend = db.users[username];
+            document.getElementById('chat-icon').innerText = '@';
+            document.getElementById('chat-title').innerText = friend.displayName;
+            document.getElementById('chat-input').placeholder = `Message @${friend.displayName}`;
+            loadMessages();
+        }
+
+        function loadDMs() {
             const dmList = document.getElementById('dm-list');
             dmList.innerHTML = '';
-            
             if(!currentUser.friends || currentUser.friends.length === 0) {
                 dmList.innerHTML = '<div style="font-size: 12px; color: #555; padding-left: 10px;">No friends yet.</div>';
                 return;
             }
-
-            currentUser.friends.forEach(friendUsername => {
-                const friend = db.users[friendUsername];
+            currentUser.friends.forEach(f => {
+                const friend = db.users[f];
                 if(!friend) return;
                 const div = document.createElement('div');
-                div.className = `dm-user ${activeChat.type === 'dm' && activeChat.id === friendUsername ? 'active' : ''}`;
-                div.onclick = () => openChat(friendUsername, 'dm');
-                
+                div.className = `dm-user ${activeView.type === 'dm' && activeView.id === f ? 'active' : ''}`;
+                div.onclick = () => openDM(f);
                 let avatarStyle = friend.pfp ? `background-image: url(${friend.pfp}); background-size: cover; color: transparent;` : '';
-                
                 div.innerHTML = `
                     <div class="dm-avatar" style="${avatarStyle}">${friend.displayName.charAt(0).toUpperCase()}</div>
                     <span style="flex:1; overflow:hidden; text-overflow:ellipsis;">${friend.displayName}</span>
@@ -482,34 +711,113 @@
             });
         }
 
-        function openChat(id, type) {
-            activeChat = { id, type };
-            loadSidebar(); // Update active highlight
-
-            const header = document.getElementById('chat-header');
-            const input = document.getElementById('chat-input');
+        // --- FRIEND REQUEST SYSTEM ---
+        function sendFriendRequest() {
+            const target = document.getElementById('friend-search').value.trim();
             
-            if(type === 'channel') {
-                document.getElementById('chat-icon').innerText = '#';
-                document.getElementById('chat-title').innerText = id;
-                input.placeholder = `Message #${id}`;
-            } else {
-                const friend = db.users[id];
-                document.getElementById('chat-icon').innerText = '@';
-                document.getElementById('chat-title').innerText = friend ? friend.displayName : id;
-                input.placeholder = `Message @${friend ? friend.displayName : id}`;
-            }
-            loadMessages();
+            if(!db.users[target]) return alert("User not found.");
+            if(target === currentUser.username) return alert("You can't add yourself.");
+            if(currentUser.friends.includes(target)) return alert("You are already friends with this user.");
+            if(currentUser.pendingOut.includes(target)) return alert("You already sent a request to this user.");
+            if(currentUser.pendingIn.includes(target)) return alert("This user already sent YOU a request. Go to the Pending tab to accept it!");
+
+            // Add to sender's outgoing list
+            currentUser.pendingOut.push(target);
+            // Add to receiver's incoming list
+            db.users[target].pendingIn.push(currentUser.username);
+            
+            saveDB();
+            alert(`Friend request sent to ${db.users[target].displayName}!`);
+            document.getElementById('friend-search').value = '';
+            closeModal('add-friend-modal');
+            switchFriendsTab('pending');
         }
 
+        function acceptFriend(targetUsername) {
+            // Move from pending to friends list
+            currentUser.pendingIn = currentUser.pendingIn.filter(u => u !== targetUsername);
+            currentUser.friends.push(targetUsername);
+
+            const targetUser = db.users[targetUsername];
+            targetUser.pendingOut = targetUser.pendingOut.filter(u => u !== currentUser.username);
+            targetUser.friends.push(currentUser.username);
+
+            saveDB();
+            updateUI();
+            switchFriendsTab('pending');
+            loadDMs();
+        }
+
+        function declineFriend(targetUsername) {
+            // Remove request entirely
+            currentUser.pendingIn = currentUser.pendingIn.filter(u => u !== targetUsername);
+            const targetUser = db.users[targetUsername];
+            targetUser.pendingOut = targetUser.pendingOut.filter(u => u !== currentUser.username);
+
+            saveDB();
+            updateUI();
+            switchFriendsTab('pending');
+        }
+
+        // --- FILE UPLOADS & PROFILE ---
+        function handleFileUpload(event, type) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (type === 'pfp') tempPfpBase64 = e.target.result;
+                if (type === 'banner') tempBannerBase64 = e.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updatePreview() {
+            const previewPfp = document.getElementById('preview-pfp');
+            const previewBanner = document.getElementById('preview-banner');
+            
+            const pfpData = tempPfpBase64 || currentUser.pfp;
+            const bannerData = tempBannerBase64 || currentUser.banner;
+
+            if(pfpData) {
+                previewPfp.style.backgroundImage = `url(${pfpData})`;
+                previewPfp.innerText = '';
+            } else {
+                previewPfp.style.backgroundImage = 'none';
+                previewPfp.innerText = currentUser.displayName.charAt(0).toUpperCase();
+            }
+            if(bannerData) {
+                previewBanner.style.backgroundImage = `url(${bannerData})`;
+            } else {
+                previewBanner.style.backgroundImage = 'var(--gold-gradient)';
+            }
+            renderBadges(currentUser.badges, 'preview-badges');
+        }
+
+        function saveProfile() {
+            currentUser.displayName = document.getElementById('set-displayname').value;
+            currentUser.status = document.getElementById('set-status').value;
+            if(tempPfpBase64) currentUser.pfp = tempPfpBase64;
+            if(tempBannerBase64) currentUser.banner = tempBannerBase64;
+            
+            saveDB();
+            updateUI();
+            loadDMs();
+            closeModal('settings-modal');
+            tempPfpBase64 = null;
+            tempBannerBase64 = null;
+            alert("Profile Saved!");
+        }
+
+        // --- MESSAGES ---
         function sendMessage(e) {
             e.preventDefault();
             const input = document.getElementById('chat-input');
-            if (!input.value.trim()) return;
+            if (!input.value.trim() || !activeView.id) return;
 
             const msg = {
-                chatId: activeChat.id,
-                chatType: activeChat.type,
+                chatId: activeView.id,
+                chatType: activeView.type,
                 author: currentUser.username,
                 text: input.value.trim(),
                 time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
@@ -524,17 +832,12 @@
         function loadMessages() {
             const container = document.getElementById('chat-messages');
             container.innerHTML = '';
-            
-            // Filter messages for current chat
-            const chatMsgs = db.messages.filter(m => m.chatId === activeChat.id && m.chatType === activeChat.type);
+            const chatMsgs = db.messages.filter(m => m.chatId === activeView.id && m.chatType === activeView.type);
             
             chatMsgs.forEach(msg => {
                 const user = db.users[msg.author] || { displayName: msg.author, badges: [], pfp: '' };
                 let badgeHTML = '';
-                user.badges.forEach(b => {
-                    badgeHTML += `<div class="badge-icon" title="${b}">${BADGE_SVGS[b]}</div>`;
-                });
-
+                user.badges.forEach(b => { badgeHTML += `<div class="badge-icon" title="${b}">${BADGE_SVGS[b]}</div>`; });
                 let avatarStyle = user.pfp ? `background-image: url(${user.pfp}); background-size: cover; color: transparent;` : '';
 
                 container.innerHTML += `
@@ -554,52 +857,50 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // --- FRIENDS SYSTEM ---
-        function sendFriendRequest() {
-            const target = document.getElementById('friend-search').value.trim();
-            if(!db.users[target]) return alert("User not found.");
-            if(target === currentUser.username) return alert("You can't add yourself.");
-            if(currentUser.friends.includes(target)) return alert("Already friends.");
-
-            // For this prototype, we'll auto-accept friendships to keep it simple
-            currentUser.friends.push(target);
-            db.users[target].friends.push(currentUser.username);
+        // --- SERVERS ---
+        function createServer() {
+            const name = document.getElementById('new-server-name').value.trim();
+            if(!name) return;
+            const sid = 'srv_' + Date.now();
+            db.servers[sid] = {
+                id: sid, name: name, owner: currentUser.username,
+                channels: [{ id: 'gen_' + Date.now(), name: 'general' }]
+            };
+            currentUser.servers.push(sid);
             saveDB();
-            
-            alert(`You are now friends with ${db.users[target].displayName}!`);
-            document.getElementById('friend-search').value = '';
-            loadFriendsList();
-            loadSidebar();
+            document.getElementById('new-server-name').value = '';
+            closeModal('server-modal');
+            loadServers();
+            openServer(sid);
         }
 
-        function loadFriendsList() {
-            const list = document.getElementById('friends-list');
-            list.innerHTML = '';
-            currentUser.friends.forEach(f => {
-                const friend = db.users[f];
-                if(!friend) return;
-                let avatarStyle = friend.pfp ? `background-image: url(${friend.pfp}); background-size: cover; color: transparent;` : '';
-                
-                list.innerHTML += `
-                    <div class="friend-card">
-                        <div class="friend-info">
-                            <div class="dm-avatar" style="${avatarStyle}">${friend.displayName.charAt(0).toUpperCase()}</div>
-                            <div>
-                                <div style="font-weight: bold; font-size: 14px;">${friend.displayName}</div>
-                                <div style="font-size: 12px; color: var(--text-muted);">@${friend.username}</div>
-                            </div>
-                        </div>
-                        <button class="btn-small" style="background: var(--gold-primary); color: black;" onclick="closeModal('friends-modal'); openChat('${friend.username}', 'dm');">Message</button>
-                    </div>
-                `;
+        function createChannel() {
+            if(!activeServerId) return;
+            const name = prompt("Enter channel name:");
+            if(!name) return;
+            const cid = 'chan_' + Date.now();
+            db.servers[activeServerId].channels.push({ id: cid, name: name.toLowerCase().replace(/\s+/g, '-') });
+            saveDB();
+            loadChannels();
+        }
+
+        // --- ADMIN & MODALS ---
+        function renderBadges(badges, containerId) {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+            container.innerHTML = '';
+            badges.forEach(b => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'badge-icon';
+                wrapper.title = b;
+                wrapper.innerHTML = BADGE_SVGS[b] || '';
+                container.appendChild(wrapper);
             });
         }
 
-        // --- ADMIN PANEL LOGIC ---
         function switchAdminTab(tab) {
             document.querySelectorAll('.admin-tab button').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-            
             if (tab === 'grant') {
                 document.querySelectorAll('.admin-tab button')[0].classList.add('active');
                 document.getElementById('admin-grant').classList.add('active');
@@ -613,27 +914,17 @@
         function grantBadge(badge) {
             const targetUser = document.getElementById('admin-target-user').value.trim();
             const feedback = document.getElementById('admin-feedback');
-            
             if (!db.users[targetUser]) {
-                feedback.style.color = 'var(--red)';
-                feedback.innerText = "User not found.";
-                return;
+                feedback.style.color = 'var(--red)'; feedback.innerText = "User not found."; return;
             }
-
             if (!db.users[targetUser].badges.includes(badge)) {
                 db.users[targetUser].badges.push(badge);
                 saveDB();
-                feedback.style.color = 'var(--green)';
-                feedback.innerText = `Successfully granted ${badge} to ${targetUser}.`;
-                
-                if (targetUser === currentUser.username) {
-                    currentUser.badges = db.users[targetUser].badges;
-                    updateUI();
-                }
-                loadMessages();
+                feedback.style.color = 'var(--green)'; feedback.innerText = `Successfully granted ${badge} to ${targetUser}.`;
+                if (targetUser === currentUser.username) { currentUser.badges = db.users[targetUser].badges; updateUI(); }
+                if(activeView.type === 'channel' || activeView.type === 'dm') loadMessages();
             } else {
-                feedback.style.color = 'var(--orange)';
-                feedback.innerText = `${targetUser} already has the ${badge} badge.`;
+                feedback.style.color = 'var(--orange)'; feedback.innerText = `${targetUser} already has the ${badge} badge.`;
             }
         }
 
@@ -641,8 +932,7 @@
             const list = document.getElementById('applications-list');
             list.innerHTML = '';
             if (db.applications.length === 0) {
-                list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No pending applications.</p>';
-                return;
+                list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No pending applications.</p>'; return;
             }
             db.applications.forEach((app, index) => {
                 list.innerHTML += `
@@ -661,9 +951,7 @@
 
         function resolveApp(index, isAccepted) {
             const app = db.applications[index];
-            if (isAccepted && !db.users[app.username].badges.includes('Staff')) {
-                db.users[app.username].badges.push('Staff');
-            }
+            if (isAccepted && !db.users[app.username].badges.includes('Staff')) db.users[app.username].badges.push('Staff');
             db.applications.splice(index, 1);
             saveDB();
             loadApplications();
@@ -675,24 +963,18 @@
             const q2 = document.getElementById('app-q2').value.trim();
             if (!q1 || !q2) return alert("Please answer all questions.");
             if (db.applications.find(a => a.username === currentUser.username)) return alert("You already have a pending application.");
-
             db.applications.push({ username: currentUser.username, q1: q1, q2: q2 });
             saveDB();
-            document.getElementById('app-q1').value = '';
-            document.getElementById('app-q2').value = '';
+            document.getElementById('app-q1').value = ''; document.getElementById('app-q2').value = '';
             alert("Application submitted! Awaiting Admin review.");
         }
 
-        // --- UTILITIES ---
-        function saveDB() { localStorage.setItem('aureo_db_v2', JSON.stringify(db)); }
-        function showAuthError(msg) {
-            const el = document.getElementById('auth-error');
-            el.innerText = msg; el.style.display = 'block';
-        }
+        function saveDB() { localStorage.setItem('aureo_db_v5', JSON.stringify(db)); }
+        function showAuthError(msg) { const el = document.getElementById('auth-error'); el.innerText = msg; el.style.display = 'block'; }
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
             if(id === 'admin-modal') loadApplications(); 
-            if(id === 'friends-modal') loadFriendsList();
+            if(id === 'settings-modal') { tempPfpBase64 = null; tempBannerBase64 = null; updatePreview(); }
         }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
