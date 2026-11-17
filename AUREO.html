@@ -11,7 +11,7 @@
             --bg-dark: #0a0514; --bg-panel: #120a24; --bg-sidebar: #080410;
             --gold-primary: #d4af37; --gold-light: #f9d976; --gold-gradient: linear-gradient(135deg, #f9d976 0%, #b8860b 100%); 
             --text-main: #e0e0e0; --text-muted: #888; 
-            --green: #2ecc71; --red: #e74c3c; --orange: #f39c12; --discord-blue: #5865F2;
+            --green: #2ecc71; --red: #e74c3c; --orange: #f39c12; --discord-blue: #5865F2; --discord-dark: #313338;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
         
@@ -121,29 +121,63 @@
         /* Admin Button */
         #admin-btn { display: none; padding: 10px; background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); color: var(--red); border-radius: 8px; text-align: center; cursor: pointer; margin: 10px; font-size: 12px; font-weight: bold; }
 
-        /* Modals */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100; justify-content: center; align-items: center; }
-        .modal-content { background: var(--bg-panel); width: 90%; max-width: 600px; border-radius: 15px; border: 1px solid rgba(212,175,55,0.3); padding: 30px; max-height: 85vh; overflow-y: auto; }
-        .modal-title { font-family: 'Cinzel', serif; color: var(--gold-light); margin-bottom: 20px; font-size: 20px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 10px; display: flex; justify-content: space-between;}
-        .close-btn { cursor: pointer; color: var(--text-muted); }
-        .close-btn:hover { color: white; }
+        /* --- SETTINGS MODAL (NEW DISCORD STYLE) --- */
+        #settings-modal .modal-content { max-width: 800px; padding: 0; display: flex; height: 80vh; overflow: hidden; background: var(--discord-dark); border: none; border-radius: 8px; }
         
-        /* Settings Form */
+        /* Settings Sidebar */
+        .settings-sidebar { width: 220px; background: #2b2d31; display: flex; flex-direction: column; padding: 20px 10px; overflow-y: auto; flex-shrink: 0; }
+        .settings-user-info { padding: 0 10px 20px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
+        .settings-user-info h4 { color: white; font-size: 14px; margin-bottom: 2px; }
+        .settings-user-info span { color: var(--text-muted); font-size: 12px; cursor: pointer; }
+        .settings-user-info span:hover { text-decoration: underline; }
+        
+        .settings-nav-item { padding: 8px 10px; border-radius: 4px; color: var(--text-muted); font-size: 14px; font-weight: 500; cursor: pointer; margin-bottom: 2px; }
+        .settings-nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
+        .settings-nav-item.active { background: rgba(255,255,255,0.1); color: white; }
+        .settings-nav-item.danger { color: var(--red); margin-top: 10px; }
+        .settings-nav-item.danger:hover { background: rgba(231, 76, 60, 0.1); }
+
+        /* Settings Content Area */
+        .settings-content { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
+        .settings-close { position: absolute; top: 20px; right: 20px; color: var(--text-muted); cursor: pointer; font-size: 20px; }
+        .settings-close:hover { color: white; }
+        
+        .settings-tab { display: none; }
+        .settings-tab.active { display: block; }
+        .settings-tab h2 { font-family: 'Cinzel', serif; color: var(--gold-light); font-size: 20px; margin-bottom: 20px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 10px; }
+
+        /* Form Styling inside settings */
+        .settings-row { display: flex; justify-content: space-between; align-items: center; background: #232428; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .settings-row-info h4 { color: white; font-size: 14px; margin-bottom: 5px; }
+        .settings-row-info p { color: var(--text-muted); font-size: 12px; }
+        
         .settings-form label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; margin-top: 15px; font-weight: 600; text-transform: uppercase; }
-        .settings-form input[type="text"], .settings-form select, .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; color: white; outline: none; }
+        .settings-form input[type="text"], .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: white; outline: none; }
         .file-upload-btn { background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); padding: 10px; border-radius: 6px; cursor: pointer; display: inline-block; margin-top: 5px; font-size: 12px; }
         .file-upload-btn:hover { background: rgba(212,175,55,0.1); }
 
-        /* Profile Banner */
-        .profile-banner { height: 120px; background: var(--gold-gradient); border-radius: 8px 8px 0 0; background-size: cover; background-position: center; position: relative; }
-        .profile-pfp { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--bg-panel); margin-top: -40px; margin-left: 20px; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: black; background-size: cover; background-position: center; position: relative; z-index: 2;}
-
-        /* Danger Zone */
-        .danger-zone { border: 1px solid rgba(231, 76, 60, 0.4); border-radius: 8px; padding: 15px; margin-top: 30px; background: rgba(231, 76, 60, 0.05); }
-        .danger-zone h3 { color: var(--red); font-size: 14px; margin-bottom: 10px; text-transform: uppercase; }
+        /* Status Picker */
+        .status-option { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 8px; cursor: pointer; margin-bottom: 5px; background: #2b2d31; transition: 0.2s; }
+        .status-option:hover { background: #35373c; }
+        .status-option-left { display: flex; align-items: center; gap: 10px; }
+        .status-option-text h4 { color: white; font-size: 14px; font-weight: 600; }
+        .status-option-text p { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+        .status-icon-circle { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .status-icon-moon { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--orange); background: transparent; flex-shrink: 0; position: relative;}
+        .status-icon-moon::after { content: ''; position: absolute; top: -2px; right: -2px; width: 6px; height: 6px; background: var(--discord-dark); border-radius: 50%; } /* Creates the crescent effect */
+        .status-icon-dnd { width: 10px; height: 10px; border-radius: 50%; background: var(--red); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .status-icon-dnd::after { content: ''; width: 6px; height: 2px; background: black; border-radius: 1px; }
+        .status-icon-offline { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--text-muted); background: transparent; flex-shrink: 0; }
+        
+        .danger-zone { border: 1px solid rgba(231, 76, 60, 0.4); border-radius: 8px; padding: 15px; background: rgba(231, 76, 60, 0.05); }
         .danger-btn { width: 100%; padding: 10px; background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 10px; transition: 0.2s;}
         .danger-btn:hover { background: var(--red); color: white; }
         .danger-btn.logout:hover { background: var(--text-muted); color: white; border-color: var(--text-muted); }
+
+        /* Other Modals */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background: var(--bg-panel); width: 90%; max-width: 600px; border-radius: 15px; border: 1px solid rgba(212,175,55,0.3); padding: 30px; max-height: 85vh; overflow-y: auto; }
+        .modal-title { font-family: 'Cinzel', serif; color: var(--gold-light); margin-bottom: 20px; font-size: 20px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 10px; display: flex; justify-content: space-between;}
 
         /* Admin Panel Specifics */
         .admin-tab { display: flex; gap: 10px; margin-bottom: 20px; }
@@ -243,7 +277,7 @@
                 
                 <!-- User Panel -->
                 <div class="user-panel">
-                    <div class="user-panel-left" onclick="openModal('settings-modal')">
+                    <div class="user-panel-left" onclick="openSettings()">
                         <div class="dm-avatar" id="my-sidebar-avatar">U</div>
                         <div class="user-panel-info">
                             <div class="user-panel-name" id="my-name">User</div>
@@ -255,7 +289,7 @@
                     </div>
                     <div class="user-panel-right">
                         <div id="my-badges-container" style="display: flex; gap: 4px;"></div>
-                        <div class="settings-gear" onclick="openModal('settings-modal')" title="User Settings">
+                        <div class="settings-gear" onclick="openSettings()" title="User Settings">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M19.14 12.94C19.18 12.64 19.2 12.33 19.2 12C19.2 11.68 19.18 11.36 19.13 11.06L21.16 9.48C21.34 9.34 21.39 9.07 21.28 8.87L19.36 5.55C19.24 5.33 18.99 5.26 18.77 5.33L16.38 6.29C15.88 5.91 15.35 5.59 14.76 5.35L14.4 2.81C14.36 2.57 14.16 2.4 13.92 2.4H10.08C9.84 2.4 9.65 2.57 9.61 2.81L9.25 5.35C8.66 5.59 8.12 5.92 7.63 6.29L5.24 5.33C5.02 5.25 4.77 5.33 4.65 5.55L2.74 8.87C2.62 9.08 2.66 9.34 2.86 9.48L4.89 11.06C4.84 11.36 4.8 11.69 4.8 12C4.8 12.31 4.82 12.64 4.87 12.94L2.84 14.52C2.66 14.66 2.61 14.93 2.72 15.13L4.64 18.45C4.76 18.67 5.01 18.74 5.23 18.67L7.62 17.71C8.12 18.09 8.65 18.41 9.24 18.65L9.6 21.19C9.65 21.43 9.84 21.6 10.08 21.6H13.92C14.16 21.6 14.36 21.43 14.39 21.19L14.75 18.65C15.34 18.41 15.88 18.09 16.37 17.71L18.76 18.67C18.98 18.75 19.23 18.67 19.35 18.45L21.27 15.13C21.39 14.91 21.34 14.66 21.15 14.52L19.14 12.94ZM12 15.6C10.02 15.6 8.4 13.98 8.4 12C8.4 10.02 10.02 8.4 12 8.4C13.98 8.4 15.6 10.02 15.6 12C15.6 13.98 13.98 15.6 12 15.6Z" fill="currentColor"/>
                             </svg>
@@ -266,7 +300,6 @@
 
             <!-- Main Area -->
             <div class="chat-area">
-                <!-- Chat View -->
                 <div id="chat-view" style="display: none; height: 100%; flex-direction: column;">
                     <div class="chat-header">
                         <span id="chat-icon" style="font-size: 20px; color: var(--text-muted);">#</span>
@@ -280,7 +313,6 @@
                     </div>
                 </div>
 
-                <!-- Friends View -->
                 <div id="friends-view" class="friends-page">
                     <div class="friends-nav">
                         <div style="display: flex; align-items: center; gap: 8px; margin-right: 10px;">
@@ -306,49 +338,131 @@
         </div>
     </div>
 
-    <!-- SETTINGS MODAL -->
+    <!-- NEW DISCORD-STYLE SETTINGS MODAL -->
     <div class="modal-overlay" id="settings-modal">
         <div class="modal-content">
-            <div class="modal-title">My Profile <span class="close-btn" onclick="attemptCloseSettings()">✖</span></div>
             
-            <div class="profile-banner" id="preview-banner"></div>
-            <div class="profile-pfp" id="preview-pfp">U</div>
-            <div style="padding: 20px; display: flex; gap: 10px; align-items: center;" id="preview-badges"></div>
-
-            <div class="settings-form">
-                <label>Profile Picture</label>
-                <input type="file" id="upload-pfp" accept="image/*" style="display: none;" onchange="handleFileUpload(event, 'pfp')">
-                <div class="file-upload-btn" onclick="document.getElementById('upload-pfp').click()">Upload Image</div>
-                
-                <label>Profile Banner</label>
-                <input type="file" id="upload-banner" accept="image/*" style="display: none;" onchange="handleFileUpload(event, 'banner')">
-                <div class="file-upload-btn" onclick="document.getElementById('upload-banner').click()">Upload Banner</div>
-
-                <label>Display Name</label>
-                <input type="text" id="set-displayname">
-                
-                <label>Status</label>
-                <select id="set-status">
-                    <option value="Online">Online</option>
-                    <option value="Idle">Idle</option>
-                    <option value="DND">Do Not Disturb</option>
-                    <option value="Offline">Offline (Invisible)</option>
-                </select>
-
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
-                <h3 style="font-size: 14px; color: var(--gold-light); margin-bottom: 10px;">Staff Application (13+)</h3>
-                <textarea id="app-q1" rows="2" placeholder="Why do you want to be staff?"></textarea>
-                <textarea id="app-q2" rows="2" placeholder="How would you handle a rulebreaker?" style="margin-top: 10px;"></textarea>
-                <button class="btn" style="margin-top: 15px; font-size: 12px; padding: 10px;" onclick="submitApplication()">Submit Application</button>
-                
-                <button class="btn" style="margin-top: 20px; background: var(--green);" onclick="saveProfile()">Save Changes</button>
-
-                <!-- DANGER ZONE -->
-                <div class="danger-zone">
-                    <h3>Danger Zone</h3>
-                    <button class="danger-btn logout" onclick="logout()">Log Out</button>
-                    <button class="danger-btn" onclick="deleteAccount()">Delete Account</button>
+            <!-- Settings Sidebar -->
+            <div class="settings-sidebar">
+                <div class="settings-user-info">
+                    <h4 id="side-settings-name">User</h4>
+                    <span>Edit Profile</span>
                 </div>
+                
+                <div class="settings-nav-item active" onclick="switchSettingsTab('account', this)">Account</div>
+                <div class="settings-nav-item" onclick="switchSettingsTab('profile', this)">Profile</div>
+                <div class="settings-nav-item" onclick="switchSettingsTab('status', this)">Status</div>
+                <div class="settings-nav-item" onclick="switchSettingsTab('staff', this)">Apply for Staff</div>
+                
+                <div style="flex:1;"></div>
+                <div class="settings-nav-item danger" onclick="switchSettingsTab('danger', this)">Danger Zone</div>
+            </div>
+
+            <!-- Settings Content Area -->
+            <div class="settings-content">
+                <span class="settings-close" onclick="attemptCloseSettings()">✖</span>
+
+                <!-- Tab: Account -->
+                <div id="tab-account" class="settings-tab active">
+                    <h2>My Account</h2>
+                    <div class="settings-form">
+                        <label>Display Name</label>
+                        <input type="text" id="set-displayname">
+                        <p style="font-size: 11px; color: var(--text-muted); margin-top: 5px;">This is how you appear to others.</p>
+                        
+                        <div style="margin-top: 20px;">
+                            <button class="btn" style="background: var(--green); width: auto; padding: 10px 20px;" onclick="saveProfile()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Profile -->
+                <div id="tab-profile" class="settings-tab">
+                    <h2>Profile Customization</h2>
+                    
+                    <div class="profile-banner" id="preview-banner" style="height: 100px; border-radius: 8px; margin-bottom: 20px;"></div>
+                    <div class="profile-pfp" id="preview-pfp" style="margin-top: -50px; margin-bottom: 15px; margin-left: 20px;">U</div>
+                    
+                    <div class="settings-form">
+                        <label>Profile Picture</label>
+                        <input type="file" id="upload-pfp" accept="image/*" style="display: none;" onchange="handleFileUpload(event, 'pfp')">
+                        <div class="file-upload-btn" onclick="document.getElementById('upload-pfp').click()">Upload Image</div>
+                        
+                        <label style="margin-top: 20px;">Profile Banner</label>
+                        <input type="file" id="upload-banner" accept="image/*" style="display: none;" onchange="handleFileUpload(event, 'banner')">
+                        <div class="file-upload-btn" onclick="document.getElementById('upload-banner').click()">Upload Banner</div>
+
+                        <div style="margin-top: 20px;">
+                            <button class="btn" style="background: var(--green); width: auto; padding: 10px 20px;" onclick="saveProfile()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Status -->
+                <div id="tab-status" class="settings-tab">
+                    <h2>Set Status</h2>
+                    
+                    <div class="status-option" onclick="setStatus('Online')">
+                        <div class="status-option-left">
+                            <div class="status-icon-circle" style="background: var(--green);"></div>
+                            <div class="status-option-text">
+                                <h4>Online</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-option" onclick="setStatus('Idle')">
+                        <div class="status-option-left">
+                            <div class="status-icon-moon"></div>
+                            <div class="status-option-text">
+                                <h4>Idle</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-option" onclick="setStatus('DND')">
+                        <div class="status-option-left">
+                            <div class="status-icon-dnd"></div>
+                            <div class="status-option-text">
+                                <h4>Do Not Disturb</h4>
+                                <p>You will not receive desktop notifications</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-option" onclick="setStatus('Offline')">
+                        <div class="status-option-left">
+                            <div class="status-icon-offline"></div>
+                            <div class="status-option-text">
+                                <h4>Invisible</h4>
+                                <p>You will appear offline</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Staff -->
+                <div id="tab-staff" class="settings-tab">
+                    <h2>Apply for Staff (13+)</h2>
+                    <div class="settings-form">
+                        <label>Why do you want to be staff?</label>
+                        <textarea id="app-q1" rows="3"></textarea>
+                        <label style="margin-top: 15px;">How would you handle a rulebreaker?</label>
+                        <textarea id="app-q2" rows="3"></textarea>
+                        
+                        <button class="btn" style="margin-top: 20px; width: auto; padding: 10px 20px;" onclick="submitApplication()">Submit Application</button>
+                    </div>
+                </div>
+
+                <!-- Tab: Danger Zone -->
+                <div id="tab-danger" class="settings-tab">
+                    <h2 style="color: var(--red); border-bottom-color: rgba(231,76,60,0.2);">Danger Zone</h2>
+                    <div class="danger-zone">
+                        <button class="danger-btn logout" onclick="logout()">Log Out</button>
+                        <button class="danger-btn" onclick="deleteAccount()">Delete Account</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -369,7 +483,7 @@
     <div class="modal-overlay" id="server-modal">
         <div class="modal-content" style="max-width: 400px; text-align: center;">
             <div class="modal-title">Create a Server <span class="close-btn" onclick="closeModal('server-modal')">✖</span></div>
-            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">Your server is where you and your friends hang out. Make yours and start talking.</p>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">Your server is where you and your friends hang out.</p>
             <input type="text" id="new-server-name" placeholder="Server Name" style="width: 100%; padding: 12px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: white; border-radius: 5px; outline: none; margin-bottom: 20px;">
             <button class="btn" onclick="createServer()">Create Server</button>
         </div>
@@ -403,22 +517,10 @@
     <script>
         // --- BADGE SVG GENERATOR & TOOLTIPS ---
         const BADGE_DATA = {
-            'OG': { 
-                svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15 9H22L16 14L18 21L12 17L6 21L8 14L2 9H9L12 2Z" fill="#9b59b6"/></svg>`,
-                tip: "OG: Registered during the first month of AUREO."
-            },
-            'Bug Hunter': { 
-                svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#2ecc71"/><path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-                tip: "Bug Hunter: Found and reported a bug."
-            },
-            'Streak': { 
-                svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12 2 12 7 16 10C20 13 20 18 16 21C12 24 6 21 6 16C6 11 10 8 10 8C10 8 10 12 12 14C14 16 16 14 16 12C16 10 12 6 12 2Z" fill="#e67e22"/></svg>`,
-                tip: "Streak: Chatted for 14 days straight (at least 5 mins a day)."
-            },
-            'Staff': { 
-                svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#e74c3c"/><path d="M12 6V18M8 10H16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>`,
-                tip: "Staff: Applied and accepted into the AUREO team."
-            }
+            'OG': { svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15 9H22L16 14L18 21L12 17L6 21L8 14L2 9H9L12 2Z" fill="#9b59b6"/></svg>`, tip: "OG: Registered during the first month of AUREO." },
+            'Bug Hunter': { svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#2ecc71"/><path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`, tip: "Bug Hunter: Found and reported a bug." },
+            'Streak': { svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12 2 12 7 16 10C20 13 20 18 16 21C12 24 6 21 6 16C6 11 10 8 10 8C10 8 10 12 12 14C14 16 16 14 16 12C16 10 12 6 12 2Z" fill="#e67e22"/></svg>`, tip: "Streak: Chatted for 14 days straight (at least 5 mins a day)." },
+            'Staff': { svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#e74c3c"/><path d="M12 6V18M8 10H16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>`, tip: "Staff: Applied and accepted into the AUREO team." }
         };
 
         // --- STATE & DATABASE ---
@@ -432,12 +534,9 @@
         
         const ADMIN_USERNAME = 'Aureo';
 
-        // --- SESSION PERSISTENCE (Keep logged in on refresh) ---
         window.onload = function() {
             const savedSession = localStorage.getItem('aureo_session');
-            if (savedSession && db.users[savedSession]) {
-                loginUser(savedSession, true); 
-            }
+            if (savedSession && db.users[savedSession]) loginUser(savedSession); 
         };
 
         // --- AUTHENTICATION ---
@@ -488,7 +587,7 @@
             } else document.getElementById('captcha-error').style.display = 'block';
         }
 
-        function loginUser(username, skipAnim = false) {
+        function loginUser(username) {
             currentUser = db.users[username];
             localStorage.setItem('aureo_session', username);
             
@@ -523,13 +622,103 @@
                     saveDB();
                     localStorage.removeItem('aureo_session');
                     location.reload();
-                } else {
-                    alert("Account deletion cancelled.");
                 }
             }
         }
 
-        // --- UI & NAVIGATION ---
+        // --- SETTINGS MODAL LOGIC ---
+        function openSettings() {
+            document.getElementById('settings-modal').style.display = 'flex';
+            document.getElementById('side-settings-name').innerText = currentUser.displayName;
+            tempPfpBase64 = null; tempBannerBase64 = null;
+            
+            // Reset to first tab
+            switchSettingsTab('account', document.querySelectorAll('.settings-nav-item')[0]);
+            
+            // Populate values
+            document.getElementById('set-displayname').value = currentUser.displayName;
+            document.getElementById('app-q1').value = '';
+            document.getElementById('app-q2').value = '';
+            
+            updatePreview();
+        }
+
+        function switchSettingsTab(tabId, el) {
+            document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+            document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+            
+            if(el) el.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        function attemptCloseSettings() {
+            const nameChanged = document.getElementById('set-displayname').value !== currentUser.displayName;
+            const hasNewImage = tempPfpBase64 || tempBannerBase64;
+
+            if (nameChanged || hasNewImage) {
+                if (confirm("You have unsaved changes. Are you sure you want to discard them?")) {
+                    closeModal('settings-modal');
+                }
+            } else {
+                closeModal('settings-modal');
+            }
+        }
+
+        // --- STATUS PICKER ---
+        function setStatus(newStatus) {
+            currentUser.status = newStatus;
+            saveDB();
+            updateUI();
+            alert(`Status changed to ${newStatus}`);
+        }
+
+        // --- PROFILE & UPLOADS ---
+        function handleFileUpload(event, type) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (type === 'pfp') tempPfpBase64 = e.target.result;
+                if (type === 'banner') tempBannerBase64 = e.target.result;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updatePreview() {
+            const previewPfp = document.getElementById('preview-pfp');
+            const previewBanner = document.getElementById('preview-banner');
+            const pfpData = tempPfpBase64 || currentUser.pfp;
+            const bannerData = tempBannerBase64 || currentUser.banner;
+
+            if(pfpData) {
+                previewPfp.style.backgroundImage = `url(${pfpData})`;
+                previewPfp.innerText = '';
+            } else {
+                previewPfp.style.backgroundImage = 'none';
+                previewPfp.innerText = currentUser.displayName.charAt(0).toUpperCase();
+            }
+            if(bannerData) {
+                previewBanner.style.backgroundImage = `url(${bannerData})`;
+            } else {
+                previewBanner.style.backgroundImage = 'var(--gold-gradient)';
+            }
+        }
+
+        function saveProfile() {
+            currentUser.displayName = document.getElementById('set-displayname').value;
+            if(tempPfpBase64) currentUser.pfp = tempPfpBase64;
+            if(tempBannerBase64) currentUser.banner = tempBannerBase64;
+            
+            saveDB();
+            updateUI();
+            loadDMs();
+            closeModal('settings-modal');
+            tempPfpBase64 = null; tempBannerBase64 = null;
+            alert("Profile Saved!");
+        }
+
+        // --- UI UPDATES ---
         function updateUI() {
             document.getElementById('my-name').innerText = currentUser.displayName;
             
@@ -548,7 +737,7 @@
             else if (currentUser.status === 'Idle') dot.classList.add('status-idle');
             else if (currentUser.status === 'DND') dot.classList.add('status-dnd');
             else dot.classList.add('status-offline');
-            document.getElementById('my-status-text').innerText = currentUser.status;
+            document.getElementById('my-status-text').innerText = currentUser.status === 'DND' ? 'Do Not Disturb' : currentUser.status;
 
             renderBadges(currentUser.badges, 'my-badges-container');
             document.getElementById('app-count').innerText = db.applications.length;
@@ -562,6 +751,7 @@
             }
         }
 
+        // --- APP NAVIGATION ---
         function loadServers() {
             const list = document.getElementById('server-list');
             list.innerHTML = '';
@@ -582,16 +772,13 @@
             activeView = { type: 'home', id: null };
             loadServers();
             
-            // UPDATE SERVER HEADER TEXT
             const headerEl = document.querySelector('#sidebar-server-name span');
             if (headerEl) headerEl.innerText = 'Direct Messages';
             
             document.getElementById('channel-list-container').style.display = 'none';
             document.getElementById('dm-list-container').style.display = 'block';
-            
             document.getElementById('friends-tab').style.display = 'flex';
             document.getElementById('friends-tab').classList.add('active');
-            
             document.getElementById('friends-view').style.display = 'flex';
             document.getElementById('chat-view').style.display = 'none';
             
@@ -695,7 +882,6 @@
             const server = db.servers[sid];
             loadServers();
             
-            // UPDATE SERVER HEADER TEXT (FIXED)
             const headerEl = document.querySelector('#sidebar-server-name span');
             if (headerEl) headerEl.innerText = server.name;
 
@@ -806,70 +992,6 @@
             saveDB();
             updateUI();
             switchFriendsTab('pending');
-        }
-
-        // --- FILE UPLOADS & PROFILE ---
-        function handleFileUpload(event, type) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                if (type === 'pfp') tempPfpBase64 = e.target.result;
-                if (type === 'banner') tempBannerBase64 = e.target.result;
-                updatePreview();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function updatePreview() {
-            const previewPfp = document.getElementById('preview-pfp');
-            const previewBanner = document.getElementById('preview-banner');
-            const pfpData = tempPfpBase64 || currentUser.pfp;
-            const bannerData = tempBannerBase64 || currentUser.banner;
-
-            if(pfpData) {
-                previewPfp.style.backgroundImage = `url(${pfpData})`;
-                previewPfp.innerText = '';
-            } else {
-                previewPfp.style.backgroundImage = 'none';
-                previewPfp.innerText = currentUser.displayName.charAt(0).toUpperCase();
-            }
-            if(bannerData) {
-                previewBanner.style.backgroundImage = `url(${bannerData})`;
-            } else {
-                previewBanner.style.backgroundImage = 'var(--gold-gradient)';
-            }
-            renderBadges(currentUser.badges, 'preview-badges');
-        }
-
-        // --- UNSAVED CHANGES WARNING ---
-        function attemptCloseSettings() {
-            const nameChanged = document.getElementById('set-displayname').value !== currentUser.displayName;
-            const statusChanged = document.getElementById('set-status').value !== currentUser.status;
-            const hasNewImage = tempPfpBase64 || tempBannerBase64;
-
-            if (nameChanged || statusChanged || hasNewImage) {
-                if (confirm("You have unsaved changes. Are you sure you want to discard them?")) {
-                    closeModal('settings-modal');
-                }
-            } else {
-                closeModal('settings-modal');
-            }
-        }
-
-        function saveProfile() {
-            currentUser.displayName = document.getElementById('set-displayname').value;
-            currentUser.status = document.getElementById('set-status').value;
-            if(tempPfpBase64) currentUser.pfp = tempPfpBase64;
-            if(tempBannerBase64) currentUser.banner = tempBannerBase64;
-            
-            saveDB();
-            updateUI();
-            loadDMs();
-            closeModal('settings-modal');
-            tempPfpBase64 = null;
-            tempBannerBase64 = null;
-            alert("Profile Saved!");
         }
 
         // --- MESSAGES ---
@@ -1038,7 +1160,6 @@
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
             if(id === 'admin-modal') loadApplications(); 
-            if(id === 'settings-modal') { tempPfpBase64 = null; tempBannerBase64 = null; updatePreview(); }
         }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
