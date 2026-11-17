@@ -136,7 +136,7 @@
         /* Admin Button */
         #admin-btn { display: none; padding: 10px; background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); color: var(--red); border-radius: 8px; text-align: center; cursor: pointer; margin: 10px; font-size: 12px; font-weight: bold; }
 
-        /* --- PROFILE POPUP MENU (NEW) --- */
+        /* --- PROFILE POPUP MENU --- */
         #profile-popup-menu { display: none; position: absolute; bottom: 70px; left: 10px; width: 250px; background: #1e1f22; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 1000; border: 1px solid rgba(255,255,255,0.05); flex-direction: column; padding: 5px; }
         .popup-item { padding: 8px 10px; border-radius: 4px; color: var(--text-main); font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .popup-item:hover { background: var(--discord-blue); color: white; }
@@ -167,30 +167,64 @@
         .settings-tab.active { display: block; }
         .settings-tab h2 { font-family: 'Cinzel', serif; color: var(--gold-light); font-size: 20px; margin-bottom: 20px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 10px; }
 
-        /* Fixed Profile Preview */
-        .profile-preview-card { background: #0a0514; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .profile-banner-preview { height: 120px; width: 100%; background: var(--gold-gradient); background-size: cover; background-position: center; }
-        .profile-body-preview { padding: 0 20px 20px 20px; position: relative; }
-        .profile-pfp-preview { width: 80px; height: 80px; border-radius: 50%; border: 5px solid #0a0514; margin-top: -40px; background: var(--gold-gradient); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: black; }
+        /* --- PERFECT PROFILE PREVIEW --- */
+        .profile-preview-container {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #232428;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .profile-banner-preview {
+            width: 100%;
+            height: 140px; /* Perfect Discord banner height */
+            background-color: #111214;
+            background-image: var(--gold-gradient);
+            background-size: cover;
+            background-position: center;
+        }
+        .profile-pfp-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 6px solid #232428; /* Cutout effect */
+            margin-top: -50px;
+            margin-left: 20px;
+            background-color: var(--gold-gradient);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #000;
+            position: relative;
+        }
         
         .settings-form label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; margin-top: 15px; font-weight: 600; text-transform: uppercase; }
         .settings-form input[type="text"], .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: white; outline: none; }
         .file-upload-btn { background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); padding: 10px; border-radius: 6px; cursor: pointer; display: inline-block; margin-top: 5px; font-size: 12px; }
         .file-upload-btn:hover { background: rgba(212,175,55,0.1); }
 
-        /* Status Picker */
-        .status-option { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 8px; cursor: pointer; margin-bottom: 5px; background: #2b2d31; transition: 0.2s; }
-        .status-option:hover { background: #35373c; }
-        .status-option-left { display: flex; align-items: center; gap: 10px; }
-        .status-option-text h4 { color: white; font-size: 14px; font-weight: 600; }
-        .status-option-text p { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
-        .status-icon-circle { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-        .status-icon-moon { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--orange); background: transparent; flex-shrink: 0; position: relative;}
-        .status-icon-moon::after { content: ''; position: absolute; top: -2px; right: -2px; width: 6px; height: 6px; background: var(--discord-dark); border-radius: 50%; }
-        .status-icon-dnd { width: 10px; height: 10px; border-radius: 50%; background: var(--red); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-        .status-icon-dnd::after { content: ''; width: 6px; height: 2px; background: black; border-radius: 1px; }
-        .status-icon-offline { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--text-muted); background: transparent; flex-shrink: 0; }
+        /* --- STATUS PICKER (EXACT MATCH) --- */
+        .status-option-card { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 8px; cursor: pointer; margin-bottom: 8px; background: #2b2d31; transition: 0.2s; border: 1px solid transparent; }
+        .status-option-card:hover { background: #35373c; }
+        .status-option-card.selected { border-color: rgba(255,255,255,0.1); }
+        .status-option-left { display: flex; align-items: center; gap: 12px; }
+        .status-option-text h4 { color: white; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .status-option-text p { color: var(--text-muted); font-size: 12px; }
         
+        /* Exact Status Icons */
+        .status-icon-circle { width: 12px; height: 12px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+        .status-icon-moon { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--orange); background: transparent; flex-shrink: 0; position: relative; margin-left: 1px;}
+        .status-icon-moon::after { content: ''; position: absolute; top: -3px; right: -3px; width: 8px; height: 8px; background: #2b2d31; border-radius: 50%; }
+        .status-icon-dnd { width: 12px; height: 12px; border-radius: 50%; background: var(--red); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .status-icon-dnd::after { content: ''; width: 8px; height: 2px; background: #2b2d31; border-radius: 1px; }
+        .status-icon-offline { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--text-muted); background: transparent; flex-shrink: 0; }
+
         .danger-zone { border: 1px solid rgba(231, 76, 60, 0.4); border-radius: 8px; padding: 15px; background: rgba(231, 76, 60, 0.05); }
         .danger-btn { width: 100%; padding: 10px; background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 10px; transition: 0.2s;}
         .danger-btn:hover { background: var(--red); color: white; }
@@ -442,6 +476,7 @@
                 
                 <div class="settings-nav-item active" onclick="switchSettingsTab('account', this)">Account</div>
                 <div class="settings-nav-item" onclick="switchSettingsTab('profile', this)">Profile</div>
+                <div class="settings-nav-item" onclick="switchSettingsTab('status', this)">Status</div>
                 <div class="settings-nav-item" onclick="switchSettingsTab('staff', this)">Apply for Staff</div>
                 
                 <div style="flex:1;"></div>
@@ -465,16 +500,13 @@
                     </div>
                 </div>
 
-                <!-- Tab: Profile -->
+                <!-- Tab: Profile (FIXED) -->
                 <div id="tab-profile" class="settings-tab">
                     <h2>Profile Customization</h2>
                     
-                    <!-- FIXED PROFILE PREVIEW -->
-                    <div class="profile-preview-card">
+                    <div class="profile-preview-container">
                         <div class="profile-banner-preview" id="preview-banner"></div>
-                        <div class="profile-body-preview">
-                            <div class="profile-pfp-preview" id="preview-pfp">U</div>
-                        </div>
+                        <div class="profile-pfp-preview" id="preview-pfp">U</div>
                     </div>
                     
                     <div class="settings-form">
@@ -488,6 +520,45 @@
 
                         <div style="margin-top: 20px;">
                             <button class="btn" style="background: var(--green); width: auto; padding: 10px 20px;" onclick="saveProfile()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Status (EXACT MATCH) -->
+                <div id="tab-status" class="settings-tab">
+                    <h2>Set Status</h2>
+                    
+                    <div class="status-option-card" onclick="setStatus('Online')">
+                        <div class="status-option-left">
+                            <div class="status-icon-circle"></div>
+                            <div class="status-option-text"><h4>Online</h4></div>
+                        </div>
+                    </div>
+
+                    <div class="status-option-card" onclick="setStatus('Idle')">
+                        <div class="status-option-left">
+                            <div class="status-icon-moon"></div>
+                            <div class="status-option-text"><h4>Idle</h4></div>
+                        </div>
+                    </div>
+
+                    <div class="status-option-card" onclick="setStatus('DND')">
+                        <div class="status-option-left">
+                            <div class="status-icon-dnd"></div>
+                            <div class="status-option-text">
+                                <h4>Do Not Disturb</h4>
+                                <p>You will not receive desktop notifications</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-option-card" onclick="setStatus('Offline')">
+                        <div class="status-option-left">
+                            <div class="status-icon-offline"></div>
+                            <div class="status-option-text">
+                                <h4>Invisible</h4>
+                                <p>You will appear offline</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -579,6 +650,7 @@
         let tempPfpBase64 = null;
         let tempBannerBase64 = null;
         let currentFriendsTab = 'online';
+        let chatUpdateInterval = null;
         
         const ADMIN_USERNAME = 'Aureo';
 
@@ -676,6 +748,12 @@
             updateUI();
             loadServers();
             openHome();
+            
+            // Start Live Chat sync loop
+            if(chatUpdateInterval) clearInterval(chatUpdateInterval);
+            chatUpdateInterval = setInterval(() => {
+                if(activeView.type !== 'home') loadMessages();
+            }, 1000); // Check for new messages every 1 second
         }
 
         function logout() {
@@ -699,7 +777,6 @@
             const menu = document.getElementById('profile-popup-menu');
             menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
             
-            // Update popup info
             document.getElementById('popup-name').innerText = currentUser.displayName;
             document.getElementById('popup-status-text').innerText = currentUser.status === 'DND' ? 'Do Not Disturb' : currentUser.status;
             
@@ -717,6 +794,7 @@
             saveDB(); updateUI();
             showToast(`Status changed to ${newStatus}`, 'success');
             document.getElementById('profile-popup-menu').style.display = 'none';
+            if(document.getElementById('settings-modal').style.display === 'flex') attemptCloseSettings();
         }
 
         // --- SETTINGS MODAL LOGIC ---
@@ -1063,31 +1141,39 @@
         }
 
         function loadMessages() {
+            // Reload DB from local storage to get messages from other tabs
+            db = JSON.parse(localStorage.getItem('aureo_db_v5')) || db;
+            
             const container = document.getElementById('chat-messages');
-            container.innerHTML = '';
             const chatMsgs = db.messages.filter(m => m.chatId === activeView.id && m.chatType === activeView.type);
-            chatMsgs.forEach(msg => {
-                const user = db.users[msg.author] || { displayName: msg.author, badges: [], pfp: '' };
-                let badgeHTML = '';
-                user.badges.forEach(b => { 
-                    if(BADGE_DATA[b]) badgeHTML += `<div class="badge-icon" data-tooltip="${BADGE_DATA[b].tip}">${BADGE_DATA[b].svg}</div>`; 
-                });
-                let avatarStyle = user.pfp ? `background-image: url(${user.pfp}); background-size: cover; color: transparent;` : '';
-                container.innerHTML += `
-                    <div class="message">
-                        <div class="dm-avatar" style="${avatarStyle}">${user.displayName.charAt(0).toUpperCase()}</div>
-                        <div class="msg-content">
-                            <div class="msg-header">
-                                <span class="msg-author">${user.displayName}</span>
-                                ${badgeHTML}
-                                <span class="msg-time">${msg.time}</span>
+            
+            // Only re-render if there is a change in length to prevent scroll jumping
+            if (container.getAttribute('data-msgcount') !== String(chatMsgs.length)) {
+                container.innerHTML = '';
+                chatMsgs.forEach(msg => {
+                    const user = db.users[msg.author] || { displayName: msg.author, badges: [], pfp: '' };
+                    let badgeHTML = '';
+                    user.badges.forEach(b => { 
+                        if(BADGE_DATA[b]) badgeHTML += `<div class="badge-icon" data-tooltip="${BADGE_DATA[b].tip}">${BADGE_DATA[b].svg}</div>`; 
+                    });
+                    let avatarStyle = user.pfp ? `background-image: url(${user.pfp}); background-size: cover; color: transparent;` : '';
+                    container.innerHTML += `
+                        <div class="message">
+                            <div class="dm-avatar" style="${avatarStyle}">${user.displayName.charAt(0).toUpperCase()}</div>
+                            <div class="msg-content">
+                                <div class="msg-header">
+                                    <span class="msg-author">${user.displayName}</span>
+                                    ${badgeHTML}
+                                    <span class="msg-time">${msg.time}</span>
+                                </div>
+                                <div class="msg-text">${msg.text}</div>
                             </div>
-                            <div class="msg-text">${msg.text}</div>
                         </div>
-                    </div>
-                `;
-            });
-            container.scrollTop = container.scrollHeight;
+                    `;
+                });
+                container.setAttribute('data-msgcount', chatMsgs.length);
+                container.scrollTop = container.scrollHeight;
+            }
         }
 
         function createServer() {
