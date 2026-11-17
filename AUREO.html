@@ -50,7 +50,7 @@
         .add-server-btn:hover { background: var(--green); color: black; border-radius: 16px; }
         
         /* Channel Sidebar */
-        .sidebar { width: 240px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); }
+        .sidebar { width: 260px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); }
         .server-header { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
         .server-header:hover { background: rgba(255,255,255,0.02); }
         .server-header span { font-weight: 600; color: white; font-size: 15px; }
@@ -63,21 +63,31 @@
         .channel:hover, .dm-user:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
         .channel.active, .dm-user.active { background: rgba(212,175,55,0.15); color: var(--gold-light); }
         
-        .dm-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; color: #000; font-weight: bold; font-size: 14px; object-fit: cover; flex-shrink: 0;}
+        /* Avatar standard */
+        .dm-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; color: #000; font-weight: bold; font-size: 14px; background-size: cover; background-position: center; flex-shrink: 0;}
         
-        /* User Panel */
-        .user-panel { padding: 10px 15px; background: #05020a; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(212,175,55,0.1); }
+        /* User Panel Bottom Left */
+        .user-panel { padding: 10px 10px; background: #05020a; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(212,175,55,0.1); }
         .user-panel:hover { background: #0a0514; }
-        .user-info { flex: 1; overflow: hidden; cursor: pointer; }
-        .user-name { font-size: 13px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .user-status { font-size: 11px; color: var(--text-muted); }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .user-panel-left { display: flex; align-items: center; gap: 8px; overflow: hidden; flex: 1; cursor: pointer; }
+        .user-panel-info { flex: 1; overflow: hidden; }
+        .user-panel-name { font-size: 13px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .user-panel-status { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; }
+        
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0;}
         .status-online { background: var(--green); }
         .status-idle { background: var(--orange); }
         .status-dnd { background: var(--red); }
         .status-offline { background: #747f8d; }
-        .settings-gear { color: var(--text-muted); cursor: pointer; font-size: 16px; }
-        .settings-gear:hover { color: white; }
+        
+        /* Right side of User Panel (Badges + Gear) */
+        .user-panel-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: 5px;}
+        .settings-gear { color: var(--text-muted); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 4px;}
+        .settings-gear:hover { color: white; background: rgba(255,255,255,0.1); }
+        
+        /* Badges */
+        .badge-icon { width: 14px; height: 14px; display: inline-flex; align-items: center; justify-content: center; cursor: help; }
+        .badge-icon svg { width: 100%; height: 100%; }
         
         /* Main Chat Area */
         .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-panel); }
@@ -107,10 +117,6 @@
         .friend-card:hover { background: rgba(255,255,255,0.02); border-radius: 8px; }
         .friend-info { display: flex; align-items: center; gap: 12px; }
         .btn-small { padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; font-size: 12px;}
-        
-        /* Badges */
-        .badge-icon { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; }
-        .badge-icon svg { width: 100%; height: 100%; }
 
         /* Admin Button */
         #admin-btn { display: none; padding: 10px; background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); color: var(--red); border-radius: 8px; text-align: center; cursor: pointer; margin: 10px; font-size: 12px; font-weight: bold; }
@@ -131,6 +137,13 @@
         /* Profile Banner */
         .profile-banner { height: 120px; background: var(--gold-gradient); border-radius: 8px 8px 0 0; background-size: cover; background-position: center; position: relative; }
         .profile-pfp { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--bg-panel); margin-top: -40px; margin-left: 20px; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: black; background-size: cover; background-position: center; position: relative; z-index: 2;}
+
+        /* Danger Zone */
+        .danger-zone { border: 1px solid rgba(231, 76, 60, 0.4); border-radius: 8px; padding: 15px; margin-top: 30px; background: rgba(231, 76, 60, 0.05); }
+        .danger-zone h3 { color: var(--red); font-size: 14px; margin-bottom: 10px; text-transform: uppercase; }
+        .danger-btn { width: 100%; padding: 10px; background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 10px; transition: 0.2s;}
+        .danger-btn:hover { background: var(--red); color: white; }
+        .danger-btn.logout:hover { background: var(--text-muted); color: white; border-color: var(--text-muted); }
 
         /* Admin Panel Specifics */
         .admin-tab { display: flex; gap: 10px; margin-bottom: 20px; }
@@ -228,14 +241,26 @@
 
                 <div id="admin-btn" onclick="openModal('admin-modal')">🛡️ Admin Panel</div>
                 
+                <!-- User Panel -->
                 <div class="user-panel">
-                    <div class="dm-avatar" id="my-sidebar-avatar" onclick="openModal('settings-modal')" style="cursor:pointer;">U</div>
-                    <div class="user-info" onclick="openModal('settings-modal')">
-                        <div class="user-name" id="my-name">User</div>
-                        <div class="user-status"><span class="status-dot status-online" id="my-status-dot"></span><span id="my-status-text">Online</span></div>
+                    <div class="user-panel-left" onclick="openModal('settings-modal')">
+                        <div class="dm-avatar" id="my-sidebar-avatar">U</div>
+                        <div class="user-panel-info">
+                            <div class="user-panel-name" id="my-name">User</div>
+                            <div class="user-panel-status">
+                                <span class="status-dot status-online" id="my-status-dot"></span>
+                                <span id="my-status-text">Online</span>
+                            </div>
+                        </div>
                     </div>
-                    <div id="my-badges-container" style="display: flex; gap: 4px; margin-right: 5px;"></div>
-                    <div class="settings-gear" onclick="openModal('settings-modal')">⚙️</div>
+                    <div class="user-panel-right">
+                        <div id="my-badges-container" style="display: flex; gap: 4px;"></div>
+                        <div class="settings-gear" onclick="openModal('settings-modal')" title="User Settings">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.14 12.94C19.18 12.64 19.2 12.33 19.2 12C19.2 11.68 19.18 11.36 19.13 11.06L21.16 9.48C21.34 9.34 21.39 9.07 21.28 8.87L19.36 5.55C19.24 5.33 18.99 5.26 18.77 5.33L16.38 6.29C15.88 5.91 15.35 5.59 14.76 5.35L14.4 2.81C14.36 2.57 14.16 2.4 13.92 2.4H10.08C9.84 2.4 9.65 2.57 9.61 2.81L9.25 5.35C8.66 5.59 8.12 5.92 7.63 6.29L5.24 5.33C5.02 5.25 4.77 5.33 4.65 5.55L2.74 8.87C2.62 9.08 2.66 9.34 2.86 9.48L4.89 11.06C4.84 11.36 4.8 11.69 4.8 12C4.8 12.31 4.82 12.64 4.87 12.94L2.84 14.52C2.66 14.66 2.61 14.93 2.72 15.13L4.64 18.45C4.76 18.67 5.01 18.74 5.23 18.67L7.62 17.71C8.12 18.09 8.65 18.41 9.24 18.65L9.6 21.19C9.65 21.43 9.84 21.6 10.08 21.6H13.92C14.16 21.6 14.36 21.43 14.39 21.19L14.75 18.65C15.34 18.41 15.88 18.09 16.37 17.71L18.76 18.67C18.98 18.75 19.23 18.67 19.35 18.45L21.27 15.13C21.39 14.91 21.34 14.66 21.15 14.52L19.14 12.94ZM12 15.6C10.02 15.6 8.4 13.98 8.4 12C8.4 10.02 10.02 8.4 12 8.4C13.98 8.4 15.6 10.02 15.6 12C15.6 13.98 13.98 15.6 12 15.6Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -284,7 +309,7 @@
     <!-- SETTINGS MODAL -->
     <div class="modal-overlay" id="settings-modal">
         <div class="modal-content">
-            <div class="modal-title">My Profile <span class="close-btn" onclick="closeModal('settings-modal')">✖</span></div>
+            <div class="modal-title">My Profile <span class="close-btn" onclick="attemptCloseSettings()">✖</span></div>
             
             <div class="profile-banner" id="preview-banner"></div>
             <div class="profile-pfp" id="preview-pfp">U</div>
@@ -317,6 +342,13 @@
                 <button class="btn" style="margin-top: 15px; font-size: 12px; padding: 10px;" onclick="submitApplication()">Submit Application</button>
                 
                 <button class="btn" style="margin-top: 20px; background: var(--green);" onclick="saveProfile()">Save Changes</button>
+
+                <!-- DANGER ZONE -->
+                <div class="danger-zone">
+                    <h3>Danger Zone</h3>
+                    <button class="danger-btn logout" onclick="logout()">Log Out</button>
+                    <button class="danger-btn" onclick="deleteAccount()">Delete Account</button>
+                </div>
             </div>
         </div>
     </div>
@@ -369,12 +401,24 @@
     </div>
 
     <script>
-        // --- BADGE SVG GENERATOR ---
-        const BADGE_SVGS = {
-            'OG': `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15 9H22L16 14L18 21L12 17L6 21L8 14L2 9H9L12 2Z" fill="#9b59b6"/></svg>`,
-            'Bug Hunter': `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#2ecc71"/><path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-            'Streak': `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12 2 12 7 16 10C20 13 20 18 16 21C12 24 6 21 6 16C6 11 10 8 10 8C10 8 10 12 12 14C14 16 16 14 16 12C16 10 12 6 12 2Z" fill="#e67e22"/></svg>`,
-            'Staff': `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#e74c3c"/><path d="M12 6V18M8 10H16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>`
+        // --- BADGE SVG GENERATOR & TOOLTIPS ---
+        const BADGE_DATA = {
+            'OG': { 
+                svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15 9H22L16 14L18 21L12 17L6 21L8 14L2 9H9L12 2Z" fill="#9b59b6"/></svg>`,
+                tip: "OG: Registered during the first month of AUREO."
+            },
+            'Bug Hunter': { 
+                svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#2ecc71"/><path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+                tip: "Bug Hunter: Found and reported a bug."
+            },
+            'Streak': { 
+                svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12 2 12 7 16 10C20 13 20 18 16 21C12 24 6 21 6 16C6 11 10 8 10 8C10 8 10 12 12 14C14 16 16 14 16 12C16 10 12 6 12 2Z" fill="#e67e22"/></svg>`,
+                tip: "Streak: Chatted for 14 days straight (at least 5 mins a day)."
+            },
+            'Staff': { 
+                svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#e74c3c"/><path d="M12 6V18M8 10H16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>`,
+                tip: "Staff: Applied and accepted into the AUREO team."
+            }
         };
 
         // --- STATE & DATABASE ---
@@ -387,6 +431,14 @@
         let currentFriendsTab = 'online';
         
         const ADMIN_USERNAME = 'Aureo';
+
+        // --- SESSION PERSISTENCE (Keep logged in on refresh) ---
+        window.onload = function() {
+            const savedSession = localStorage.getItem('aureo_session');
+            if (savedSession && db.users[savedSession]) {
+                loginUser(savedSession, true); 
+            }
+        };
 
         // --- AUTHENTICATION ---
         function toggleForm(type) {
@@ -436,9 +488,10 @@
             } else document.getElementById('captcha-error').style.display = 'block';
         }
 
-        function loginUser(username) {
+        function loginUser(username, skipAnim = false) {
             currentUser = db.users[username];
-            // Clean up undefined arrays for older accounts
+            localStorage.setItem('aureo_session', username);
+            
             if(!currentUser.pendingIn) currentUser.pendingIn = [];
             if(!currentUser.pendingOut) currentUser.pendingOut = [];
             if(!currentUser.servers) currentUser.servers = [];
@@ -453,6 +506,27 @@
             updateUI();
             loadServers();
             openHome();
+        }
+
+        function logout() {
+            if(confirm("Are you sure you want to log out?")) {
+                localStorage.removeItem('aureo_session');
+                location.reload();
+            }
+        }
+
+        function deleteAccount() {
+            if(confirm("WARNING: Are you sure you want to permanently delete your account? This cannot be undone.")) {
+                const confirmText = prompt("Type 'DELETE' to confirm:");
+                if (confirmText === 'DELETE') {
+                    delete db.users[currentUser.username];
+                    saveDB();
+                    localStorage.removeItem('aureo_session');
+                    location.reload();
+                } else {
+                    alert("Account deletion cancelled.");
+                }
+            }
         }
 
         // --- UI & NAVIGATION ---
@@ -479,7 +553,6 @@
             renderBadges(currentUser.badges, 'my-badges-container');
             document.getElementById('app-count').innerText = db.applications.length;
             
-            // Update Pending Tab badge indicator
             if(currentUser.pendingIn && currentUser.pendingIn.length > 0) {
                 document.getElementById('pending-tab-btn').innerText = `Pending (${currentUser.pendingIn.length})`;
                 document.getElementById('pending-tab-btn').style.color = 'var(--gold-light)';
@@ -509,7 +582,10 @@
             activeView = { type: 'home', id: null };
             loadServers();
             
-            document.getElementById('sidebar-server-name').innerText = 'Direct Messages';
+            // UPDATE SERVER HEADER TEXT
+            const headerEl = document.querySelector('#sidebar-server-name span');
+            if (headerEl) headerEl.innerText = 'Direct Messages';
+            
             document.getElementById('channel-list-container').style.display = 'none';
             document.getElementById('dm-list-container').style.display = 'block';
             
@@ -527,13 +603,11 @@
             document.getElementById('friends-tab').classList.add('active');
             document.getElementById('friends-view').style.display = 'flex';
             document.getElementById('chat-view').style.display = 'none';
-            switchFriendsTab(currentFriendsTab); // Refresh current tab
+            switchFriendsTab(currentFriendsTab); 
         }
 
         function switchFriendsTab(tab) {
             currentFriendsTab = tab;
-            
-            // Update Tab UI
             document.querySelectorAll('.friends-nav-tab').forEach(t => t.classList.remove('active'));
             if(tab === 'online') document.querySelectorAll('.friends-nav-tab')[0].classList.add('active');
             if(tab === 'all') document.querySelectorAll('.friends-nav-tab')[1].classList.add('active');
@@ -545,13 +619,9 @@
             if (tab === 'pending') {
                 const incoming = currentUser.pendingIn || [];
                 const outgoing = currentUser.pendingOut || [];
-                
                 if (incoming.length === 0 && outgoing.length === 0) {
-                    list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No pending requests.</p>';
-                    return;
+                    list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No pending requests.</p>'; return;
                 }
-
-                // Render Incoming
                 if (incoming.length > 0) {
                     list.innerHTML += `<h3 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin: 10px 0;">Incoming Requests</h3>`;
                     incoming.forEach(f => {
@@ -575,8 +645,6 @@
                         `;
                     });
                 }
-
-                // Render Outgoing
                 if (outgoing.length > 0) {
                     list.innerHTML += `<h3 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin: 20px 0 10px 0;">Outgoing Requests</h3>`;
                     outgoing.forEach(f => {
@@ -600,16 +668,13 @@
                 return;
             }
 
-            // Online / All Tab
             if(currentUser.friends.length === 0) {
-                list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No friends yet.</p>';
-                return;
+                list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No friends yet.</p>'; return;
             }
             currentUser.friends.forEach(f => {
                 const friend = db.users[f];
                 if(!friend) return;
                 let avatarStyle = friend.pfp ? `background-image: url(${friend.pfp}); background-size: cover; color: transparent;` : '';
-                
                 list.innerHTML += `
                     <div class="friend-card">
                         <div class="friend-info">
@@ -630,17 +695,16 @@
             const server = db.servers[sid];
             loadServers();
             
-            document.getElementById('sidebar-server-name').innerText = server.name;
+            // UPDATE SERVER HEADER TEXT (FIXED)
+            const headerEl = document.querySelector('#sidebar-server-name span');
+            if (headerEl) headerEl.innerText = server.name;
+
             document.getElementById('friends-tab').style.display = 'none';
             document.getElementById('dm-list-container').style.display = 'none';
             document.getElementById('channel-list-container').style.display = 'block';
             
-            if(server.channels.length > 0) {
-                openChannel(sid, server.channels[0].id);
-            } else {
-                document.getElementById('friends-view').style.display = 'flex';
-                document.getElementById('chat-view').style.display = 'none';
-            }
+            if(server.channels.length > 0) openChannel(sid, server.channels[0].id);
+            else { document.getElementById('friends-view').style.display = 'flex'; document.getElementById('chat-view').style.display = 'none'; }
             loadChannels();
         }
 
@@ -649,7 +713,6 @@
             list.innerHTML = '';
             if(!activeServerId) return;
             const server = db.servers[activeServerId];
-            
             server.channels.forEach(c => {
                 const div = document.createElement('div');
                 div.className = `channel ${activeView.type === 'channel' && activeView.id === c.id ? 'active' : ''}`;
@@ -662,10 +725,8 @@
         function openChannel(sid, cid) {
             activeView = { type: 'channel', id: cid };
             loadChannels();
-            
             document.getElementById('friends-view').style.display = 'none';
             document.getElementById('chat-view').style.display = 'flex';
-            
             const server = db.servers[sid];
             const channel = server.channels.find(c => c.id === cid);
             document.getElementById('chat-icon').innerText = '#';
@@ -677,11 +738,9 @@
         function openDM(username) {
             activeView = { type: 'dm', id: username };
             loadDMs();
-            
             document.getElementById('friends-tab').classList.remove('active');
             document.getElementById('friends-view').style.display = 'none';
             document.getElementById('chat-view').style.display = 'flex';
-            
             const friend = db.users[username];
             document.getElementById('chat-icon').innerText = '@';
             document.getElementById('chat-title').innerText = friend.displayName;
@@ -693,8 +752,7 @@
             const dmList = document.getElementById('dm-list');
             dmList.innerHTML = '';
             if(!currentUser.friends || currentUser.friends.length === 0) {
-                dmList.innerHTML = '<div style="font-size: 12px; color: #555; padding-left: 10px;">No friends yet.</div>';
-                return;
+                dmList.innerHTML = '<div style="font-size: 12px; color: #555; padding-left: 10px;">No friends yet.</div>'; return;
             }
             currentUser.friends.forEach(f => {
                 const friend = db.users[f];
@@ -714,18 +772,14 @@
         // --- FRIEND REQUEST SYSTEM ---
         function sendFriendRequest() {
             const target = document.getElementById('friend-search').value.trim();
-            
             if(!db.users[target]) return alert("User not found.");
             if(target === currentUser.username) return alert("You can't add yourself.");
             if(currentUser.friends.includes(target)) return alert("You are already friends with this user.");
             if(currentUser.pendingOut.includes(target)) return alert("You already sent a request to this user.");
             if(currentUser.pendingIn.includes(target)) return alert("This user already sent YOU a request. Go to the Pending tab to accept it!");
 
-            // Add to sender's outgoing list
             currentUser.pendingOut.push(target);
-            // Add to receiver's incoming list
             db.users[target].pendingIn.push(currentUser.username);
-            
             saveDB();
             alert(`Friend request sent to ${db.users[target].displayName}!`);
             document.getElementById('friend-search').value = '';
@@ -734,14 +788,11 @@
         }
 
         function acceptFriend(targetUsername) {
-            // Move from pending to friends list
             currentUser.pendingIn = currentUser.pendingIn.filter(u => u !== targetUsername);
             currentUser.friends.push(targetUsername);
-
             const targetUser = db.users[targetUsername];
             targetUser.pendingOut = targetUser.pendingOut.filter(u => u !== currentUser.username);
             targetUser.friends.push(currentUser.username);
-
             saveDB();
             updateUI();
             switchFriendsTab('pending');
@@ -749,11 +800,9 @@
         }
 
         function declineFriend(targetUsername) {
-            // Remove request entirely
             currentUser.pendingIn = currentUser.pendingIn.filter(u => u !== targetUsername);
             const targetUser = db.users[targetUsername];
             targetUser.pendingOut = targetUser.pendingOut.filter(u => u !== currentUser.username);
-
             saveDB();
             updateUI();
             switchFriendsTab('pending');
@@ -775,7 +824,6 @@
         function updatePreview() {
             const previewPfp = document.getElementById('preview-pfp');
             const previewBanner = document.getElementById('preview-banner');
-            
             const pfpData = tempPfpBase64 || currentUser.pfp;
             const bannerData = tempBannerBase64 || currentUser.banner;
 
@@ -792,6 +840,21 @@
                 previewBanner.style.backgroundImage = 'var(--gold-gradient)';
             }
             renderBadges(currentUser.badges, 'preview-badges');
+        }
+
+        // --- UNSAVED CHANGES WARNING ---
+        function attemptCloseSettings() {
+            const nameChanged = document.getElementById('set-displayname').value !== currentUser.displayName;
+            const statusChanged = document.getElementById('set-status').value !== currentUser.status;
+            const hasNewImage = tempPfpBase64 || tempBannerBase64;
+
+            if (nameChanged || statusChanged || hasNewImage) {
+                if (confirm("You have unsaved changes. Are you sure you want to discard them?")) {
+                    closeModal('settings-modal');
+                }
+            } else {
+                closeModal('settings-modal');
+            }
         }
 
         function saveProfile() {
@@ -814,15 +877,10 @@
             e.preventDefault();
             const input = document.getElementById('chat-input');
             if (!input.value.trim() || !activeView.id) return;
-
             const msg = {
-                chatId: activeView.id,
-                chatType: activeView.type,
-                author: currentUser.username,
-                text: input.value.trim(),
-                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                chatId: activeView.id, chatType: activeView.type, author: currentUser.username,
+                text: input.value.trim(), time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             };
-
             db.messages.push(msg);
             saveDB();
             input.value = '';
@@ -837,7 +895,11 @@
             chatMsgs.forEach(msg => {
                 const user = db.users[msg.author] || { displayName: msg.author, badges: [], pfp: '' };
                 let badgeHTML = '';
-                user.badges.forEach(b => { badgeHTML += `<div class="badge-icon" title="${b}">${BADGE_SVGS[b]}</div>`; });
+                user.badges.forEach(b => { 
+                    if(BADGE_DATA[b]) {
+                        badgeHTML += `<div class="badge-icon" title="${BADGE_DATA[b].tip}">${BADGE_DATA[b].svg}</div>`; 
+                    }
+                });
                 let avatarStyle = user.pfp ? `background-image: url(${user.pfp}); background-size: cover; color: transparent;` : '';
 
                 container.innerHTML += `
@@ -890,11 +952,13 @@
             if(!container) return;
             container.innerHTML = '';
             badges.forEach(b => {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'badge-icon';
-                wrapper.title = b;
-                wrapper.innerHTML = BADGE_SVGS[b] || '';
-                container.appendChild(wrapper);
+                if(BADGE_DATA[b]) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'badge-icon';
+                    wrapper.title = BADGE_DATA[b].tip; 
+                    wrapper.innerHTML = BADGE_DATA[b].svg;
+                    container.appendChild(wrapper);
+                }
             });
         }
 
