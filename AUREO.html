@@ -43,15 +43,15 @@
         .app-layout { display: flex; height: 100%; width: 100%; }
         
         /* Server Sidebar */
-        .server-sidebar { width: 72px; background: #05020a; display: flex; flex-direction: column; align-items: center; padding: 10px 0; gap: 10px; border-right: 1px solid rgba(255,255,255,0.05); }
-        .server-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-panel); display: flex; justify-content: center; align-items: center; font-weight: bold; cursor: pointer; transition: 0.2s; color: var(--gold-light); font-family: 'Cinzel'; border: 1px solid transparent; }
+        .server-sidebar { width: 72px; background: #05020a; display: flex; flex-direction: column; align-items: center; padding: 10px 0; gap: 10px; border-right: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+        .server-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-panel); display: flex; justify-content: center; align-items: center; font-weight: bold; cursor: pointer; transition: 0.2s; color: var(--gold-light); font-family: 'Cinzel'; border: 1px solid transparent; flex-shrink: 0;}
         .server-icon:hover, .server-icon.active { border-radius: 16px; background: var(--gold-primary); color: black; border-color: var(--gold-light); }
-        .add-server-btn { width: 48px; height: 48px; border-radius: 50%; background: transparent; border: 2px dashed var(--green); color: var(--green); font-size: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
+        .add-server-btn { width: 48px; height: 48px; border-radius: 50%; background: transparent; border: 2px dashed var(--green); color: var(--green); font-size: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; flex-shrink: 0;}
         .add-server-btn:hover { background: var(--green); color: black; border-radius: 16px; }
         
         /* Channel Sidebar */
-        .sidebar { width: 260px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); position: relative; }
-        .server-header { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .sidebar { width: 260px; min-width: 260px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); position: relative; flex-shrink: 0; }
+        .server-header { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; cursor: pointer; flex-shrink: 0; }
         .server-header:hover { background: rgba(255,255,255,0.02); }
         .server-header span { font-weight: 600; color: white; font-size: 15px; }
         
@@ -67,14 +67,16 @@
         .dm-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; color: #000; font-weight: bold; font-size: 14px; background-size: cover; background-position: center; flex-shrink: 0;}
         
         /* User Panel Bottom Left */
-        .user-panel { padding: 10px 10px; background: #05020a; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(212,175,55,0.1); }
+        .user-panel { padding: 10px 10px; background: #05020a; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(212,175,55,0.1); flex-shrink: 0; }
         .user-panel:hover { background: #0a0514; }
-        .user-panel-left { display: flex; align-items: center; gap: 8px; overflow: hidden; flex: 1; cursor: pointer; }
-        .user-panel-info { flex: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+        .user-panel-left { display: flex; align-items: center; gap: 8px; overflow: hidden; flex: 1; cursor: pointer; min-width: 0; }
+        .user-panel-info { flex: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-width: 0;}
         .user-panel-name { font-size: 13px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; }
-        .user-panel-status { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; margin-top: 2px; line-height: 1.2;}
         
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0;}
+        /* Fixed Status Layout */
+        .user-panel-status { font-size: 11px; color: var(--text-muted); display: flex; align-items: flex-start; margin-top: 2px; line-height: 1.1;}
+        
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0; margin-top: 2px;}
         .status-online { background: var(--green); }
         .status-idle { background: var(--orange); }
         .status-dnd { background: var(--red); }
@@ -105,8 +107,8 @@
         .badge-icon:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         /* Main Chat Area */
-        .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-panel); }
-        .chat-header { padding: 15px 20px; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; align-items: center; gap: 10px; }
+        .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-panel); min-width: 0; }
+        .chat-header { padding: 15px 20px; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
         .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
         .message { display: flex; gap: 15px; }
         .msg-content { display: flex; flex-direction: column; }
@@ -115,12 +117,12 @@
         .msg-author:hover { text-decoration: underline; }
         .msg-time { font-size: 11px; color: var(--text-muted); }
         .msg-text { font-size: 14px; color: var(--text-main); line-height: 1.4; }
-        .chat-input-area { padding: 20px; }
+        .chat-input-area { padding: 20px; flex-shrink: 0; }
         .chat-input { width: 100%; padding: 15px; background: #0a0514; border: none; border-radius: 8px; color: white; outline: none; font-size: 14px; }
         
         /* Friends Page */
         .friends-page { display: flex; flex-direction: column; height: 100%; }
-        .friends-nav { display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .friends-nav { display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;}
         .friends-nav-tab { font-size: 14px; padding: 4px 8px; border-radius: 4px; cursor: pointer; color: var(--text-muted); }
         .friends-nav-tab:hover { background: rgba(255,255,255,0.05); color: white; }
         .friends-nav-tab.active { background: rgba(255,255,255,0.1); color: white; }
@@ -134,7 +136,7 @@
         .btn-small { padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; font-size: 12px;}
 
         /* Admin Button */
-        #admin-btn { display: none; padding: 10px; background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); color: var(--red); border-radius: 8px; text-align: center; cursor: pointer; margin: 10px; font-size: 12px; font-weight: bold; }
+        #admin-btn { display: none; padding: 10px; background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); color: var(--red); border-radius: 8px; text-align: center; cursor: pointer; margin: 10px; font-size: 12px; font-weight: bold; flex-shrink: 0;}
 
         /* --- PROFILE POPUP MENU --- */
         #profile-popup-menu { display: none; position: absolute; bottom: 70px; left: 10px; width: 250px; background: #1e1f22; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 1000; border: 1px solid rgba(255,255,255,0.05); flex-direction: column; padding: 5px; }
@@ -179,7 +181,7 @@
         }
         .profile-banner-preview {
             width: 100%;
-            height: 140px; /* Perfect Discord banner height */
+            height: 140px;
             background-color: #111214;
             background-image: var(--gold-gradient);
             background-size: cover;
@@ -189,7 +191,7 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            border: 6px solid #232428; /* Cutout effect */
+            border: 6px solid #232428;
             margin-top: -50px;
             margin-left: 20px;
             background-color: var(--gold-gradient);
@@ -205,7 +207,7 @@
         }
         
         .settings-form label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; margin-top: 15px; font-weight: 600; text-transform: uppercase; }
-        .settings-form input[type="text"], .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: white; outline: none; }
+        .settings-form input[type="text"], .settings-form input[type="password"], .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: white; outline: none; }
         .file-upload-btn { background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: var(--gold-light); padding: 10px; border-radius: 6px; cursor: pointer; display: inline-block; margin-top: 5px; font-size: 12px; }
         .file-upload-btn:hover { background: rgba(212,175,55,0.1); }
 
@@ -267,6 +269,14 @@
         .confirm-btn.cancel:hover { text-decoration: underline; }
         .confirm-btn.danger { background: var(--red); color: white; }
         .confirm-btn.primary { background: var(--gold-gradient); color: black; }
+
+        /* --- SWITCH ACCOUNT MENU (NEW) --- */
+        #switch-menu { display: none; position: absolute; bottom: 70px; left: 80px; width: 280px; background: #1e1f22; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 1000; border: 1px solid rgba(255,255,255,0.05); flex-direction: column; padding: 5px; }
+        .switch-user-item { padding: 10px; display: flex; align-items: center; justify-content: space-between; border-radius: 4px; cursor: pointer; }
+        .switch-user-item:hover { background: var(--discord-blue); }
+        .switch-user-info { display: flex; align-items: center; gap: 10px; }
+        .switch-add-btn { padding: 10px; display: flex; align-items: center; gap: 10px; color: var(--text-main); font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 4px; }
+        .switch-add-btn:hover { background: rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
@@ -366,7 +376,7 @@
 
                 <div id="admin-btn" onclick="openModal('admin-modal')">🛡️ Admin Panel</div>
                 
-                <!-- User Panel Popup Menu -->
+                <!-- User Panel Popup Menu (Status) -->
                 <div id="profile-popup-menu">
                     <div class="popup-item" style="background: rgba(255,255,255,0.05); margin-bottom: 5px; cursor: default;">
                         <div class="status-option-left" style="flex-direction: row; align-items: center; gap: 10px;">
@@ -398,6 +408,14 @@
                     
                     <div class="popup-item" onclick="openSettings()">
                         <span>⚙️ User Settings</span>
+                    </div>
+                </div>
+
+                <!-- Switch Account Menu -->
+                <div id="switch-menu">
+                    <div id="saved-accounts-list"></div>
+                    <div class="switch-add-btn" onclick="openSwitchAddModal()">
+                        <span style="font-size: 16px;">+</span> Add another account
                     </div>
                 </div>
 
@@ -479,7 +497,8 @@
                 <div class="settings-nav-item" onclick="switchSettingsTab('staff', this)">Apply for Staff</div>
                 
                 <div style="flex:1;"></div>
-                <div class="settings-nav-item" onclick="openSwitchAccountModal()">Switch Account</div>
+                <!-- Switch Account triggers the floating menu -->
+                <div class="settings-nav-item" onclick="triggerSwitchFromSettings()">Switch Account</div>
                 <div class="settings-nav-item danger" onclick="switchSettingsTab('danger', this)">Danger Zone</div>
             </div>
 
@@ -500,7 +519,7 @@
                     </div>
                 </div>
 
-                <!-- Tab: Profile (FIXED) -->
+                <!-- Tab: Profile -->
                 <div id="tab-profile" class="settings-tab">
                     <h2>Profile Customization</h2>
                     
@@ -550,17 +569,16 @@
         </div>
     </div>
 
-    <!-- SWITCH ACCOUNT MODAL -->
-    <div class="modal-overlay" id="switch-account-modal">
+    <!-- ADD ANOTHER ACCOUNT MODAL -->
+    <div class="modal-overlay" id="switch-add-modal">
         <div class="modal-content" style="max-width: 400px;">
-            <div class="modal-title">Switch Account <span class="close-btn" onclick="closeModal('switch-account-modal')">✖</span></div>
-            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">Log into another AUREO account.</p>
+            <div class="modal-title">Add Account <span class="close-btn" onclick="closeModal('switch-add-modal')">✖</span></div>
             <div class="settings-form">
                 <label>Username</label>
                 <input type="text" id="switch-username" placeholder="Enter username">
                 <label style="margin-top: 15px;">Password</label>
                 <input type="password" id="switch-password" placeholder="Enter password">
-                <button class="btn" style="margin-top: 20px;" onclick="performSwitchAccount()">Sign In</button>
+                <button class="btn" style="margin-top: 20px;" onclick="performAddAccount()">Sign In</button>
             </div>
         </div>
     </div>
@@ -627,6 +645,9 @@
         let tempBannerBase64 = null;
         let currentFriendsTab = 'online';
         let chatUpdateInterval = null;
+        
+        // Track saved accounts locally for quick switching
+        let savedAccounts = JSON.parse(localStorage.getItem('aureo_saved_accounts')) || [];
         
         const ADMIN_USERNAME = 'Aureo';
 
@@ -702,6 +723,13 @@
                 };
                 if (!db.ogLocked) db.users[pendingRegUser.username].badges.push('OG');
                 saveDB();
+                
+                // Save to quick switch list
+                if (!savedAccounts.includes(pendingRegUser.username)) {
+                    savedAccounts.push(pendingRegUser.username);
+                    localStorage.setItem('aureo_saved_accounts', JSON.stringify(savedAccounts));
+                }
+                
                 loginUser(pendingRegUser.username);
             } else document.getElementById('captcha-error').style.display = 'block';
         }
@@ -710,6 +738,11 @@
             currentUser = db.users[username];
             localStorage.setItem('aureo_session', username);
             
+            if(!savedAccounts.includes(username)) {
+                savedAccounts.push(username);
+                localStorage.setItem('aureo_saved_accounts', JSON.stringify(savedAccounts));
+            }
+
             if(!currentUser.pendingIn) currentUser.pendingIn = [];
             if(!currentUser.pendingOut) currentUser.pendingOut = [];
             if(!currentUser.servers) currentUser.servers = [];
@@ -717,6 +750,8 @@
 
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('app-screen').style.display = 'block';
+            document.getElementById('switch-menu').style.display = 'none';
+            document.getElementById('settings-modal').style.display = 'none';
             
             if (currentUser.username === ADMIN_USERNAME) document.getElementById('admin-btn').style.display = 'block';
             else document.getElementById('admin-btn').style.display = 'none';
@@ -724,30 +759,72 @@
             updateUI();
             loadServers();
             openHome();
+            populateSwitchMenu();
             
-            // Start Live Chat sync loop
             if(chatUpdateInterval) clearInterval(chatUpdateInterval);
             chatUpdateInterval = setInterval(() => {
                 if(activeView.type !== 'home') loadMessages();
-            }, 1000); // Check for new messages every 1 second
+            }, 1000);
         }
 
-        function performSwitchAccount() {
+        // --- SWITCH ACCOUNT LOGIC ---
+        function populateSwitchMenu() {
+            const list = document.getElementById('saved-accounts-list');
+            list.innerHTML = '';
+            savedAccounts.forEach(accName => {
+                const acc = db.users[accName];
+                if(!acc) return;
+                const isActive = accName === currentUser.username;
+                let avatarStyle = acc.pfp ? `background-image: url(${acc.pfp}); background-size: cover; color: transparent;` : '';
+                
+                list.innerHTML += `
+                    <div class="switch-user-item" onclick="switchToAccount('${accName}')">
+                        <div class="switch-user-info">
+                            <div class="dm-avatar" style="${avatarStyle}">${acc.displayName.charAt(0).toUpperCase()}</div>
+                            <span style="font-size: 14px; font-weight: 600; color: white;">${acc.displayName}</span>
+                        </div>
+                        ${isActive ? '<span style="font-size:12px; color:var(--green);">Active</span>' : ''}
+                    </div>
+                `;
+            });
+        }
+
+        function triggerSwitchFromSettings() {
+            closeModal('settings-modal');
+            document.getElementById('switch-menu').style.display = 'flex';
+            populateSwitchMenu();
+        }
+
+        function switchToAccount(username) {
+            if (username === currentUser.username) {
+                document.getElementById('switch-menu').style.display = 'none';
+                return;
+            }
+            loginUser(username);
+            showToast(`Switched to ${db.users[username].displayName}`, 'success');
+        }
+
+        function openSwitchAddModal() {
+            document.getElementById('switch-menu').style.display = 'none';
+            document.getElementById('switch-username').value = '';
+            document.getElementById('switch-password').value = '';
+            openModal('switch-add-modal');
+        }
+
+        function performAddAccount() {
             const user = document.getElementById('switch-username').value.trim();
             const pass = document.getElementById('switch-password').value;
             if (db.users[user] && db.users[user].password === pass) {
-                closeModal('switch-account-modal');
+                closeModal('switch-add-modal');
+                if(!savedAccounts.includes(user)) {
+                    savedAccounts.push(user);
+                    localStorage.setItem('aureo_saved_accounts', JSON.stringify(savedAccounts));
+                }
                 loginUser(user);
-                showToast("Account switched successfully!", 'success');
+                showToast(`Switched to ${db.users[user].displayName}`, 'success');
             } else {
                 showToast("Invalid username or password.", 'error');
             }
-        }
-
-        function openSwitchAccountModal() {
-            document.getElementById('switch-username').value = '';
-            document.getElementById('switch-password').value = '';
-            openModal('switch-account-modal');
         }
 
         function logout() {
@@ -759,17 +836,22 @@
         function deleteAccount() {
             showConfirm("Delete Account", "Are you absolutely sure? This will permanently delete your account and all your data.", "Delete", "danger", () => {
                 showConfirm("Final Warning", "Type 'DELETE' to confirm.", "Confirm", "danger", () => {
-                    delete db.users[currentUser.username]; saveDB();
-                    localStorage.removeItem('aureo_session'); location.reload();
+                    delete db.users[currentUser.username]; 
+                    savedAccounts = savedAccounts.filter(u => u !== currentUser.username);
+                    localStorage.setItem('aureo_saved_accounts', JSON.stringify(savedAccounts));
+                    saveDB();
+                    localStorage.removeItem('aureo_session'); 
+                    location.reload();
                 });
             });
         }
 
-        // --- POPUP MENU ---
+        // --- PROFILE POPUP MENU ---
         function toggleProfilePopup(e) {
             e.stopPropagation();
             const menu = document.getElementById('profile-popup-menu');
             menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+            document.getElementById('switch-menu').style.display = 'none';
             
             document.getElementById('popup-name').innerText = currentUser.displayName;
             document.getElementById('popup-status-text').innerText = currentUser.status === 'DND' ? 'Do Not Disturb' : currentUser.status;
@@ -780,7 +862,9 @@
         }
         document.addEventListener('click', (e) => {
             const menu = document.getElementById('profile-popup-menu');
-            if(menu.style.display === 'flex' && !menu.contains(e.target)) { menu.style.display = 'none'; }
+            const switchMenu = document.getElementById('switch-menu');
+            if(menu.style.display === 'flex' && !menu.contains(e.target) && !e.target.closest('.user-panel-left')) { menu.style.display = 'none'; }
+            if(switchMenu.style.display === 'flex' && !switchMenu.contains(e.target) && !e.target.closest('.settings-nav-item')) { switchMenu.style.display = 'none'; }
         });
 
         function setStatus(newStatus) {
@@ -788,7 +872,6 @@
             saveDB(); updateUI();
             showToast(`Status changed to ${newStatus}`, 'success');
             document.getElementById('profile-popup-menu').style.display = 'none';
-            if(document.getElementById('settings-modal').style.display === 'flex') attemptCloseSettings();
         }
 
         // --- SETTINGS MODAL LOGIC ---
@@ -1135,13 +1218,11 @@
         }
 
         function loadMessages(forceScroll = false) {
-            // Reload DB from local storage to get messages from other tabs
             db = JSON.parse(localStorage.getItem('aureo_db_v5')) || db;
             
             const container = document.getElementById('chat-messages');
             const chatMsgs = db.messages.filter(m => m.chatId === activeView.id && m.chatType === activeView.type);
             
-            // Only re-render if there is a change in length or forceScroll is true
             const currentCount = parseInt(container.getAttribute('data-msgcount') || '0');
             if (currentCount !== chatMsgs.length || forceScroll) {
                 container.innerHTML = '';
