@@ -1,1 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUREO | Where Conversation Shines</title>
+    <style>
+        /* Import a luxurious font */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap');
 
+        :root {
+            --bg-dark: #0a0514;
+            --bg-panel: #120a24;
+            --gold-primary: #d4af37;
+            --gold-light: #f9d976;
+            --gold-gradient: linear-gradient(135deg, #f9d976 0%, #b8860b 100%);
+            --text-main: #e0e0e0;
+            --text-muted: #888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            /* Creating the orbital rings background effect */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 10% 90%, rgba(30, 15, 60, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 90% 10%, rgba(30, 15, 60, 0.8) 0%, transparent 50%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Decorative Background Lines */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        body::before {
+            width: 80vw;
+            height: 80vw;
+            top: -40vw;
+            left: -20vw;
+        }
+        body::after {
+            width: 100vw;
+            height: 100vw;
+            bottom: -50vw;
+            right: -30vw;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            background: rgba(18, 10, 36, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1);
+            overflow: hidden;
+        }
+
+        /* Logo Area */
+        .logo-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            border-radius: 18px; /* Matching your app icon style */
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .brand-title {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            letter-spacing: 8px;
+            color: transparent;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .brand-tagline {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Forms Container */
+        .forms-wrapper {
+            position: relative;
+            width: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .form-section {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .form-section.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Input Styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--text-main);
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-bottom-color: var(--gold-light);
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            color: var(--text-muted);
+            font-size: 14px;
+            pointer-events: none;
+            transition: 0.3s ease all;
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label {
+            top: -10px;
+            font-size: 11px;
+            color: var(--gold-light);
+            letter-spacing: 1px;
+        }
+
+        /* Button Styling */
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--gold-gradient);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Toggle Text */
+        .toggle-text {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .toggle-text span {
+            color: var(--gold-light);
+            cursor: pointer;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-text span:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Animation for switching forms */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .active-form {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header with Logo -->
+        <div class="logo-header">
+            <!-- Using a base64 placeholder for your app icon, you can replace the src with your actual image file -->
+            <img src="https://i.ibb.co/6P4KqXQ/aureo-icon.png" alt="AUREO Icon" class="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'20\' fill=\'%230a0514\'/><text x=\'50\' y=\'65\' font-family=\'Cinzel\' font-size=\'60\' fill=\'%23d4af37\' text-anchor=\'middle\'>A</text></svg>'">
+            <h1 class="brand-title">AUREO</h1>
+            <p class="brand-tagline">Where Conversation Shines</p>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="form-section active-form">
+            <form onsubmit="event.preventDefault(); alert('Login functionality goes here.');">
+                <div class="input-group">
+                    <input type="email" id="login-email" required>
+                    <label for="login-email">Email Address</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="login-password" required>
+                    <label for="login-password">Password</label>
+                </div>
+                <button type="submit" class="btn">Sign In</button>
+            </form>
+            <p class="toggle-text">
+                New to AUREO? <span onclick="toggleForm('register')">Create an account</span>
+            </p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="form-section hidden">
+            <form onsubmit="event.preventDefault(); alert('Registration functionality goes here.');">
+                <div class="input-group">
+                    <input type="text" id="reg-username" required>
+                    <label for="reg-username">Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="reg-email" required>
+                    <label for="reg-email">Email Address</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="reg-password" required>
+                    <label for="reg-password">Password</label>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p class="toggle-text">
+                Already have an account? <span onclick="toggleForm('login')">Sign In</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm(formType) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+
+            if (formType === 'register') {
+                loginForm.classList.add('hidden');
+                loginForm.classList.remove('active-form');
+                
+                registerForm.classList.remove('hidden');
+                // Small delay to ensure display:block is applied before animating
+                setTimeout(() => {
+                    registerForm.classList.add('active-form');
+                }, 10);
+            } else {
+                registerForm.classList.add('hidden');
+                registerForm.classList.remove('active-form');
+                
+                loginForm.classList.remove('hidden');
+                setTimeout(() => {
+                    loginForm.classList.add('active-form');
+                }, 10);
+            }
+        }
+    </script>
+</body>
+</html>
