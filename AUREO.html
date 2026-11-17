@@ -6,52 +6,60 @@
     <title>AUREO | Where Conversation Shines</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f9d976'/%3E%3Cstop offset='100%25' stop-color='%23b8860b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='%230a0514'/%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='url(%23gold)' stroke-width='0.8' opacity='0.6'/%3E%3Cellipse cx='50' cy='50' rx='45' ry='15' fill='none' stroke='url(%23gold)' stroke-width='1.5' transform='rotate(-25 50 50)' opacity='0.8'/%3E%3Cpath d='M50 18 L22 82 L34 82 L50 38 L66 82 L78 82 Z' fill='url(%23gold)'/%3E%3Crect x='36' y='64' width='28' height='5' fill='url(%23gold)'/%3E%3C/svg%3E">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
-        :root { --bg-dark: #0a0514; --bg-panel: #120a24; --gold-primary: #d4af37; --gold-light: #f9d976; --gold-gradient: linear-gradient(135deg, #f9d976 0%, #b8860b 100%); --text-main: #e0e0e0; --text-muted: #888; --green: #2ecc71; --red: #e74c3c; --orange: #f39c12; }
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+        :root { 
+            --bg-dark: #0a0514; --bg-panel: #120a24; --bg-sidebar: #080410;
+            --gold-primary: #d4af37; --gold-light: #f9d976; --gold-gradient: linear-gradient(135deg, #f9d976 0%, #b8860b 100%); 
+            --text-main: #e0e0e0; --text-muted: #888; 
+            --green: #2ecc71; --red: #e74c3c; --orange: #f39c12;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
         
-        /* LOGIN SCREEN STYLES */
-        body { background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 60%); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        .container { position: relative; width: 100%; max-width: 420px; background: rgba(18, 10, 36, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 20px; padding: 40px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); overflow: hidden; }
+        /* --- AUTH SCREEN --- */
+        body { background-color: var(--bg-dark); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        #auth-screen { position: relative; width: 100%; max-width: 420px; background: rgba(18, 10, 36, 0.7); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 20px; padding: 40px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
         .logo-header { text-align: center; margin-bottom: 30px; }
         .logo-svg { width: 90px; height: 90px; margin-bottom: 15px; border-radius: 22px; box-shadow: 0 0 25px rgba(212, 175, 55, 0.2); }
-        .brand-title { font-family: 'Cinzel', serif; font-size: 32px; letter-spacing: 8px; color: transparent; background: var(--gold-gradient); -webkit-background-clip: text; background-clip: text; margin-bottom: 5px; font-weight: 700; }
-        .brand-tagline { font-size: 10px; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase; }
+        .brand-title { font-family: 'Cinzel', serif; font-size: 32px; letter-spacing: 8px; color: transparent; background: var(--gold-gradient); -webkit-background-clip: text; margin-bottom: 5px; font-weight: 700; }
         .form-section { transition: opacity 0.4s ease, transform 0.4s ease; }
         .form-section.hidden { display: none; opacity: 0; transform: translateY(20px); }
         .input-group { position: relative; margin-bottom: 25px; }
-        .input-group input { width: 100%; padding: 15px 0; background: transparent; border: none; border-bottom: 1px solid rgba(212, 175, 55, 0.3); color: var(--gold-light); font-size: 14px; outline: none; transition: border-color 0.3s; }
+        .input-group input { width: 100%; padding: 15px 0; background: transparent; border: none; border-bottom: 1px solid rgba(212, 175, 55, 0.3); color: var(--gold-light); font-size: 14px; outline: none; }
         .input-group input:focus { border-bottom-color: var(--gold-light); }
         .input-group label { position: absolute; top: 15px; left: 0; color: var(--text-muted); font-size: 14px; pointer-events: none; transition: 0.3s ease all; }
         .input-group input:focus ~ label, .input-group input:valid ~ label { top: -10px; font-size: 11px; color: var(--gold-light); }
-        .btn { width: 100%; padding: 15px; background: var(--gold-gradient); border: none; border-radius: 8px; color: #000; font-family: 'Cinzel', serif; font-weight: 700; font-size: 16px; cursor: pointer; transition: transform 0.2s; text-transform: uppercase; margin-top: 10px;}
+        .btn { width: 100%; padding: 15px; background: var(--gold-gradient); border: none; border-radius: 8px; color: #000; font-family: 'Cinzel', serif; font-weight: 700; font-size: 16px; cursor: pointer; text-transform: uppercase; margin-top: 10px;}
         .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
         .toggle-text { text-align: center; margin-top: 25px; font-size: 13px; color: var(--text-muted); }
-        .toggle-text span { color: var(--gold-light); cursor: pointer; font-weight: 500; }
+        .toggle-text span { color: var(--gold-light); cursor: pointer; }
         .error-msg { color: var(--red); font-size: 12px; text-align: center; margin-bottom: 10px; display: none; }
 
-        /* CAPTCHA MODAL */
+        /* --- CAPTCHA --- */
         #captcha-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
         .captcha-box { background: var(--bg-panel); padding: 30px; border-radius: 15px; border: 1px solid var(--gold-primary); text-align: center; }
-        
-        /* APP STYLES (DISCORD CLONE) */
+
+        /* --- MAIN APP LAYOUT --- */
         #app-screen { display: none; width: 100vw; height: 100vh; background: var(--bg-dark); }
         .app-layout { display: flex; height: 100%; width: 100%; }
         
         /* Sidebar */
-        .sidebar { width: 260px; background: #0b0615; display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); }
-        .server-header { padding: 20px; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .server-header:hover { background: rgba(212,175,55,0.05); }
-        .channel-list { padding: 15px 10px; flex: 1; overflow-y: auto; }
-        .channel { padding: 10px 15px; border-radius: 8px; color: var(--text-muted); cursor: pointer; margin-bottom: 5px; font-size: 14px; display: flex; align-items: center; gap: 10px; }
-        .channel:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
-        .channel.active { background: rgba(212,175,55,0.1); color: var(--gold-light); }
+        .sidebar { width: 280px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); }
+        .server-header { padding: 20px; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; align-items: center; gap: 10px; }
         
-        /* User Panel Bottom Left */
-        .user-panel { padding: 15px; background: #080410; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(212,175,55,0.1); cursor: pointer; }
-        .user-panel:hover { background: #0d071a; }
-        .avatar { width: 35px; height: 35px; border-radius: 50%; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; color: #000; font-weight: bold; }
-        .user-info { flex: 1; overflow: hidden; }
+        .sidebar-scroll { flex: 1; overflow-y: auto; padding: 15px 10px; display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; padding-left: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        .sidebar-section-title:hover { color: var(--text-main); }
+        
+        .channel, .dm-user { padding: 8px 10px; border-radius: 6px; color: var(--text-muted); cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+        .channel:hover, .dm-user:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
+        .channel.active, .dm-user.active { background: rgba(212,175,55,0.15); color: var(--gold-light); }
+        
+        .dm-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; color: #000; font-weight: bold; font-size: 14px; object-fit: cover; }
+        
+        /* User Panel */
+        .user-panel { padding: 15px; background: #05020a; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(212,175,55,0.1); }
+        .user-panel:hover { background: #0a0514; }
+        .user-info { flex: 1; overflow: hidden; cursor: pointer; }
         .user-name { font-size: 14px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .user-status { font-size: 11px; color: var(--text-muted); }
         .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
@@ -59,41 +67,50 @@
         .status-idle { background: var(--orange); }
         .status-dnd { background: var(--red); }
         .status-offline { background: #747f8d; }
+        .settings-gear { color: var(--text-muted); cursor: pointer; font-size: 18px; }
+        .settings-gear:hover { color: white; }
         
         /* Main Chat Area */
-        .chat-area { flex: 1; display: flex; flex-direction: column; background: #120a24; }
+        .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-panel); }
         .chat-header { padding: 20px; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; align-items: center; gap: 10px; }
         .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
         .message { display: flex; gap: 15px; }
         .msg-content { display: flex; flex-direction: column; }
         .msg-header { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
-        .msg-author { font-weight: 600; color: var(--gold-light); font-size: 14px; }
+        .msg-author { font-weight: 600; color: var(--gold-light); font-size: 14px; cursor: pointer; }
+        .msg-author:hover { text-decoration: underline; }
         .msg-time { font-size: 11px; color: var(--text-muted); }
         .msg-text { font-size: 14px; color: var(--text-main); line-height: 1.4; }
         .chat-input-area { padding: 20px; }
-        .chat-input { width: 100%; padding: 15px; background: #1a102b; border: none; border-radius: 8px; color: white; outline: none; font-size: 14px; }
-        .chat-input:focus { box-shadow: 0 0 0 1px var(--gold-primary); }
+        .chat-input { width: 100%; padding: 15px; background: #0a0514; border: none; border-radius: 8px; color: white; outline: none; font-size: 14px; }
         
-        /* Badges */
-        .badge { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; }
-        .badge-og { background: #5b2c6f; color: #d7bde2; border: 1px solid #8e44ad; }
-        .badge-bug { background: #1e8449; color: #a9dfbf; border: 1px solid #27ae60; }
-        .badge-streak { background: #b9770e; color: #fdebd0; border: 1px solid #d68910; }
-        .badge-staff { background: #922b21; color: #f5b7b1; border: 1px solid #c0392b; }
-        
+        /* Badges (SVG Icons) */
+        .badge-icon { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; }
+        .badge-icon svg { width: 100%; height: 100%; }
+
         /* Admin Button */
         #admin-btn { display: none; padding: 10px; background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); color: var(--red); border-radius: 8px; text-align: center; cursor: pointer; margin: 10px; font-size: 12px; font-weight: bold; }
 
-        /* Modals (Settings & Admin) */
+        /* Modals */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100; justify-content: center; align-items: center; }
-        .modal-content { background: var(--bg-panel); width: 90%; max-width: 600px; border-radius: 15px; border: 1px solid rgba(212,175,55,0.3); padding: 30px; max-height: 80vh; overflow-y: auto; }
+        .modal-content { background: var(--bg-panel); width: 90%; max-width: 600px; border-radius: 15px; border: 1px solid rgba(212,175,55,0.3); padding: 30px; max-height: 85vh; overflow-y: auto; }
         .modal-title { font-family: 'Cinzel', serif; color: var(--gold-light); margin-bottom: 20px; font-size: 20px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 10px; display: flex; justify-content: space-between;}
         .close-btn { cursor: pointer; color: var(--text-muted); }
         .close-btn:hover { color: white; }
         
         .settings-form label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; margin-top: 15px; }
-        .settings-form input, .settings-form select, .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; color: white; outline: none; font-family: 'Montserrat'; }
+        .settings-form input, .settings-form select, .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; color: white; outline: none; }
         
+        /* Friends List */
+        .friends-list { display: flex; flex-direction: column; gap: 10px; }
+        .friend-card { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: #0a0514; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+        .friend-info { display: flex; align-items: center; gap: 10px; }
+        .btn-small { padding: 5px 10px; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; font-size: 12px;}
+        
+        /* Profile Banner */
+        .profile-banner { height: 120px; background: var(--gold-gradient); border-radius: 8px 8px 0 0; background-size: cover; background-position: center; }
+        .profile-pfp { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--bg-panel); margin-top: -40px; margin-left: 20px; background: var(--gold-gradient); display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: black; background-size: cover; background-position: center; }
+
         /* Admin Panel Specifics */
         .admin-tab { display: flex; gap: 10px; margin-bottom: 20px; }
         .admin-tab button { padding: 8px 15px; background: #0a0514; border: 1px solid var(--text-muted); color: white; border-radius: 5px; cursor: pointer; }
@@ -102,28 +119,23 @@
         .admin-section.active { display: block; }
         .application-card { background: #0a0514; padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
         .app-actions { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-small { padding: 5px 15px; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; }
         .btn-accept { background: var(--green); color: black; }
         .btn-deny { background: var(--red); color: white; }
-
     </style>
 </head>
 <body>
 
-    <!-- LOGIN / REGISTER SCREEN -->
-    <div class="container" id="auth-screen">
+    <!-- AUTH SCREEN -->
+    <div id="auth-screen">
         <div class="logo-header">
             <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <defs><linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f9d976" /><stop offset="100%" stop-color="#b8860b" /></linearGradient></defs>
                 <rect width="100" height="100" rx="22" fill="#0a0514"/><circle cx="50" cy="50" r="42" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.6"/><ellipse cx="50" cy="50" rx="45" ry="15" fill="none" stroke="url(#gold)" stroke-width="1.5" transform="rotate(-25 50 50)" opacity="0.8"/><path d="M50 18 L22 82 L34 82 L50 38 L66 82 L78 82 Z" fill="url(#gold)"/><rect x="36" y="64" width="28" height="5" fill="url(#gold)"/>
             </svg>
             <h1 class="brand-title">AUREO</h1>
-            <p class="brand-tagline">Where Conversation Shines</p>
+            <p class="brand-tagline" style="font-size: 10px; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase;">Where Conversation Shines</p>
         </div>
-
         <div class="error-msg" id="auth-error"></div>
-
-        <!-- Login Form -->
         <div id="login-form" class="form-section active-form">
             <form onsubmit="handleLogin(event)">
                 <div class="input-group"><input type="text" id="login-username" required><label for="login-username">Username</label></div>
@@ -132,8 +144,6 @@
             </form>
             <p class="toggle-text">New to AUREO? <span onclick="toggleForm('register')">Create an account</span></p>
         </div>
-
-        <!-- Register Form -->
         <div id="register-form" class="form-section hidden">
             <form onsubmit="handleRegister(event)">
                 <div class="input-group"><input type="text" id="reg-username" required><label for="reg-username">Username</label></div>
@@ -145,55 +155,63 @@
         </div>
     </div>
 
-    <!-- CAPTCHA MODAL -->
+    <!-- CAPTCHA -->
     <div id="captcha-modal">
         <div class="captcha-box">
             <h2 style="font-family: Cinzel; color: var(--gold-light); margin-bottom: 15px;">Security Check</h2>
-            <p style="margin-bottom: 15px; font-size: 14px;">Please solve this to prove you are human.</p>
             <h3 id="captcha-question" style="font-size: 24px; margin-bottom: 15px; color: white;">3 + 4 = ?</h3>
             <input type="number" id="captcha-answer" style="padding: 10px; width: 100px; text-align: center; font-size: 18px; border-radius: 5px; border: 1px solid var(--gold-primary); background: transparent; color: white; outline: none; margin-bottom: 20px;">
-            <div id="captcha-error" style="color: red; font-size: 12px; margin-bottom: 15px; display: none;">Incorrect. Try again.</div>
+            <div id="captcha-error" style="color: red; font-size: 12px; margin-bottom: 15px; display: none;">Incorrect.</div>
             <button class="btn" onclick="verifyCaptcha()" style="width: 100%;">Verify</button>
         </div>
     </div>
 
-    <!-- MAIN APP SCREEN -->
+    <!-- MAIN APP -->
     <div id="app-screen">
         <div class="app-layout">
             <!-- Sidebar -->
             <div class="sidebar">
                 <div class="server-header">
-                    <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="100" height="100" rx="22" fill="#0a0514" stroke="#d4af37" stroke-width="2"/>
-                        <path d="M50 18 L22 82 L34 82 L50 38 L66 82 L78 82 Z" fill="#d4af37"/>
-                    </svg>
+                    <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="22" fill="#0a0514" stroke="#d4af37" stroke-width="2"/><path d="M50 18 L22 82 L34 82 L50 38 L66 82 L78 82 Z" fill="#d4af37"/></svg>
                     <span style="font-family: Cinzel; font-weight: bold; color: var(--gold-light);">AUREO</span>
                 </div>
-                <div class="channel-list">
-                    <div class="channel active"><span>#</span> general</div>
-                    <div class="channel"><span>#</span> announcements</div>
-                    <div class="channel"><span>#</span> off-topic</div>
+                
+                <div class="sidebar-scroll">
+                    <!-- Friends/DMs -->
+                    <div>
+                        <div class="sidebar-section-title" onclick="openModal('friends-modal')">Direct Messages <span style="font-size: 16px;">+</span></div>
+                        <div id="dm-list">
+                            <!-- DMs will be generated here -->
+                        </div>
+                    </div>
+                    <!-- Channels -->
+                    <div>
+                        <div class="sidebar-section-title">Channels</div>
+                        <div class="channel active" onclick="openChat('general', 'channel')"><span>#</span> general</div>
+                    </div>
                 </div>
+
                 <div id="admin-btn" onclick="openModal('admin-modal')">🛡️ Admin Panel</div>
-                <div class="user-panel" onclick="openModal('settings-modal')">
-                    <div class="avatar" id="my-avatar">U</div>
-                    <div class="user-info">
+                
+                <!-- User Panel -->
+                <div class="user-panel">
+                    <div class="dm-avatar" id="my-sidebar-avatar" onclick="openModal('settings-modal')" style="cursor:pointer;">U</div>
+                    <div class="user-info" onclick="openModal('settings-modal')">
                         <div class="user-name" id="my-name">User</div>
                         <div class="user-status"><span class="status-dot status-online" id="my-status-dot"></span><span id="my-status-text">Online</span></div>
                     </div>
-                    <div id="my-badges-container" style="display: flex; gap: 2px;"></div>
+                    <div id="my-badges-container" style="display: flex; gap: 4px; margin-right: 5px;"></div>
+                    <div class="settings-gear" onclick="openModal('settings-modal')">⚙️</div>
                 </div>
             </div>
 
             <!-- Chat Area -->
             <div class="chat-area">
                 <div class="chat-header">
-                    <span style="font-size: 20px; color: var(--text-muted);">#</span>
-                    <h2 style="font-size: 16px; font-weight: 600; color: white;">general</h2>
+                    <span id="chat-icon" style="font-size: 20px; color: var(--text-muted);">#</span>
+                    <h2 id="chat-title" style="font-size: 16px; font-weight: 600; color: white;">general</h2>
                 </div>
-                <div class="chat-messages" id="chat-messages">
-                    <!-- Messages will appear here -->
-                </div>
+                <div class="chat-messages" id="chat-messages"></div>
                 <div class="chat-input-area">
                     <form onsubmit="sendMessage(event)">
                         <input type="text" class="chat-input" id="chat-input" placeholder="Message #general" autocomplete="off">
@@ -203,55 +221,68 @@
         </div>
     </div>
 
-    <!-- SETTINGS MODAL -->
+    <!-- SETTINGS MODAL (PROFILE CUSTOMIZATION) -->
     <div class="modal-overlay" id="settings-modal">
         <div class="modal-content">
-            <div class="modal-title">
-                User Settings
-                <span class="close-btn" onclick="closeModal('settings-modal')">✖</span>
-            </div>
+            <div class="modal-title">My Profile <span class="close-btn" onclick="closeModal('settings-modal')">✖</span></div>
+            
+            <!-- Live Profile Preview -->
+            <div class="profile-banner" id="preview-banner"></div>
+            <div class="profile-pfp" id="preview-pfp">U</div>
+            <div style="padding: 20px; display: flex; gap: 10px; align-items: center;" id="preview-badges"></div>
+
             <div class="settings-form">
+                <label>Profile Picture URL</label>
+                <input type="text" id="set-pfp" placeholder="https://example.com/image.png" oninput="updatePreview()">
+                
+                <label>Profile Banner URL</label>
+                <input type="text" id="set-banner" placeholder="https://example.com/banner.png" oninput="updatePreview()">
+
                 <label>Display Name</label>
-                <input type="text" id="set-displayname">
+                <input type="text" id="set-displayname" onchange="saveProfile()">
                 
                 <label>Status</label>
-                <select id="set-status">
+                <select id="set-status" onchange="saveProfile()">
                     <option value="Online">Online</option>
                     <option value="Idle">Idle</option>
                     <option value="DND">Do Not Disturb</option>
                     <option value="Offline">Offline (Invisible)</option>
                 </select>
 
-                <label>Badges Earned</label>
-                <div id="settings-badges" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;"></div>
-
                 <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
-                <h3 style="font-size: 14px; color: var(--gold-light); margin-bottom: 10px;">Apply for Staff</h3>
-                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Must be 13+ to apply.</p>
-                <label>Why do you want to be staff?</label>
-                <textarea id="app-q1" rows="2"></textarea>
-                <label>How would you handle a toxic user?</label>
-                <textarea id="app-q2" rows="2"></textarea>
+                <h3 style="font-size: 14px; color: var(--gold-light); margin-bottom: 10px;">Staff Application (13+)</h3>
+                <textarea id="app-q1" rows="2" placeholder="Why do you want to be staff?"></textarea>
+                <textarea id="app-q2" rows="2" placeholder="How would you handle a rulebreaker?" style="margin-top: 10px;"></textarea>
                 <button class="btn" style="margin-top: 15px; font-size: 12px; padding: 10px;" onclick="submitApplication()">Submit Application</button>
             </div>
         </div>
     </div>
 
-    <!-- ADMIN PANEL MODAL -->
+    <!-- FRIENDS MODAL -->
+    <div class="modal-overlay" id="friends-modal">
+        <div class="modal-content">
+            <div class="modal-title">Friends <span class="close-btn" onclick="closeModal('friends-modal')">✖</span></div>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <input type="text" id="friend-search" placeholder="Enter exact username..." style="flex:1; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: white; border-radius: 5px;">
+                <button class="btn" style="width: auto; margin: 0; padding: 0 20px;" onclick="sendFriendRequest()">Add</button>
+            </div>
+            <h3 style="font-size: 14px; color: var(--gold-light); margin-bottom: 10px;">Your Friends</h3>
+            <div class="friends-list" id="friends-list">
+                <!-- Friends populate here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
     <div class="modal-overlay" id="admin-modal">
         <div class="modal-content">
-            <div class="modal-title">
-                Admin Panel
-                <span class="close-btn" onclick="closeModal('admin-modal')">✖</span>
-            </div>
+            <div class="modal-title">Admin Panel <span class="close-btn" onclick="closeModal('admin-modal')">✖</span></div>
             <div class="admin-tab">
                 <button class="active" onclick="switchAdminTab('grant')">Grant Badges</button>
-                <button onclick="switchAdminTab('apps')">Staff Applications (<span id="app-count">0</span>)</button>
+                <button onclick="switchAdminTab('apps')">Applications (<span id="app-count">0</span>)</button>
             </div>
-            
-            <!-- Grant Badges Tab -->
             <div id="admin-grant" class="admin-section active">
-                <label style="font-size: 12px; color: var(--text-muted);">Enter exact Username:</label>
+                <label style="font-size: 12px; color: var(--text-muted);">Target Username:</label>
                 <input type="text" id="admin-target-user" style="width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: white; margin-bottom: 15px; border-radius: 5px;">
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="btn-small" style="background: #5b2c6f; color: white; border: 1px solid #8e44ad;" onclick="grantBadge('OG')">Grant OG</button>
@@ -261,23 +292,25 @@
                 </div>
                 <p id="admin-feedback" style="margin-top: 15px; font-size: 13px; color: var(--green);"></p>
             </div>
-
-            <!-- Staff Applications Tab -->
             <div id="admin-apps" class="admin-section">
-                <div id="applications-list">
-                    <p style="color: var(--text-muted); font-size: 13px;">No pending applications.</p>
-                </div>
+                <div id="applications-list"></div>
             </div>
         </div>
     </div>
 
     <script>
+        // --- BADGE SVG GENERATOR ---
+        const BADGE_SVGS = {
+            'OG': `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15 9H22L16 14L18 21L12 17L6 21L8 14L2 9H9L12 2Z" fill="#9b59b6"/></svg>`,
+            'Bug Hunter': `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#2ecc71"/><path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+            'Streak': `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12 2 12 7 16 10C20 13 20 18 16 21C12 24 6 21 6 16C6 11 10 8 10 8C10 8 10 12 12 14C14 16 16 14 16 12C16 10 12 6 12 2Z" fill="#e67e22"/></svg>`,
+            'Staff': `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#e74c3c"/><path d="M12 6V18M8 10H16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>`
+        };
+
         // --- STATE & DATABASE ---
-        let db = JSON.parse(localStorage.getItem('aureo_db')) || { users: {}, messages: [], applications: [] };
+        let db = JSON.parse(localStorage.getItem('aureo_db_v2')) || { users: {}, messages: [], applications: [] };
         let currentUser = null;
-        let streakTimer = null;
-        
-        // Hardcoded Admin Username
+        let activeChat = { type: 'channel', id: 'general' };
         const ADMIN_USERNAME = 'Aureo';
 
         // --- AUTHENTICATION ---
@@ -291,12 +324,8 @@
             e.preventDefault();
             const user = document.getElementById('login-username').value.trim();
             const pass = document.getElementById('login-password').value;
-            
-            if (db.users[user] && db.users[user].password === pass) {
-                loginUser(user);
-            } else {
-                showAuthError("Invalid username or password.");
-            }
+            if (db.users[user] && db.users[user].password === pass) loginUser(user);
+            else showAuthError("Invalid username or password.");
         }
 
         let pendingRegUser = null;
@@ -305,12 +334,9 @@
             const user = document.getElementById('reg-username').value.trim();
             const display = document.getElementById('reg-displayname').value.trim();
             const pass = document.getElementById('reg-password').value;
-
             if (db.users[user]) return showAuthError("Username already taken.");
-
             pendingRegUser = { username: user, displayName: display, password: pass };
             
-            // Trigger CAPTCHA
             const num1 = Math.floor(Math.random() * 10) + 1;
             const num2 = Math.floor(Math.random() * 10) + 1;
             document.getElementById('captcha-question').innerText = `${num1} + ${num2} = ?`;
@@ -323,137 +349,168 @@
         function verifyCaptcha() {
             const input = document.getElementById('captcha-answer').value;
             const correct = document.getElementById('captcha-answer').dataset.answer;
-            
             if (input == correct) {
                 document.getElementById('captcha-modal').style.display = 'none';
-                
-                // Create User Data
                 db.users[pendingRegUser.username] = {
-                    username: pendingRegUser.username,
-                    displayName: pendingRegUser.displayName,
-                    password: pendingRegUser.password,
-                    badges: [],
-                    status: 'Online',
-                    streak: 0,
-                    lastChat: Date.now(),
-                    createdAt: Date.now()
+                    username: pendingRegUser.username, displayName: pendingRegUser.displayName, password: pendingRegUser.password,
+                    badges: [], status: 'Online', friends: [], pfp: '', banner: ''
                 };
-
-                // Check for OG (First Month logic)
-                const currentMonth = new Date().getMonth();
-                const currentYear = new Date().getFullYear();
-                if (!db.ogLocked) { // If OG hasn't been locked yet
-                    db.users[pendingRegUser.username].badges.push('OG');
-                }
-
+                if (!db.ogLocked) db.users[pendingRegUser.username].badges.push('OG');
                 saveDB();
                 loginUser(pendingRegUser.username);
-            } else {
-                document.getElementById('captcha-error').style.display = 'block';
-            }
+            } else document.getElementById('captcha-error').style.display = 'block';
         }
 
         function loginUser(username) {
             currentUser = db.users[username];
-            
-            // Check Streak logic on login
-            checkStreak();
-
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('app-screen').style.display = 'block';
             
-            updateUI();
-            loadMessages();
+            if (currentUser.username === ADMIN_USERNAME) document.getElementById('admin-btn').style.display = 'block';
+            else document.getElementById('admin-btn').style.display = 'none';
 
-            // Admin Check
-            if (currentUser.username === ADMIN_USERNAME) {
-                document.getElementById('admin-btn').style.display = 'block';
+            updateUI();
+            loadSidebar();
+            openChat('general', 'channel');
+        }
+
+        // --- UI UPDATES ---
+        function updateUI() {
+            // Sidebar User Panel
+            document.getElementById('my-name').innerText = currentUser.displayName;
+            
+            const myAvatar = document.getElementById('my-sidebar-avatar');
+            if(currentUser.pfp) {
+                myAvatar.style.backgroundImage = `url(${currentUser.pfp})`;
+                myAvatar.innerText = '';
             } else {
-                document.getElementById('admin-btn').style.display = 'none';
+                myAvatar.style.backgroundImage = 'none';
+                myAvatar.innerText = currentUser.displayName.charAt(0).toUpperCase();
             }
 
-            // Start background timer to simulate 5 mins of chatting (Set to 10 seconds for testing)
-            if (streakTimer) clearInterval(streakTimer);
-            streakTimer = setInterval(() => {
-                currentUser.streak += 1;
-                if (currentUser.streak === 14 && !currentUser.badges.includes('Streak')) {
-                    currentUser.badges.push('Streak');
-                    alert("Congratulations! You earned the 14-Day Streak badge!");
-                }
-                saveDB();
-                updateUI();
-            }, 10000); // 10000ms = 10 seconds for testing
-        }
-
-        function checkStreak() {
-            // Logic to simulate daily login. 
-            // For this prototype, we just ensure the variable exists.
-            if (!currentUser.streak) currentUser.streak = 0;
-        }
-
-        // --- MAIN APP LOGIC ---
-        function updateUI() {
-            document.getElementById('my-name').innerText = currentUser.displayName;
-            document.getElementById('my-avatar').innerText = currentUser.displayName.charAt(0).toUpperCase();
-            
-            // Status
             const dot = document.getElementById('my-status-dot');
-            const txt = document.getElementById('my-status-text');
             dot.className = 'status-dot';
-            
             if (currentUser.status === 'Online') dot.classList.add('status-online');
             else if (currentUser.status === 'Idle') dot.classList.add('status-idle');
             else if (currentUser.status === 'DND') dot.classList.add('status-dnd');
             else dot.classList.add('status-offline');
-            txt.innerText = currentUser.status;
+            document.getElementById('my-status-text').innerText = currentUser.status;
 
-            // Render Badges
+            // Render Badges (Sidebar)
             renderBadges(currentUser.badges, 'my-badges-container');
-            renderBadges(currentUser.badges, 'settings-badges');
-            
-            // Populate Settings
+
+            // Settings Modal Population
             document.getElementById('set-displayname').value = currentUser.displayName;
             document.getElementById('set-status').value = currentUser.status;
+            document.getElementById('set-pfp').value = currentUser.pfp || '';
+            document.getElementById('set-banner').value = currentUser.banner || '';
+            updatePreview();
 
-            // Update Apps Count
             document.getElementById('app-count').innerText = db.applications.length;
         }
 
         function renderBadges(badges, containerId) {
             const container = document.getElementById(containerId);
+            if(!container) return;
             container.innerHTML = '';
             badges.forEach(b => {
-                let cls = 'badge-og';
-                if (b === 'Bug Hunter') cls = 'badge-bug';
-                if (b === 'Streak') cls = 'badge-streak';
-                if (b === 'Staff') cls = 'badge-staff';
-                
-                container.innerHTML += `<span class="badge ${cls}">${b}</span>`;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'badge-icon';
+                wrapper.title = b;
+                wrapper.innerHTML = BADGE_SVGS[b] || '';
+                container.appendChild(wrapper);
             });
         }
 
-        // Settings Save
-        document.getElementById('set-displayname').addEventListener('change', (e) => {
-            currentUser.displayName = e.target.value;
-            saveDB();
-            updateUI();
-        });
-        document.getElementById('set-status').addEventListener('change', (e) => {
-            currentUser.status = e.target.value;
-            saveDB();
-            updateUI();
-        });
+        function updatePreview() {
+            const pfp = document.getElementById('set-pfp').value;
+            const banner = document.getElementById('set-banner').value;
+            
+            const previewPfp = document.getElementById('preview-pfp');
+            if(pfp) {
+                previewPfp.style.backgroundImage = `url(${pfp})`;
+                previewPfp.innerText = '';
+            } else {
+                previewPfp.style.backgroundImage = 'none';
+                previewPfp.innerText = currentUser.displayName.charAt(0).toUpperCase();
+            }
 
-        // Chat
+            const previewBanner = document.getElementById('preview-banner');
+            if(banner) {
+                previewBanner.style.backgroundImage = `url(${banner})`;
+            } else {
+                previewBanner.style.backgroundImage = 'var(--gold-gradient)';
+            }
+
+            renderBadges(currentUser.badges, 'preview-badges');
+        }
+
+        function saveProfile() {
+            currentUser.displayName = document.getElementById('set-displayname').value;
+            currentUser.status = document.getElementById('set-status').value;
+            currentUser.pfp = document.getElementById('set-pfp').value;
+            currentUser.banner = document.getElementById('set-banner').value;
+            saveDB();
+            updateUI();
+            loadSidebar(); 
+        }
+
+        // --- SIDEBAR & CHAT LOGIC ---
+        function loadSidebar() {
+            const dmList = document.getElementById('dm-list');
+            dmList.innerHTML = '';
+            
+            if(!currentUser.friends || currentUser.friends.length === 0) {
+                dmList.innerHTML = '<div style="font-size: 12px; color: #555; padding-left: 10px;">No friends yet.</div>';
+                return;
+            }
+
+            currentUser.friends.forEach(friendUsername => {
+                const friend = db.users[friendUsername];
+                if(!friend) return;
+                const div = document.createElement('div');
+                div.className = `dm-user ${activeChat.type === 'dm' && activeChat.id === friendUsername ? 'active' : ''}`;
+                div.onclick = () => openChat(friendUsername, 'dm');
+                
+                let avatarStyle = friend.pfp ? `background-image: url(${friend.pfp}); background-size: cover; color: transparent;` : '';
+                
+                div.innerHTML = `
+                    <div class="dm-avatar" style="${avatarStyle}">${friend.displayName.charAt(0).toUpperCase()}</div>
+                    <span style="flex:1; overflow:hidden; text-overflow:ellipsis;">${friend.displayName}</span>
+                `;
+                dmList.appendChild(div);
+            });
+        }
+
+        function openChat(id, type) {
+            activeChat = { id, type };
+            loadSidebar(); // Update active highlight
+
+            const header = document.getElementById('chat-header');
+            const input = document.getElementById('chat-input');
+            
+            if(type === 'channel') {
+                document.getElementById('chat-icon').innerText = '#';
+                document.getElementById('chat-title').innerText = id;
+                input.placeholder = `Message #${id}`;
+            } else {
+                const friend = db.users[id];
+                document.getElementById('chat-icon').innerText = '@';
+                document.getElementById('chat-title').innerText = friend ? friend.displayName : id;
+                input.placeholder = `Message @${friend ? friend.displayName : id}`;
+            }
+            loadMessages();
+        }
+
         function sendMessage(e) {
             e.preventDefault();
             const input = document.getElementById('chat-input');
             if (!input.value.trim()) return;
 
             const msg = {
+                chatId: activeChat.id,
+                chatType: activeChat.type,
                 author: currentUser.username,
-                displayName: currentUser.displayName,
-                badges: [...currentUser.badges],
                 text: input.value.trim(),
                 time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             };
@@ -468,27 +525,24 @@
             const container = document.getElementById('chat-messages');
             container.innerHTML = '';
             
-            db.messages.forEach(msg => {
-                // Get latest user data in case badges changed
-                const user = db.users[msg.author];
-                const currentBadges = user ? user.badges : msg.badges;
-                const currentName = user ? user.displayName : msg.displayName;
-                
+            // Filter messages for current chat
+            const chatMsgs = db.messages.filter(m => m.chatId === activeChat.id && m.chatType === activeChat.type);
+            
+            chatMsgs.forEach(msg => {
+                const user = db.users[msg.author] || { displayName: msg.author, badges: [], pfp: '' };
                 let badgeHTML = '';
-                currentBadges.forEach(b => {
-                    let cls = 'badge-og';
-                    if (b === 'Bug Hunter') cls = 'badge-bug';
-                    if (b === 'Streak') cls = 'badge-streak';
-                    if (b === 'Staff') cls = 'badge-staff';
-                    badgeHTML += `<span class="badge ${cls}">${b}</span>`;
+                user.badges.forEach(b => {
+                    badgeHTML += `<div class="badge-icon" title="${b}">${BADGE_SVGS[b]}</div>`;
                 });
+
+                let avatarStyle = user.pfp ? `background-image: url(${user.pfp}); background-size: cover; color: transparent;` : '';
 
                 container.innerHTML += `
                     <div class="message">
-                        <div class="avatar" style="width: 40px; height: 40px;">${currentName.charAt(0).toUpperCase()}</div>
+                        <div class="dm-avatar" style="${avatarStyle}">${user.displayName.charAt(0).toUpperCase()}</div>
                         <div class="msg-content">
                             <div class="msg-header">
-                                <span class="msg-author">${currentName}</span>
+                                <span class="msg-author">${user.displayName}</span>
                                 ${badgeHTML}
                                 <span class="msg-time">${msg.time}</span>
                             </div>
@@ -498,6 +552,47 @@
                 `;
             });
             container.scrollTop = container.scrollHeight;
+        }
+
+        // --- FRIENDS SYSTEM ---
+        function sendFriendRequest() {
+            const target = document.getElementById('friend-search').value.trim();
+            if(!db.users[target]) return alert("User not found.");
+            if(target === currentUser.username) return alert("You can't add yourself.");
+            if(currentUser.friends.includes(target)) return alert("Already friends.");
+
+            // For this prototype, we'll auto-accept friendships to keep it simple
+            currentUser.friends.push(target);
+            db.users[target].friends.push(currentUser.username);
+            saveDB();
+            
+            alert(`You are now friends with ${db.users[target].displayName}!`);
+            document.getElementById('friend-search').value = '';
+            loadFriendsList();
+            loadSidebar();
+        }
+
+        function loadFriendsList() {
+            const list = document.getElementById('friends-list');
+            list.innerHTML = '';
+            currentUser.friends.forEach(f => {
+                const friend = db.users[f];
+                if(!friend) return;
+                let avatarStyle = friend.pfp ? `background-image: url(${friend.pfp}); background-size: cover; color: transparent;` : '';
+                
+                list.innerHTML += `
+                    <div class="friend-card">
+                        <div class="friend-info">
+                            <div class="dm-avatar" style="${avatarStyle}">${friend.displayName.charAt(0).toUpperCase()}</div>
+                            <div>
+                                <div style="font-weight: bold; font-size: 14px;">${friend.displayName}</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">@${friend.username}</div>
+                            </div>
+                        </div>
+                        <button class="btn-small" style="background: var(--gold-primary); color: black;" onclick="closeModal('friends-modal'); openChat('${friend.username}', 'dm');">Message</button>
+                    </div>
+                `;
+            });
         }
 
         // --- ADMIN PANEL LOGIC ---
@@ -531,12 +626,10 @@
                 feedback.style.color = 'var(--green)';
                 feedback.innerText = `Successfully granted ${badge} to ${targetUser}.`;
                 
-                // If granting to self, update UI
                 if (targetUser === currentUser.username) {
                     currentUser.badges = db.users[targetUser].badges;
                     updateUI();
                 }
-                // Update chat to show new badge
                 loadMessages();
             } else {
                 feedback.style.color = 'var(--orange)';
@@ -547,12 +640,10 @@
         function loadApplications() {
             const list = document.getElementById('applications-list');
             list.innerHTML = '';
-            
             if (db.applications.length === 0) {
                 list.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No pending applications.</p>';
                 return;
             }
-
             db.applications.forEach((app, index) => {
                 list.innerHTML += `
                     <div class="application-card">
@@ -570,36 +661,22 @@
 
         function resolveApp(index, isAccepted) {
             const app = db.applications[index];
-            if (isAccepted) {
-                if (!db.users[app.username].badges.includes('Staff')) {
-                    db.users[app.username].badges.push('Staff');
-                }
+            if (isAccepted && !db.users[app.username].badges.includes('Staff')) {
+                db.users[app.username].badges.push('Staff');
             }
-            
             db.applications.splice(index, 1);
             saveDB();
             loadApplications();
             document.getElementById('app-count').innerText = db.applications.length;
-            alert(isAccepted ? 'Application Accepted. Staff badge granted.' : 'Application Denied.');
         }
 
         function submitApplication() {
             const q1 = document.getElementById('app-q1').value.trim();
             const q2 = document.getElementById('app-q2').value.trim();
-
             if (!q1 || !q2) return alert("Please answer all questions.");
+            if (db.applications.find(a => a.username === currentUser.username)) return alert("You already have a pending application.");
 
-            // Check if already applied
-            if (db.applications.find(a => a.username === currentUser.username)) {
-                return alert("You already have a pending application.");
-            }
-
-            db.applications.push({
-                username: currentUser.username,
-                q1: q1,
-                q2: q2
-            });
-
+            db.applications.push({ username: currentUser.username, q1: q1, q2: q2 });
             saveDB();
             document.getElementById('app-q1').value = '';
             document.getElementById('app-q2').value = '';
@@ -607,24 +684,17 @@
         }
 
         // --- UTILITIES ---
-        function saveDB() {
-            localStorage.setItem('aureo_db', JSON.stringify(db));
-        }
-
+        function saveDB() { localStorage.setItem('aureo_db_v2', JSON.stringify(db)); }
         function showAuthError(msg) {
             const el = document.getElementById('auth-error');
-            el.innerText = msg;
-            el.style.display = 'block';
+            el.innerText = msg; el.style.display = 'block';
         }
-
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
-            if(id === 'admin-modal') loadApplications(); // Refresh apps when opening
+            if(id === 'admin-modal') loadApplications(); 
+            if(id === 'friends-modal') loadFriendsList();
         }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-        }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
 </body>
 </html>
