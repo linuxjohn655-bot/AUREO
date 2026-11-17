@@ -9,7 +9,6 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f9d976'/%3E%3Cstop offset='100%25' stop-color='%23b8860b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='%230a0514'/%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='url(%23gold)' stroke-width='0.8' opacity='0.6'/%3E%3Cellipse cx='50' cy='50' rx='45' ry='15' fill='none' stroke='url(%23gold)' stroke-width='1.5' transform='rotate(-25 50 50)' opacity='0.8'/%3E%3Cpath d='M50 18 L22 82 L34 82 L50 38 L66 82 L78 82 Z' fill='url(%23gold)'/%3E%3Crect x='36' y='64' width='28' height='5' fill='url(%23gold)'/%3E%3C/svg%3E">
 
     <style>
-        /* Import a luxurious font */
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap');
 
         :root {
@@ -77,7 +76,6 @@
             overflow: hidden;
         }
 
-        /* Logo Area */
         .logo-header {
             text-align: center;
             margin-bottom: 30px;
@@ -110,7 +108,6 @@
             text-transform: uppercase;
         }
 
-        /* Forms Container */
         .forms-wrapper {
             position: relative;
             width: 100%;
@@ -127,7 +124,6 @@
             transform: translateY(20px);
         }
 
-        /* Input Styling */
         .input-group {
             position: relative;
             margin-bottom: 25px;
@@ -139,7 +135,7 @@
             background: transparent;
             border: none;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--text-main);
+            color: var(--gold-light); /* Makes typed text gold */
             font-size: 14px;
             font-family: 'Montserrat', sans-serif;
             outline: none;
@@ -168,7 +164,6 @@
             letter-spacing: 1px;
         }
 
-        /* Button Styling */
         .btn {
             width: 100%;
             padding: 15px;
@@ -195,7 +190,6 @@
             transform: translateY(0);
         }
 
-        /* Toggle Text */
         .toggle-text {
             text-align: center;
             margin-top: 25px;
@@ -215,7 +209,6 @@
             text-decoration: underline;
         }
 
-        /* Animation for switching forms */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -235,7 +228,6 @@
 <body>
 
     <div class="container">
-        <!-- Header with Logo (Built directly into the code) -->
         <div class="logo-header">
             <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -258,7 +250,7 @@
         <div id="login-form" class="form-section active-form">
             <form onsubmit="event.preventDefault(); alert('Login functionality goes here.');">
                 <div class="input-group">
-                    <!-- Changed to Username -->
+                    <!-- Username Field for Login -->
                     <input type="text" id="login-username" required>
                     <label for="login-username">Username</label>
                 </div>
@@ -280,6 +272,7 @@
                     <input type="text" id="reg-username" required>
                     <label for="reg-username">Username</label>
                 </div>
+                <!-- NEW DISPLAY NAME FIELD -->
                 <div class="input-group">
                     <input type="text" id="reg-displayname" required>
                     <label for="reg-displayname">Display Name</label>
