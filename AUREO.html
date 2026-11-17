@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AUREO | Where Conversation Shines</title>
+    
+    <!-- THIS IS THE LINE THAT ADDS THE ICON TO THE BROWSER TAB -->
+    <link rel="icon" type="image/png" href="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGEwNTE0Ii8+PHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Q0YWYzNyIgc3Ryb2tlLXdpZHRoPSIwLjUiIG9wYWNpdHk9IjAuNSIvPjxlbGxpcHNlIGN4PSI1MCIgY3k9IjUwIiByeD0iNDAiIHJ5PSIxNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDRhZjM3IiBzdHJva2Utd2lkdGg9IjAuOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTIwIDUwIDUwKSIgb3BhY2l0eT0iMC42Ii8+PGVsbGlwc2UgY3g9IjUwIiBjeT0iNTAiIHJ4PSI0NSIgcnk9IjQ1IiBmaWxsPSJub25lIiBzdHJva2U9IiNkNGFmMzciIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjMiLz48cGF0aCBkPSJNNTAgMjAgTDI1IDgwIEwzNSA4MCBMNTAgNDAgTDY1IDgwIEw3NSA4MCBaIiBmaWxsPSIjZDRhZjM3Ii8+PHJlY3QgeD0iMzgiIHk9IjY1IiB3aWR0aD0iMjQiIGhlaWdodD0iNCIgZmlsbD0iI2Q0YWYzNyIvPjwvc3ZnPg==" />
+
     <style>
         /* Import a luxurious font */
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap');
@@ -27,7 +31,6 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-dark);
-            /* Creating the orbital rings background effect */
             background-image: 
                 radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 60%),
                 radial-gradient(circle at 10% 90%, rgba(30, 15, 60, 0.8) 0%, transparent 50%),
@@ -80,11 +83,11 @@
             margin-bottom: 30px;
         }
 
-        .logo-img {
+        .logo-svg {
             width: 80px;
             height: 80px;
             margin-bottom: 15px;
-            border-radius: 18px; /* Matching your app icon style */
+            border-radius: 20px;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
@@ -234,8 +237,14 @@
     <div class="container">
         <!-- Header with Logo -->
         <div class="logo-header">
-            <!-- Using a base64 placeholder for your app icon, you can replace the src with your actual image file -->
-            <img src="https://i.ibb.co/6P4KqXQ/aureo-icon.png" alt="AUREO Icon" class="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'20\' fill=\'%230a0514\'/><text x=\'50\' y=\'65\' font-family=\'Cinzel\' font-size=\'60\' fill=\'%23d4af37\' text-anchor=\'middle\'>A</text></svg>'">
+            <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" rx="20" fill="#0a0514"/>
+                <rect width="96" height="96" x="2" y="2" rx="18" fill="none" stroke="#d4af37" stroke-width="0.5" opacity="0.5"/>
+                <ellipse cx="50" cy="50" rx="40" ry="15" fill="none" stroke="#d4af37" stroke-width="0.8" transform="rotate(-20 50 50)" opacity="0.6"/>
+                <ellipse cx="50" cy="50" rx="45" ry="45" fill="none" stroke="#d4af37" stroke-width="0.5" opacity="0.3"/>
+                <path d="M50 20 L25 80 L35 80 L50 40 L65 80 L75 80 Z" fill="#d4af37"/>
+                <rect x="38" y="65" width="24" height="4" fill="#d4af37"/>
+            </svg>
             <h1 class="brand-title">AUREO</h1>
             <p class="brand-tagline">Where Conversation Shines</p>
         </div>
@@ -291,7 +300,6 @@
                 loginForm.classList.remove('active-form');
                 
                 registerForm.classList.remove('hidden');
-                // Small delay to ensure display:block is applied before animating
                 setTimeout(() => {
                     registerForm.classList.add('active-form');
                 }, 10);
