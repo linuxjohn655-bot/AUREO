@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AUREO | Where Conversation Shines</title>
     
-    <!-- THIS IS THE LINE THAT ADDS THE ICON TO THE BROWSER TAB -->
-    <link rel="icon" type="image/png" href="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGEwNTE0Ii8+PHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Q0YWYzNyIgc3Ryb2tlLXdpZHRoPSIwLjUiIG9wYWNpdHk9IjAuNSIvPjxlbGxpcHNlIGN4PSI1MCIgY3k9IjUwIiByeD0iNDAiIHJ5PSIxNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDRhZjM3IiBzdHJva2Utd2lkdGg9IjAuOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTIwIDUwIDUwKSIgb3BhY2l0eT0iMC42Ii8+PGVsbGlwc2UgY3g9IjUwIiBjeT0iNTAiIHJ4PSI0NSIgcnk9IjQ1IiBmaWxsPSJub25lIiBzdHJva2U9IiNkNGFmMzciIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjMiLz48cGF0aCBkPSJNNTAgMjAgTDI1IDgwIEwzNSA4MCBMNTAgNDAgTDY1IDgwIEw3NSA4MCBaIiBmaWxsPSIjZDRhZjM3Ii8+PHJlY3QgeD0iMzgiIHk9IjY1IiB3aWR0aD0iMjQiIGhlaWdodD0iNCIgZmlsbD0iI2Q0YWYzNyIvPjwvc3ZnPg==" />
+    <!-- This is the code that puts the logo in the browser tab -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='gold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f9d976'/%3E%3Cstop offset='100%25' stop-color='%23b8860b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='%230a0514'/%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='url(%23gold)' stroke-width='0.8' opacity='0.6'/%3E%3Cellipse cx='50' cy='50' rx='45' ry='15' fill='none' stroke='url(%23gold)' stroke-width='1.5' transform='rotate(-25 50 50)' opacity='0.8'/%3E%3Cpath d='M50 18 L22 82 L34 82 L50 38 L66 82 L78 82 Z' fill='url(%23gold)'/%3E%3Crect x='36' y='64' width='28' height='5' fill='url(%23gold)'/%3E%3C/svg%3E">
 
     <style>
         /* Import a luxurious font */
@@ -84,16 +84,16 @@
         }
 
         .logo-svg {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             margin-bottom: 15px;
-            border-radius: 20px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            border-radius: 22px;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
         }
 
         .brand-title {
             font-family: 'Cinzel', serif;
-            font-size: 28px;
+            font-size: 32px;
             letter-spacing: 8px;
             color: transparent;
             background: var(--gold-gradient);
@@ -235,15 +235,25 @@
 <body>
 
     <div class="container">
-        <!-- Header with Logo -->
+        <!-- Header with Logo (Built directly into the code) -->
         <div class="logo-header">
             <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100" height="100" rx="20" fill="#0a0514"/>
-                <rect width="96" height="96" x="2" y="2" rx="18" fill="none" stroke="#d4af37" stroke-width="0.5" opacity="0.5"/>
-                <ellipse cx="50" cy="50" rx="40" ry="15" fill="none" stroke="#d4af37" stroke-width="0.8" transform="rotate(-20 50 50)" opacity="0.6"/>
-                <ellipse cx="50" cy="50" rx="45" ry="45" fill="none" stroke="#d4af37" stroke-width="0.5" opacity="0.3"/>
-                <path d="M50 20 L25 80 L35 80 L50 40 L65 80 L75 80 Z" fill="#d4af37"/>
-                <rect x="38" y="65" width="24" height="4" fill="#d4af37"/>
+                <defs>
+                    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#f9d976" />
+                        <stop offset="100%" stop-color="#b8860b" />
+                    </linearGradient>
+                </defs>
+                <!-- Background -->
+                <rect width="100" height="100" rx="22" fill="#0a0514"/>
+                <!-- Outer Ring -->
+                <circle cx="50" cy="50" r="42" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.6"/>
+                <!-- Tilted Orbit Ring -->
+                <ellipse cx="50" cy="50" rx="45" ry="15" fill="none" stroke="url(#gold)" stroke-width="1.5" transform="rotate(-25 50 50)" opacity="0.8"/>
+                <!-- Letter A -->
+                <path d="M50 18 L22 82 L34 82 L50 38 L66 82 L78 82 Z" fill="url(#gold)"/>
+                <!-- Crossbar of A -->
+                <rect x="36" y="64" width="28" height="5" fill="url(#gold)"/>
             </svg>
             <h1 class="brand-title">AUREO</h1>
             <p class="brand-tagline">Where Conversation Shines</p>
