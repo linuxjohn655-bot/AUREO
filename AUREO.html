@@ -70,9 +70,9 @@
         .user-panel { padding: 10px 10px; background: #05020a; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(212,175,55,0.1); }
         .user-panel:hover { background: #0a0514; }
         .user-panel-left { display: flex; align-items: center; gap: 8px; overflow: hidden; flex: 1; cursor: pointer; }
-        .user-panel-info { flex: 1; overflow: hidden; }
-        .user-panel-name { font-size: 13px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .user-panel-status { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; }
+        .user-panel-info { flex: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+        .user-panel-name { font-size: 13px; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; }
+        .user-panel-status { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; margin-top: 2px; line-height: 1.2;}
         
         .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0;}
         .status-online { background: var(--green); }
@@ -140,7 +140,7 @@
         #profile-popup-menu { display: none; position: absolute; bottom: 70px; left: 10px; width: 250px; background: #1e1f22; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 1000; border: 1px solid rgba(255,255,255,0.05); flex-direction: column; padding: 5px; }
         .popup-item { padding: 8px 10px; border-radius: 4px; color: var(--text-main); font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .popup-item:hover { background: var(--discord-blue); color: white; }
-        .popup-item .status-option-left { display: flex; flex-direction: column; gap: 2px; }
+        .popup-item .status-option-left { display: flex; align-items: center; gap: 10px; }
         .popup-item .status-option-text h4 { font-size: 13px; font-weight: 600; color: white; }
         .popup-item .status-option-text p { font-size: 11px; color: var(--text-muted); }
         .popup-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 5px 0; }
@@ -476,10 +476,10 @@
                 
                 <div class="settings-nav-item active" onclick="switchSettingsTab('account', this)">Account</div>
                 <div class="settings-nav-item" onclick="switchSettingsTab('profile', this)">Profile</div>
-                <div class="settings-nav-item" onclick="switchSettingsTab('status', this)">Status</div>
                 <div class="settings-nav-item" onclick="switchSettingsTab('staff', this)">Apply for Staff</div>
                 
                 <div style="flex:1;"></div>
+                <div class="settings-nav-item" onclick="openSwitchAccountModal()">Switch Account</div>
                 <div class="settings-nav-item danger" onclick="switchSettingsTab('danger', this)">Danger Zone</div>
             </div>
 
@@ -524,45 +524,6 @@
                     </div>
                 </div>
 
-                <!-- Tab: Status (EXACT MATCH) -->
-                <div id="tab-status" class="settings-tab">
-                    <h2>Set Status</h2>
-                    
-                    <div class="status-option-card" onclick="setStatus('Online')">
-                        <div class="status-option-left">
-                            <div class="status-icon-circle"></div>
-                            <div class="status-option-text"><h4>Online</h4></div>
-                        </div>
-                    </div>
-
-                    <div class="status-option-card" onclick="setStatus('Idle')">
-                        <div class="status-option-left">
-                            <div class="status-icon-moon"></div>
-                            <div class="status-option-text"><h4>Idle</h4></div>
-                        </div>
-                    </div>
-
-                    <div class="status-option-card" onclick="setStatus('DND')">
-                        <div class="status-option-left">
-                            <div class="status-icon-dnd"></div>
-                            <div class="status-option-text">
-                                <h4>Do Not Disturb</h4>
-                                <p>You will not receive desktop notifications</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="status-option-card" onclick="setStatus('Offline')">
-                        <div class="status-option-left">
-                            <div class="status-icon-offline"></div>
-                            <div class="status-option-text">
-                                <h4>Invisible</h4>
-                                <p>You will appear offline</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Tab: Staff -->
                 <div id="tab-staff" class="settings-tab">
                     <h2>Apply for Staff (13+)</h2>
@@ -585,6 +546,21 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <!-- SWITCH ACCOUNT MODAL -->
+    <div class="modal-overlay" id="switch-account-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-title">Switch Account <span class="close-btn" onclick="closeModal('switch-account-modal')">✖</span></div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">Log into another AUREO account.</p>
+            <div class="settings-form">
+                <label>Username</label>
+                <input type="text" id="switch-username" placeholder="Enter username">
+                <label style="margin-top: 15px;">Password</label>
+                <input type="password" id="switch-password" placeholder="Enter password">
+                <button class="btn" style="margin-top: 20px;" onclick="performSwitchAccount()">Sign In</button>
             </div>
         </div>
     </div>
@@ -754,6 +730,24 @@
             chatUpdateInterval = setInterval(() => {
                 if(activeView.type !== 'home') loadMessages();
             }, 1000); // Check for new messages every 1 second
+        }
+
+        function performSwitchAccount() {
+            const user = document.getElementById('switch-username').value.trim();
+            const pass = document.getElementById('switch-password').value;
+            if (db.users[user] && db.users[user].password === pass) {
+                closeModal('switch-account-modal');
+                loginUser(user);
+                showToast("Account switched successfully!", 'success');
+            } else {
+                showToast("Invalid username or password.", 'error');
+            }
+        }
+
+        function openSwitchAccountModal() {
+            document.getElementById('switch-username').value = '';
+            document.getElementById('switch-password').value = '';
+            openModal('switch-account-modal');
         }
 
         function logout() {
@@ -1137,18 +1131,19 @@
                 text: input.value.trim(), time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             };
             db.messages.push(msg);
-            saveDB(); input.value = ''; loadMessages();
+            saveDB(); input.value = ''; loadMessages(true);
         }
 
-        function loadMessages() {
+        function loadMessages(forceScroll = false) {
             // Reload DB from local storage to get messages from other tabs
             db = JSON.parse(localStorage.getItem('aureo_db_v5')) || db;
             
             const container = document.getElementById('chat-messages');
             const chatMsgs = db.messages.filter(m => m.chatId === activeView.id && m.chatType === activeView.type);
             
-            // Only re-render if there is a change in length to prevent scroll jumping
-            if (container.getAttribute('data-msgcount') !== String(chatMsgs.length)) {
+            // Only re-render if there is a change in length or forceScroll is true
+            const currentCount = parseInt(container.getAttribute('data-msgcount') || '0');
+            if (currentCount !== chatMsgs.length || forceScroll) {
                 container.innerHTML = '';
                 chatMsgs.forEach(msg => {
                     const user = db.users[msg.author] || { displayName: msg.author, badges: [], pfp: '' };
@@ -1172,7 +1167,9 @@
                     `;
                 });
                 container.setAttribute('data-msgcount', chatMsgs.length);
-                container.scrollTop = container.scrollHeight;
+                if(forceScroll || currentCount !== chatMsgs.length) {
+                    container.scrollTop = container.scrollHeight;
+                }
             }
         }
 
@@ -1235,7 +1232,7 @@
                 saveDB();
                 showToast(`Granted ${badge} to ${targetUser}.`, 'success');
                 if (targetUser === currentUser.username) { currentUser.badges = db.users[targetUser].badges; updateUI(); }
-                if(activeView.type === 'channel' || activeView.type === 'dm') loadMessages();
+                if(activeView.type === 'channel' || activeView.type === 'dm') loadMessages(true);
             } else {
                 showToast(`${targetUser} already has the ${badge} badge.`, 'error');
             }
