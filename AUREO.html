@@ -50,7 +50,7 @@
         .add-server-btn:hover { background: var(--green); color: black; border-radius: 16px; }
         
         /* Channel Sidebar */
-        .sidebar { width: 260px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); }
+        .sidebar { width: 260px; background: var(--bg-sidebar); display: flex; flex-direction: column; border-right: 1px solid rgba(212,175,55,0.1); position: relative; }
         .server-header { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
         .server-header:hover { background: rgba(255,255,255,0.02); }
         .server-header span { font-weight: 600; color: white; font-size: 15px; }
@@ -85,10 +85,25 @@
         .settings-gear { color: var(--text-muted); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 4px;}
         .settings-gear:hover { color: white; background: rgba(255,255,255,0.1); }
         
-        /* Badges */
-        .badge-icon { width: 14px; height: 14px; display: inline-flex; align-items: center; justify-content: center; cursor: help; }
+        /* Badges & Custom Tooltip */
+        .badge-icon { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; }
         .badge-icon svg { width: 100%; height: 100%; }
         
+        .badge-icon::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 150%; left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #111214; color: #dbdee1;
+            padding: 8px 12px; border-radius: 6px;
+            font-size: 12px; font-weight: 500; white-space: nowrap;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.15s ease, transform 0.15s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .badge-icon:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+
         /* Main Chat Area */
         .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--bg-panel); }
         .chat-header { padding: 15px 20px; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; align-items: center; gap: 10px; }
@@ -121,10 +136,17 @@
         /* Admin Button */
         #admin-btn { display: none; padding: 10px; background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); color: var(--red); border-radius: 8px; text-align: center; cursor: pointer; margin: 10px; font-size: 12px; font-weight: bold; }
 
-        /* --- SETTINGS MODAL (NEW DISCORD STYLE) --- */
+        /* --- PROFILE POPUP MENU (NEW) --- */
+        #profile-popup-menu { display: none; position: absolute; bottom: 70px; left: 10px; width: 250px; background: #1e1f22; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 1000; border: 1px solid rgba(255,255,255,0.05); flex-direction: column; padding: 5px; }
+        .popup-item { padding: 8px 10px; border-radius: 4px; color: var(--text-main); font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .popup-item:hover { background: var(--discord-blue); color: white; }
+        .popup-item .status-option-left { display: flex; flex-direction: column; gap: 2px; }
+        .popup-item .status-option-text h4 { font-size: 13px; font-weight: 600; color: white; }
+        .popup-item .status-option-text p { font-size: 11px; color: var(--text-muted); }
+        .popup-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 5px 0; }
+
+        /* --- SETTINGS MODAL --- */
         #settings-modal .modal-content { max-width: 800px; padding: 0; display: flex; height: 80vh; overflow: hidden; background: var(--discord-dark); border: none; border-radius: 8px; }
-        
-        /* Settings Sidebar */
         .settings-sidebar { width: 220px; background: #2b2d31; display: flex; flex-direction: column; padding: 20px 10px; overflow-y: auto; flex-shrink: 0; }
         .settings-user-info { padding: 0 10px 20px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
         .settings-user-info h4 { color: white; font-size: 14px; margin-bottom: 2px; }
@@ -137,7 +159,6 @@
         .settings-nav-item.danger { color: var(--red); margin-top: 10px; }
         .settings-nav-item.danger:hover { background: rgba(231, 76, 60, 0.1); }
 
-        /* Settings Content Area */
         .settings-content { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
         .settings-close { position: absolute; top: 20px; right: 20px; color: var(--text-muted); cursor: pointer; font-size: 20px; }
         .settings-close:hover { color: white; }
@@ -146,10 +167,11 @@
         .settings-tab.active { display: block; }
         .settings-tab h2 { font-family: 'Cinzel', serif; color: var(--gold-light); font-size: 20px; margin-bottom: 20px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 10px; }
 
-        /* Form Styling inside settings */
-        .settings-row { display: flex; justify-content: space-between; align-items: center; background: #232428; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-        .settings-row-info h4 { color: white; font-size: 14px; margin-bottom: 5px; }
-        .settings-row-info p { color: var(--text-muted); font-size: 12px; }
+        /* Fixed Profile Preview */
+        .profile-preview-card { background: #0a0514; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .profile-banner-preview { height: 120px; width: 100%; background: var(--gold-gradient); background-size: cover; background-position: center; }
+        .profile-body-preview { padding: 0 20px 20px 20px; position: relative; }
+        .profile-pfp-preview { width: 80px; height: 80px; border-radius: 50%; border: 5px solid #0a0514; margin-top: -40px; background: var(--gold-gradient); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: black; }
         
         .settings-form label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; margin-top: 15px; font-weight: 600; text-transform: uppercase; }
         .settings-form input[type="text"], .settings-form textarea { width: 100%; padding: 10px; background: #0a0514; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: white; outline: none; }
@@ -164,7 +186,7 @@
         .status-option-text p { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
         .status-icon-circle { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
         .status-icon-moon { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--orange); background: transparent; flex-shrink: 0; position: relative;}
-        .status-icon-moon::after { content: ''; position: absolute; top: -2px; right: -2px; width: 6px; height: 6px; background: var(--discord-dark); border-radius: 50%; } /* Creates the crescent effect */
+        .status-icon-moon::after { content: ''; position: absolute; top: -2px; right: -2px; width: 6px; height: 6px; background: var(--discord-dark); border-radius: 50%; }
         .status-icon-dnd { width: 10px; height: 10px; border-radius: 50%; background: var(--red); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
         .status-icon-dnd::after { content: ''; width: 6px; height: 2px; background: black; border-radius: 1px; }
         .status-icon-offline { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--text-muted); background: transparent; flex-shrink: 0; }
@@ -189,9 +211,44 @@
         .app-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-accept { background: var(--green); color: black; }
         .btn-deny { background: var(--red); color: white; }
+
+        /* --- CUSTOM NOTIFICATION SYSTEM (Toasts) --- */
+        #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 99999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+        .toast { background: #1e1f22; color: white; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-left: 4px solid var(--gold-primary); animation: slideDown 0.3s ease forwards; pointer-events: auto; display: flex; align-items: center; gap: 10px; }
+        .toast.success { border-left-color: var(--green); }
+        .toast.error { border-left-color: var(--red); }
+        .toast.fade-out { animation: fadeOut 0.3s ease forwards; }
+        
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
+
+        /* --- CUSTOM CONFIRM MODAL --- */
+        #confirm-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 99998; justify-content: center; align-items: center; }
+        .confirm-box { background: var(--discord-dark); padding: 25px; border-radius: 10px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.05); }
+        .confirm-box h3 { color: white; margin-bottom: 10px; font-size: 18px; }
+        .confirm-box p { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; line-height: 1.4; }
+        .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+        .confirm-btn { padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 14px; }
+        .confirm-btn.cancel { background: transparent; color: white; }
+        .confirm-btn.cancel:hover { text-decoration: underline; }
+        .confirm-btn.danger { background: var(--red); color: white; }
+        .confirm-btn.primary { background: var(--gold-gradient); color: black; }
     </style>
 </head>
 <body>
+
+    <!-- CUSTOM UI OVERLAYS -->
+    <div id="toast-container"></div>
+    <div id="confirm-modal">
+        <div class="confirm-box">
+            <h3 id="confirm-title">Are you sure?</h3>
+            <p id="confirm-text">This action cannot be undone.</p>
+            <div class="confirm-actions">
+                <button class="confirm-btn cancel" onclick="closeConfirm()">Cancel</button>
+                <button class="confirm-btn danger" id="confirm-action-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
 
     <!-- AUTH SCREEN -->
     <div id="auth-screen">
@@ -275,9 +332,44 @@
 
                 <div id="admin-btn" onclick="openModal('admin-modal')">🛡️ Admin Panel</div>
                 
+                <!-- User Panel Popup Menu -->
+                <div id="profile-popup-menu">
+                    <div class="popup-item" style="background: rgba(255,255,255,0.05); margin-bottom: 5px; cursor: default;">
+                        <div class="status-option-left" style="flex-direction: row; align-items: center; gap: 10px;">
+                            <div class="dm-avatar" id="popup-avatar" style="width: 40px; height: 40px; font-size: 16px;">U</div>
+                            <div class="status-option-text">
+                                <h4 id="popup-name" style="font-size: 15px;">User</h4>
+                                <p id="popup-status-text">Online</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="popup-divider"></div>
+                    
+                    <div class="popup-item" onclick="setStatus('Online')">
+                        <div class="status-option-left"><div class="status-icon-circle" style="background: var(--green);"></div><span>Online</span></div>
+                    </div>
+                    <div class="popup-item" onclick="setStatus('Idle')">
+                        <div class="status-option-left"><div class="status-icon-moon"></div><span>Idle</span></div>
+                        <span style="font-size:10px; color:var(--text-muted);">10m auto</span>
+                    </div>
+                    <div class="popup-item" onclick="setStatus('DND')">
+                        <div class="status-option-left"><div class="status-icon-dnd"></div><span>Do Not Disturb</span></div>
+                    </div>
+                    <div class="popup-item" onclick="setStatus('Offline')">
+                        <div class="status-option-left"><div class="status-icon-offline"></div><span>Invisible</span></div>
+                    </div>
+                    
+                    <div class="popup-divider"></div>
+                    
+                    <div class="popup-item" onclick="openSettings()">
+                        <span>⚙️ User Settings</span>
+                    </div>
+                </div>
+
                 <!-- User Panel -->
                 <div class="user-panel">
-                    <div class="user-panel-left" onclick="openSettings()">
+                    <div class="user-panel-left" onclick="toggleProfilePopup(event)">
                         <div class="dm-avatar" id="my-sidebar-avatar">U</div>
                         <div class="user-panel-info">
                             <div class="user-panel-name" id="my-name">User</div>
@@ -338,11 +430,10 @@
         </div>
     </div>
 
-    <!-- NEW DISCORD-STYLE SETTINGS MODAL -->
+    <!-- SETTINGS MODAL -->
     <div class="modal-overlay" id="settings-modal">
         <div class="modal-content">
             
-            <!-- Settings Sidebar -->
             <div class="settings-sidebar">
                 <div class="settings-user-info">
                     <h4 id="side-settings-name">User</h4>
@@ -351,14 +442,12 @@
                 
                 <div class="settings-nav-item active" onclick="switchSettingsTab('account', this)">Account</div>
                 <div class="settings-nav-item" onclick="switchSettingsTab('profile', this)">Profile</div>
-                <div class="settings-nav-item" onclick="switchSettingsTab('status', this)">Status</div>
                 <div class="settings-nav-item" onclick="switchSettingsTab('staff', this)">Apply for Staff</div>
                 
                 <div style="flex:1;"></div>
                 <div class="settings-nav-item danger" onclick="switchSettingsTab('danger', this)">Danger Zone</div>
             </div>
 
-            <!-- Settings Content Area -->
             <div class="settings-content">
                 <span class="settings-close" onclick="attemptCloseSettings()">✖</span>
 
@@ -380,8 +469,13 @@
                 <div id="tab-profile" class="settings-tab">
                     <h2>Profile Customization</h2>
                     
-                    <div class="profile-banner" id="preview-banner" style="height: 100px; border-radius: 8px; margin-bottom: 20px;"></div>
-                    <div class="profile-pfp" id="preview-pfp" style="margin-top: -50px; margin-bottom: 15px; margin-left: 20px;">U</div>
+                    <!-- FIXED PROFILE PREVIEW -->
+                    <div class="profile-preview-card">
+                        <div class="profile-banner-preview" id="preview-banner"></div>
+                        <div class="profile-body-preview">
+                            <div class="profile-pfp-preview" id="preview-pfp">U</div>
+                        </div>
+                    </div>
                     
                     <div class="settings-form">
                         <label>Profile Picture</label>
@@ -394,49 +488,6 @@
 
                         <div style="margin-top: 20px;">
                             <button class="btn" style="background: var(--green); width: auto; padding: 10px 20px;" onclick="saveProfile()">Save Changes</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab: Status -->
-                <div id="tab-status" class="settings-tab">
-                    <h2>Set Status</h2>
-                    
-                    <div class="status-option" onclick="setStatus('Online')">
-                        <div class="status-option-left">
-                            <div class="status-icon-circle" style="background: var(--green);"></div>
-                            <div class="status-option-text">
-                                <h4>Online</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="status-option" onclick="setStatus('Idle')">
-                        <div class="status-option-left">
-                            <div class="status-icon-moon"></div>
-                            <div class="status-option-text">
-                                <h4>Idle</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="status-option" onclick="setStatus('DND')">
-                        <div class="status-option-left">
-                            <div class="status-icon-dnd"></div>
-                            <div class="status-option-text">
-                                <h4>Do Not Disturb</h4>
-                                <p>You will not receive desktop notifications</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="status-option" onclick="setStatus('Offline')">
-                        <div class="status-option-left">
-                            <div class="status-icon-offline"></div>
-                            <div class="status-option-text">
-                                <h4>Invisible</h4>
-                                <p>You will appear offline</p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -474,7 +525,7 @@
             <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">You can add friends with their exact AUREO username.</p>
             <div style="display: flex; gap: 10px;">
                 <input type="text" id="friend-search" placeholder="Enter exact username..." style="flex:1; padding: 10px; background: #0a0514; border: 1px solid rgba(212,175,55,0.3); color: white; border-radius: 5px; outline: none;">
-                <button class="btn" style="width: auto; margin: 0; padding: 0 20px; font-size: 14px;" onclick="sendFriendRequest()">Send Friend Request</button>
+                <button class="btn" style="width: auto; margin: 0; padding: 0 20px; font-size: 14px;" onclick="sendFriendRequest()">Send Request</button>
             </div>
         </div>
     </div>
@@ -506,7 +557,6 @@
                     <button class="btn-small" style="background: #b9770e; color: white; border: 1px solid #d68910;" onclick="grantBadge('Streak')">Grant Streak</button>
                     <button class="btn-small" style="background: #922b21; color: white; border: 1px solid #c0392b;" onclick="grantBadge('Staff')">Grant Staff</button>
                 </div>
-                <p id="admin-feedback" style="margin-top: 15px; font-size: 13px; color: var(--green);"></p>
             </div>
             <div id="admin-apps" class="admin-section">
                 <div id="applications-list"></div>
@@ -515,7 +565,6 @@
     </div>
 
     <script>
-        // --- BADGE SVG GENERATOR & TOOLTIPS ---
         const BADGE_DATA = {
             'OG': { svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15 9H22L16 14L18 21L12 17L6 21L8 14L2 9H9L12 2Z" fill="#9b59b6"/></svg>`, tip: "OG: Registered during the first month of AUREO." },
             'Bug Hunter': { svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#2ecc71"/><path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`, tip: "Bug Hunter: Found and reported a bug." },
@@ -523,7 +572,6 @@
             'Staff': { svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="#e74c3c"/><path d="M12 6V18M8 10H16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>`, tip: "Staff: Applied and accepted into the AUREO team." }
         };
 
-        // --- STATE & DATABASE ---
         let db = JSON.parse(localStorage.getItem('aureo_db_v5')) || { users: {}, messages: [], applications: [], servers: {} };
         let currentUser = null;
         let activeView = { type: 'home', id: null };
@@ -538,6 +586,29 @@
             const savedSession = localStorage.getItem('aureo_session');
             if (savedSession && db.users[savedSession]) loginUser(savedSession); 
         };
+
+        // --- TOASTS & CONFIRMS ---
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            let icon = type === 'success' ? '✔️' : type === 'error' ? '❌' : '';
+            toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => { toast.classList.add('fade-out'); setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        let confirmCallback = null;
+        function showConfirm(title, text, btnText, btnClass, callback) {
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-text').innerText = text;
+            const btn = document.getElementById('confirm-action-btn');
+            btn.innerText = btnText; btn.className = `confirm-btn ${btnClass}`;
+            confirmCallback = callback;
+            document.getElementById('confirm-modal').style.display = 'flex';
+        }
+        function closeConfirm() { document.getElementById('confirm-modal').style.display = 'none'; confirmCallback = null; }
+        document.getElementById('confirm-action-btn').onclick = () => { if(confirmCallback) confirmCallback(); closeConfirm(); };
 
         // --- AUTHENTICATION ---
         function toggleForm(type) {
@@ -608,34 +679,54 @@
         }
 
         function logout() {
-            if(confirm("Are you sure you want to log out?")) {
-                localStorage.removeItem('aureo_session');
-                location.reload();
-            }
+            showConfirm("Log Out", "Are you sure you want to log out of AUREO?", "Log Out", "danger", () => {
+                localStorage.removeItem('aureo_session'); location.reload();
+            });
         }
 
         function deleteAccount() {
-            if(confirm("WARNING: Are you sure you want to permanently delete your account? This cannot be undone.")) {
-                const confirmText = prompt("Type 'DELETE' to confirm:");
-                if (confirmText === 'DELETE') {
-                    delete db.users[currentUser.username];
-                    saveDB();
-                    localStorage.removeItem('aureo_session');
-                    location.reload();
-                }
-            }
+            showConfirm("Delete Account", "Are you absolutely sure? This will permanently delete your account and all your data.", "Delete", "danger", () => {
+                showConfirm("Final Warning", "Type 'DELETE' to confirm.", "Confirm", "danger", () => {
+                    delete db.users[currentUser.username]; saveDB();
+                    localStorage.removeItem('aureo_session'); location.reload();
+                });
+            });
+        }
+
+        // --- POPUP MENU ---
+        function toggleProfilePopup(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('profile-popup-menu');
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+            
+            // Update popup info
+            document.getElementById('popup-name').innerText = currentUser.displayName;
+            document.getElementById('popup-status-text').innerText = currentUser.status === 'DND' ? 'Do Not Disturb' : currentUser.status;
+            
+            const popupAvatar = document.getElementById('popup-avatar');
+            if(currentUser.pfp) { popupAvatar.style.backgroundImage = `url(${currentUser.pfp})`; popupAvatar.innerText = ''; }
+            else { popupAvatar.style.backgroundImage = 'none'; popupAvatar.innerText = currentUser.displayName.charAt(0).toUpperCase(); }
+        }
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('profile-popup-menu');
+            if(menu.style.display === 'flex' && !menu.contains(e.target)) { menu.style.display = 'none'; }
+        });
+
+        function setStatus(newStatus) {
+            currentUser.status = newStatus;
+            saveDB(); updateUI();
+            showToast(`Status changed to ${newStatus}`, 'success');
+            document.getElementById('profile-popup-menu').style.display = 'none';
         }
 
         // --- SETTINGS MODAL LOGIC ---
         function openSettings() {
+            document.getElementById('profile-popup-menu').style.display = 'none';
             document.getElementById('settings-modal').style.display = 'flex';
             document.getElementById('side-settings-name').innerText = currentUser.displayName;
             tempPfpBase64 = null; tempBannerBase64 = null;
             
-            // Reset to first tab
             switchSettingsTab('account', document.querySelectorAll('.settings-nav-item')[0]);
-            
-            // Populate values
             document.getElementById('set-displayname').value = currentUser.displayName;
             document.getElementById('app-q1').value = '';
             document.getElementById('app-q2').value = '';
@@ -646,7 +737,6 @@
         function switchSettingsTab(tabId, el) {
             document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
             document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
-            
             if(el) el.classList.add('active');
             document.getElementById('tab-' + tabId).classList.add('active');
         }
@@ -654,22 +744,9 @@
         function attemptCloseSettings() {
             const nameChanged = document.getElementById('set-displayname').value !== currentUser.displayName;
             const hasNewImage = tempPfpBase64 || tempBannerBase64;
-
             if (nameChanged || hasNewImage) {
-                if (confirm("You have unsaved changes. Are you sure you want to discard them?")) {
-                    closeModal('settings-modal');
-                }
-            } else {
-                closeModal('settings-modal');
-            }
-        }
-
-        // --- STATUS PICKER ---
-        function setStatus(newStatus) {
-            currentUser.status = newStatus;
-            saveDB();
-            updateUI();
-            alert(`Status changed to ${newStatus}`);
+                showConfirm("Unsaved Changes", "You have unsaved changes. Are you sure you want to discard them?", "Discard", "danger", () => { closeModal('settings-modal'); });
+            } else { closeModal('settings-modal'); }
         }
 
         // --- PROFILE & UPLOADS ---
@@ -691,18 +768,11 @@
             const pfpData = tempPfpBase64 || currentUser.pfp;
             const bannerData = tempBannerBase64 || currentUser.banner;
 
-            if(pfpData) {
-                previewPfp.style.backgroundImage = `url(${pfpData})`;
-                previewPfp.innerText = '';
-            } else {
-                previewPfp.style.backgroundImage = 'none';
-                previewPfp.innerText = currentUser.displayName.charAt(0).toUpperCase();
-            }
-            if(bannerData) {
-                previewBanner.style.backgroundImage = `url(${bannerData})`;
-            } else {
-                previewBanner.style.backgroundImage = 'var(--gold-gradient)';
-            }
+            if(pfpData) { previewPfp.style.backgroundImage = `url(${pfpData})`; previewPfp.innerText = ''; }
+            else { previewPfp.style.backgroundImage = 'none'; previewPfp.innerText = currentUser.displayName.charAt(0).toUpperCase(); }
+            
+            if(bannerData) { previewBanner.style.backgroundImage = `url(${bannerData})`; }
+            else { previewBanner.style.backgroundImage = 'var(--gold-gradient)'; }
         }
 
         function saveProfile() {
@@ -710,12 +780,10 @@
             if(tempPfpBase64) currentUser.pfp = tempPfpBase64;
             if(tempBannerBase64) currentUser.banner = tempBannerBase64;
             
-            saveDB();
-            updateUI();
-            loadDMs();
+            saveDB(); updateUI(); loadDMs();
             closeModal('settings-modal');
             tempPfpBase64 = null; tempBannerBase64 = null;
-            alert("Profile Saved!");
+            showToast("Profile Saved!", 'success');
         }
 
         // --- UI UPDATES ---
@@ -723,13 +791,8 @@
             document.getElementById('my-name').innerText = currentUser.displayName;
             
             const myAvatar = document.getElementById('my-sidebar-avatar');
-            if(currentUser.pfp) {
-                myAvatar.style.backgroundImage = `url(${currentUser.pfp})`;
-                myAvatar.innerText = '';
-            } else {
-                myAvatar.style.backgroundImage = 'none';
-                myAvatar.innerText = currentUser.displayName.charAt(0).toUpperCase();
-            }
+            if(currentUser.pfp) { myAvatar.style.backgroundImage = `url(${currentUser.pfp})`; myAvatar.innerText = ''; }
+            else { myAvatar.style.backgroundImage = 'none'; myAvatar.innerText = currentUser.displayName.charAt(0).toUpperCase(); }
 
             const dot = document.getElementById('my-status-dot');
             dot.className = 'status-dot';
@@ -751,7 +814,6 @@
             }
         }
 
-        // --- APP NAVIGATION ---
         function loadServers() {
             const list = document.getElementById('server-list');
             list.innerHTML = '';
@@ -771,17 +833,14 @@
             activeServerId = null;
             activeView = { type: 'home', id: null };
             loadServers();
-            
             const headerEl = document.querySelector('#sidebar-server-name span');
             if (headerEl) headerEl.innerText = 'Direct Messages';
-            
             document.getElementById('channel-list-container').style.display = 'none';
             document.getElementById('dm-list-container').style.display = 'block';
             document.getElementById('friends-tab').style.display = 'flex';
             document.getElementById('friends-tab').classList.add('active');
             document.getElementById('friends-view').style.display = 'flex';
             document.getElementById('chat-view').style.display = 'none';
-            
             loadDMs();
         }
 
@@ -881,14 +940,11 @@
             activeServerId = sid;
             const server = db.servers[sid];
             loadServers();
-            
             const headerEl = document.querySelector('#sidebar-server-name span');
             if (headerEl) headerEl.innerText = server.name;
-
             document.getElementById('friends-tab').style.display = 'none';
             document.getElementById('dm-list-container').style.display = 'none';
             document.getElementById('channel-list-container').style.display = 'block';
-            
             if(server.channels.length > 0) openChannel(sid, server.channels[0].id);
             else { document.getElementById('friends-view').style.display = 'flex'; document.getElementById('chat-view').style.display = 'none'; }
             loadChannels();
@@ -955,19 +1011,19 @@
             });
         }
 
-        // --- FRIEND REQUEST SYSTEM ---
+        // --- FRIENDS SYSTEM ---
         function sendFriendRequest() {
             const target = document.getElementById('friend-search').value.trim();
-            if(!db.users[target]) return alert("User not found.");
-            if(target === currentUser.username) return alert("You can't add yourself.");
-            if(currentUser.friends.includes(target)) return alert("You are already friends with this user.");
-            if(currentUser.pendingOut.includes(target)) return alert("You already sent a request to this user.");
-            if(currentUser.pendingIn.includes(target)) return alert("This user already sent YOU a request. Go to the Pending tab to accept it!");
+            if(!db.users[target]) return showToast("User not found.", 'error');
+            if(target === currentUser.username) return showToast("You can't add yourself.", 'error');
+            if(currentUser.friends.includes(target)) return showToast("You are already friends with this user.", 'error');
+            if(currentUser.pendingOut.includes(target)) return showToast("You already sent a request to this user.", 'error');
+            if(currentUser.pendingIn.includes(target)) return showToast("This user already sent YOU a request. Check Pending!", 'error');
 
             currentUser.pendingOut.push(target);
             db.users[target].pendingIn.push(currentUser.username);
             saveDB();
-            alert(`Friend request sent to ${db.users[target].displayName}!`);
+            showToast(`Friend request sent to ${db.users[target].displayName}!`, 'success');
             document.getElementById('friend-search').value = '';
             closeModal('add-friend-modal');
             switchFriendsTab('pending');
@@ -979,19 +1035,18 @@
             const targetUser = db.users[targetUsername];
             targetUser.pendingOut = targetUser.pendingOut.filter(u => u !== currentUser.username);
             targetUser.friends.push(currentUser.username);
-            saveDB();
-            updateUI();
-            switchFriendsTab('pending');
-            loadDMs();
+            saveDB(); updateUI();
+            switchFriendsTab('pending'); loadDMs();
+            showToast("Friend request accepted!", 'success');
         }
 
         function declineFriend(targetUsername) {
             currentUser.pendingIn = currentUser.pendingIn.filter(u => u !== targetUsername);
             const targetUser = db.users[targetUsername];
             targetUser.pendingOut = targetUser.pendingOut.filter(u => u !== currentUser.username);
-            saveDB();
-            updateUI();
+            saveDB(); updateUI();
             switchFriendsTab('pending');
+            showToast("Friend request ignored.", 'info');
         }
 
         // --- MESSAGES ---
@@ -1004,26 +1059,20 @@
                 text: input.value.trim(), time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             };
             db.messages.push(msg);
-            saveDB();
-            input.value = '';
-            loadMessages();
+            saveDB(); input.value = ''; loadMessages();
         }
 
         function loadMessages() {
             const container = document.getElementById('chat-messages');
             container.innerHTML = '';
             const chatMsgs = db.messages.filter(m => m.chatId === activeView.id && m.chatType === activeView.type);
-            
             chatMsgs.forEach(msg => {
                 const user = db.users[msg.author] || { displayName: msg.author, badges: [], pfp: '' };
                 let badgeHTML = '';
                 user.badges.forEach(b => { 
-                    if(BADGE_DATA[b]) {
-                        badgeHTML += `<div class="badge-icon" title="${BADGE_DATA[b].tip}">${BADGE_DATA[b].svg}</div>`; 
-                    }
+                    if(BADGE_DATA[b]) badgeHTML += `<div class="badge-icon" data-tooltip="${BADGE_DATA[b].tip}">${BADGE_DATA[b].svg}</div>`; 
                 });
                 let avatarStyle = user.pfp ? `background-image: url(${user.pfp}); background-size: cover; color: transparent;` : '';
-
                 container.innerHTML += `
                     <div class="message">
                         <div class="dm-avatar" style="${avatarStyle}">${user.displayName.charAt(0).toUpperCase()}</div>
@@ -1041,21 +1090,17 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // --- SERVERS ---
         function createServer() {
             const name = document.getElementById('new-server-name').value.trim();
             if(!name) return;
             const sid = 'srv_' + Date.now();
-            db.servers[sid] = {
-                id: sid, name: name, owner: currentUser.username,
-                channels: [{ id: 'gen_' + Date.now(), name: 'general' }]
-            };
+            db.servers[sid] = { id: sid, name: name, owner: currentUser.username, channels: [{ id: 'gen_' + Date.now(), name: 'general' }] };
             currentUser.servers.push(sid);
             saveDB();
             document.getElementById('new-server-name').value = '';
             closeModal('server-modal');
-            loadServers();
-            openServer(sid);
+            loadServers(); openServer(sid);
+            showToast("Server created!", 'success');
         }
 
         function createChannel() {
@@ -1064,11 +1109,10 @@
             if(!name) return;
             const cid = 'chan_' + Date.now();
             db.servers[activeServerId].channels.push({ id: cid, name: name.toLowerCase().replace(/\s+/g, '-') });
-            saveDB();
-            loadChannels();
+            saveDB(); loadChannels();
         }
 
-        // --- ADMIN & MODALS ---
+        // --- ADMIN ---
         function renderBadges(badges, containerId) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -1077,7 +1121,7 @@
                 if(BADGE_DATA[b]) {
                     const wrapper = document.createElement('div');
                     wrapper.className = 'badge-icon';
-                    wrapper.title = BADGE_DATA[b].tip; 
+                    wrapper.setAttribute('data-tooltip', BADGE_DATA[b].tip); 
                     wrapper.innerHTML = BADGE_DATA[b].svg;
                     container.appendChild(wrapper);
                 }
@@ -1099,18 +1143,15 @@
 
         function grantBadge(badge) {
             const targetUser = document.getElementById('admin-target-user').value.trim();
-            const feedback = document.getElementById('admin-feedback');
-            if (!db.users[targetUser]) {
-                feedback.style.color = 'var(--red)'; feedback.innerText = "User not found."; return;
-            }
+            if (!db.users[targetUser]) return showToast("User not found.", 'error');
             if (!db.users[targetUser].badges.includes(badge)) {
                 db.users[targetUser].badges.push(badge);
                 saveDB();
-                feedback.style.color = 'var(--green)'; feedback.innerText = `Successfully granted ${badge} to ${targetUser}.`;
+                showToast(`Granted ${badge} to ${targetUser}.`, 'success');
                 if (targetUser === currentUser.username) { currentUser.badges = db.users[targetUser].badges; updateUI(); }
                 if(activeView.type === 'channel' || activeView.type === 'dm') loadMessages();
             } else {
-                feedback.style.color = 'var(--orange)'; feedback.innerText = `${targetUser} already has the ${badge} badge.`;
+                showToast(`${targetUser} already has the ${badge} badge.`, 'error');
             }
         }
 
@@ -1139,28 +1180,25 @@
             const app = db.applications[index];
             if (isAccepted && !db.users[app.username].badges.includes('Staff')) db.users[app.username].badges.push('Staff');
             db.applications.splice(index, 1);
-            saveDB();
-            loadApplications();
+            saveDB(); loadApplications();
             document.getElementById('app-count').innerText = db.applications.length;
+            showToast(isAccepted ? "Application accepted." : "Application denied.", 'success');
         }
 
         function submitApplication() {
             const q1 = document.getElementById('app-q1').value.trim();
             const q2 = document.getElementById('app-q2').value.trim();
-            if (!q1 || !q2) return alert("Please answer all questions.");
-            if (db.applications.find(a => a.username === currentUser.username)) return alert("You already have a pending application.");
+            if (!q1 || !q2) return showToast("Please answer all questions.", 'error');
+            if (db.applications.find(a => a.username === currentUser.username)) return showToast("You already have a pending application.", 'error');
             db.applications.push({ username: currentUser.username, q1: q1, q2: q2 });
             saveDB();
             document.getElementById('app-q1').value = ''; document.getElementById('app-q2').value = '';
-            alert("Application submitted! Awaiting Admin review.");
+            showToast("Application submitted!", 'success');
         }
 
         function saveDB() { localStorage.setItem('aureo_db_v5', JSON.stringify(db)); }
         function showAuthError(msg) { const el = document.getElementById('auth-error'); el.innerText = msg; el.style.display = 'block'; }
-        function openModal(id) {
-            document.getElementById(id).style.display = 'flex';
-            if(id === 'admin-modal') loadApplications(); 
-        }
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; if(id === 'admin-modal') loadApplications(); }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
 </body>
