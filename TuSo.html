@@ -345,6 +345,7 @@ textarea.input{resize:vertical;min-height:90px}
         <button type="button" data-tab="profile">Profile</button>
         <button type="button" data-tab="appearance">Appearance</button>
         <button type="button" data-tab="notify">Notifications</button>
+        <button type="button" data-tab="admin" id="adminTab" hidden>Admin</button>
         <hr>
         <button type="button" class="logout" id="logoutBtn">Log out</button>
       </div>
@@ -385,6 +386,12 @@ textarea.input{resize:vertical;min-height:90px}
             <div class="field"><label for="delPw">Password</label><div class="pw"><input class="input" id="delPw" type="password" autocomplete="current-password"><button type="button" class="pwt" data-for="delPw" aria-label="Show password">Show</button></div><div class="err" aria-live="polite"></div></div>
             <div class="actions"><button class="btn btn-danger" type="submit">Delete my account</button></div>
           </form>
+        </div>
+        <!-- secret admin entry, only visible to authorized users -->
+        <div class="blk" id="adminEntry" hidden>
+          <h3>Secret panel</h3>
+          <p class="hint">You have access to the hidden administration panel.</p>
+          <div class="actions"><button class="btn btn-primary" type="button" id="openAdmin">Open Admin Panel</button></div>
         </div>
       </section>
 
@@ -454,6 +461,42 @@ textarea.input{resize:vertical;min-height:90px}
         <div class="blk">
           <div class="srow"><div><b id="swB">Unread badges</b><span>Show a count next to conversations with new messages.</span></div><button type="button" class="switch" role="switch" aria-labelledby="swB" aria-checked="true" data-pref="badges"></button></div>
           <div class="srow"><div><b id="swS">Message sounds</b><span>Play a soft tone when a message arrives.</span></div><button type="button" class="switch" role="switch" aria-labelledby="swS" aria-checked="false" data-pref="sound"></button></div>
+        </div>
+      </section>
+
+      <!-- SECRET ADMIN PANEL -->
+      <section class="spanel" id="p-admin" hidden>
+        <h2>Admin commands</h2>
+        <p class="hint" style="margin-top:-8px">Restricted tools for managing this browser's TuSo data. Only users with granted usernames can see this.</p>
+        <div class="blk">
+          <h3>Access control</h3>
+          <p class="hint">Grant or revoke secret panel access by the exact real username (not display name).</p>
+          <form id="fGrant" novalidate>
+            <div class="row2">
+              <div class="field"><label for="gUser">Username</label><input class="input" id="gUser" placeholder="exact username" maxlength="24" autocapitalize="none" spellcheck="false"></div>
+              <div class="field"><label for="gNote">Note (optional)</label><input class="input" id="gNote" placeholder="who is this" maxlength="80"></div>
+            </div>
+            <div class="actions"><button class="btn btn-primary" type="submit">Grant access</button></div>
+          </form>
+          <div id="grantList" class="hint" style="display:grid;gap:6px"></div>
+        </div>
+        <div class="blk">
+          <h3>Data commands</h3>
+          <div class="actions" style="flex-wrap:wrap;gap:10px">
+            <button class="btn btn-ghost" type="button" id="cmdHeal">Heal all conversations</button>
+            <button class="btn btn-ghost" type="button" id="cmdUnreadClear">Clear all unread</button>
+            <button class="btn btn-ghost" type="button" id="cmdBackup">Export data (JSON)</button>
+            <button class="btn btn-danger" type="button" id="cmdWipeConvos">Wipe all conversations</button>
+            <button class="btn btn-danger" type="button" id="cmdWipeAccounts">Delete all non-admin accounts</button>
+          </div>
+          <p class="hint">“Heal” ensures every real user has the four sample DM threads. “Wipe” commands are destructive and cannot be undone.</p>
+        </div>
+        <div class="blk">
+          <h3>Realtime broadcast (simulated)</h3>
+          <form id="fBroadcast" novalidate>
+            <div class="field"><label for="bcText">Message from TuSo</label><textarea class="input" id="bcText" rows="2" maxlength="500" placeholder="This will appear in the TuSo bot thread for every account."></textarea></div>
+            <div class="actions"><button class="btn btn-primary" type="submit">Send to everyone</button></div>
+          </form>
         </div>
       </section>
 
@@ -699,6 +742,28 @@ function convo(id){const ud=UD();return ud.convos[id]||(ud.convos[id]={msgs:[],u
 const lastMsg=cv=>cv.msgs[cv.msgs.length-1];
 const author=id=>id===me.id?me:contact(id);
 
+/* ============================================================
+   SECRET ADMIN ACCESS
+   ============================================================ */
+const ROOT_ADMIN='galaxeral'; // only exact username, never display name
+function adminDB(){ // stored on top-level db so it survives
+  if(!db.admin)db.admin={granted:{}};
+  return db.admin;
+}
+function isAdmin(user){
+  if(!user||!user.username)return false;
+  const u=user.username.toLowerCase();
+  if(u===ROOT_ADMIN)return true;
+  return !!adminDB().granted[u];
+}
+function refreshAdminUI(){
+  const ok=me&&isAdmin(me);
+  const tabBtn=$('#adminTab'),entry=$('#adminEntry');
+  if(tabBtn)tabBtn.hidden=!ok;
+  if(entry)entry.hidden=!ok;
+  if(!ok&&$('#p-admin')&&!$('#p-admin').hidden){closeSettings(true)}
+}
+
 /* ---------- entering / leaving ---------- */
 function enter(u){
   me=u;
@@ -707,6 +772,7 @@ function enter(u){
   active=contact(ud.last)?ud.last:'tuso';
   applyPrefs();renderMe();renderList();renderChat();
   $('#shell').classList.remove('chat-open');
+  refreshAdminUI();
   if(!phone())$('#ta').focus();
 }
 function leave(){
@@ -882,11 +948,14 @@ function closeSettings(silent){
   if(!silent&&$('#openSettings'))$('#openSettings').focus();
 }
 function tab(name){
+  // block non-admins from opening admin even if they somehow trigger it
+  if(name==='admin'&&(!me||!isAdmin(me)))name='account';
   $$('.snav button[data-tab]').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===name?'page':'false'));
   $$('.spanel').forEach(p=>p.hidden=p.id!=='p-'+name);
   if(name==='account')initAccount();
   if(name==='profile')initProfile();
   if(name==='appearance'||name==='notify')syncPrefUI();
+  if(name==='admin')initAdmin();
   $('#scontent').scrollTop=0;
 }
 $$('.snav button[data-tab]').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
@@ -898,6 +967,12 @@ $('#logoutBtn').onclick=async()=>{
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&$('#modal').hidden&&me&&!$('#settings').hidden)closeSettings();
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'&&me){e.preventDefault();closeSettings(true);$('#shell').classList.remove('chat-open');$('#dmSearch').focus()}
+  // secret shortcut: Ctrl/Cmd + Shift + A
+  if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='a'&&me){
+    e.preventDefault();
+    if(!isAdmin(me)){toast('You do not have access to that panel.');return}
+    openSettings('admin');
+  }
 });
 
 /* account */
@@ -905,7 +980,12 @@ function initAccount(){
   $('#acctTop').innerHTML=`${av(me,72,true)}<div class="nm"><b>${esc(me.display)}</b><span>@${esc(me.username)} · ${esc(me.email)}</span></div>`;
   $('#acName').value=me.display;$('#acUser').value=me.username;$('#acEmail').value=me.email;
   clearErrs($('#fAccount'));clearErrs($('#fPass'));clearErrs($('#fDelete'));
+  refreshAdminUI();
 }
+$('#openAdmin').onclick=()=>{
+  if(!isAdmin(me)){toast('You do not have access to that panel.');return}
+  tab('admin');
+};
 $('#fAccount').addEventListener('submit',e=>{
   e.preventDefault();clearErrs(e.target);
   const nEl=$('#acName'),uEl=$('#acUser'),mEl=$('#acEmail');
@@ -917,8 +997,11 @@ $('#fAccount').addEventListener('submit',e=>{
   if(!reEmail.test(em)){setErr(mEl,'Enter a valid email address.');ok=false}
   else if(db.users.some(x=>x.id!==me.id&&x.email===em)){setErr(mEl,'Another account already uses this email.');ok=false}
   if(!ok)return;
+  const wasAdmin=isAdmin(me);
   me.display=dn;me.username=un;me.email=em;save();
   renderMe();renderMsgs(false);initAccount();toast('Account updated.');
+  // if the root admin changed their username, access remains via their id
+  if(wasAdmin)refreshAdminUI();
 });
 $('#fPass').addEventListener('submit',async e=>{
   e.preventDefault();clearErrs(e.target);
@@ -987,6 +1070,125 @@ $('#prSave').onclick=()=>{
   me.avatar=draft.avatar;me.bio=draft.bio.trim();me.status=draft.status;save();
   renderMe();renderMsgs(false);renderList();initAccount();toast('Profile saved.');
 };
+
+/* ============================================================
+   SECRET ADMIN COMMANDS
+   ============================================================ */
+function initAdmin(){
+  if(!me||!isAdmin(me))return;
+  renderGrantList();
+}
+function renderGrantList(){
+  const box=$('#grantList');if(!box)return;
+  const g=adminDB().granted;
+  const rows=Object.keys(g).sort().map(un=>{
+    const note=g[un]?g[un].note:'';
+    return `<div style="display:flex;gap:8px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0">
+      <span><b class="mono">@${esc(un)}</b>${note?` <span class="hint">— ${esc(note)}</span>`:''}</span>
+      <button class="btn btn-ghost" type="button" data-revoke="${esc(un)}" style="padding:4px 10px;font-size:12px">Revoke</button>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="hint" style="margin-bottom:4px">Root access: <b class="mono">@${ROOT_ADMIN}</b> (hardcoded)</div>`+
+    (rows||`<div class="hint">No usernames have been granted yet.</div>`);
+}
+$('#grantList').addEventListener('click',async e=>{
+  const b=e.target.closest('[data-revoke]');if(!b)return;
+  const un=b.dataset.revoke;
+  if(!await ask({title:'Revoke access?',body:`@${un} will no longer see the secret panel.`,ok:'Revoke',danger:true}))return;
+  delete adminDB().granted[un];save();renderGrantList();refreshAdminUI();
+  toast(`Revoked access for @${un}.`);
+});
+$('#fGrant').addEventListener('submit',e=>{
+  e.preventDefault();
+  if(!isAdmin(me))return;
+  const unEl=$('#gUser'),noteEl=$('#gNote');
+  const un=unEl.value.trim().toLowerCase().replace(/^@/,'');
+  if(!reUser.test(un)){toast('Enter a valid exact username.');return}
+  if(un===ROOT_ADMIN){toast('That username is already root admin.');return}
+  const note=noteEl.value.trim().slice(0,80);
+  adminDB().granted[un]={note,at:Date.now(),by:me.username};
+  save();unEl.value='';noteEl.value='';renderGrantList();refreshAdminUI();
+  toast(`Granted secret panel access to @${un}.`);
+});
+
+/* admin data commands */
+function eachUserData(fn){
+  db.users.forEach(u=>{
+    if(!db.data[u.id])db.data[u.id]=seed(u);
+    fn(u,db.data[u.id]);
+  });
+}
+$('#cmdHeal').onclick=async()=>{
+  if(!isAdmin(me))return;
+  if(!await ask({title:'Heal all conversations?',body:'Every real account will get any missing sample threads restored. Existing messages are kept.',ok:'Heal'}))return;
+  let n=0;
+  eachUserData((u,ud)=>{
+    if(!ud.prefs)ud.prefs={...DEF};
+    if(!ud.convos)ud.convos={};
+    for(const b of BOTS){
+      if(!ud.convos[b.id]){ud.convos[b.id]={unread:0,msgs:[]};n++}
+      if(!Array.isArray(ud.convos[b.id].msgs))ud.convos[b.id].msgs=[];
+    }
+    if(!ud.last||!ud.convos[ud.last])ud.last='tuso';
+  });
+  save();toast(`Healed ${db.users.length} account(s), added ${n} thread(s).`);
+};
+$('#cmdUnreadClear').onclick=async()=>{
+  if(!isAdmin(me))return;
+  if(!await ask({title:'Clear all unread badges?',body:'This resets unread counts for every account in this browser.',ok:'Clear unread'}))return;
+  eachUserData((u,ud)=>{Object.values(ud.convos||{}).forEach(cv=>cv.unread=0)});
+  save();
+  if(me)renderList();
+  toast('All unread counts cleared.');
+};
+$('#cmdBackup').onclick=()=>{
+  if(!isAdmin(me))return;
+  try{
+    const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download='tuso-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+    toast('Backup exported.');
+  }catch(e){toast('Backup failed.')}
+};
+$('#cmdWipeConvos').onclick=async()=>{
+  if(!isAdmin(me))return;
+  if(!await ask({title:'Wipe all conversations?',body:'Every message in every account will be deleted. Accounts are kept. This cannot be undone.',ok:'Wipe conversations',danger:true}))return;
+  eachUserData((u,ud)=>{ud.convos={};ud.last='tuso';for(const b of BOTS)ud.convos[b.id]={unread:0,msgs:[]}});
+  save();
+  if(me){active='tuso';renderList();renderChat()}
+  toast('All conversations wiped.');
+};
+$('#cmdWipeAccounts').onclick=async()=>{
+  if(!isAdmin(me))return;
+  if(!await ask({title:'Delete all non-admin accounts?',body:'Every real account except @'+ROOT_ADMIN+' and granted admins will be permanently removed, including their conversations.',ok:'Delete accounts',danger:true}))return;
+  const keep=new Set([ROOT_ADMIN,...Object.keys(adminDB().granted)]);
+  const before=db.users.length;
+  db.users=db.users.filter(u=>keep.has(u.username));
+  const ids=new Set(db.users.map(u=>u.id));
+  Object.keys(db.data).forEach(id=>{if(!ids.has(id))delete db.data[id]});
+  // keep the current session valid if they were one of the kept accounts
+  if(!db.users.some(u=>u.id===db.session)){db.session=null;save();leave();toast(`Deleted ${before-keep.size} account(s).`);return}
+  save();renderList();renderChat();refreshAdminUI();
+  toast(`Deleted ${before-keep.size} account(s).`);
+};
+$('#fBroadcast').addEventListener('submit',e=>{
+  e.preventDefault();
+  if(!isAdmin(me))return;
+  const el=$('#bcText'),text=el.value.trim();
+  if(!text){toast('Write a message first.');return}
+  const ts=Date.now();
+  eachUserData((u,ud)=>{
+    if(!ud.convos.tuso)ud.convos.tuso={unread:0,msgs:[]};
+    const cv=ud.convos.tuso;
+    cv.msgs.push({id:uid(),from:'tuso',ts,text:'[Admin broadcast] '+text});
+    if(u.id!==me.id)cv.unread=(cv.unread||0)+1;
+  });
+  save();el.value='';
+  if(active==='tuso')renderMsgs(false);
+  renderList();
+  toast('Broadcast sent to all accounts.');
+});
 
 /* ---------- init ---------- */
 $('#sendBtn').innerHTML=I.send;
