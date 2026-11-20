@@ -942,7 +942,7 @@ $('#fLogin').addEventListener('submit',async e=>{
 
 $('#fSignup').addEventListener('submit',async e=>{
   e.preventDefault();
-  const f=e.target;clearErrs(f);db=load();
+  const f=e.target;clearErrs(f);await loadDB();
   const emEl=$('#suEmail'),dnEl=$('#suName'),unEl=$('#suUser'),pwEl=$('#suPw'),p2El=$('#suPw2');
   const em=emEl.value.trim().toLowerCase(),dn=dnEl.value.trim(),un=unEl.value.trim().toLowerCase().replace(/^@/,''),pw=pwEl.value;
   let ok=true;
@@ -956,13 +956,13 @@ $('#fSignup').addEventListener('submit',async e=>{
   const btn=$('#suBtn');busy(btn,true);
   const salt=rand(),hash=await sha(pw,salt);
   await wait(260);
-  db=load();
+  await loadDB();
   if(db.users.some(x=>x.username===un||x.email===em)){busy(btn,false);setErr(unEl,'That username or email was just taken.');shake();return}
   const u={id:uid(),email:em,username:un,display:dn||un,salt,hash,created:Date.now(),avatar:null,bio:'',banner:0,status:'online',seen:0};
   db.users.push(u);db.data[u.id]={last:null,prefs:{...DEF}};save();
   busy(btn,false);f.reset();enter(u);
 });
-
+   
 /* ---------- state ---------- */
 const DEF={bg:reduce?'static':'animated',dens:'cozy',size:'md',badges:true,sound:false};
 let me=null,active=null,activeServer=null;
