@@ -423,7 +423,7 @@ textarea.input{resize:vertical;min-height:96px}
       </div>
       <p class="warn" id="storeWarn" hidden>This browser is blocking storage, so accounts will be forgotten when you close the tab.</p>
       <div id="formWrap">
-        <form id="fLogin" novalidate aria-label="Log in">
+        <div id="fLogin" novalidate aria-label="Log in">
           <div class="field"><label for="liId">Email or username<span class="req" aria-hidden="true">*</span></label><input class="input" id="liId" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" aria-required="true"><div class="err" aria-live="polite"></div></div>
           <div class="field"><label for="liPw">Password<span class="req" aria-hidden="true">*</span></label><div class="pw"><input class="input" id="liPw" name="password" type="password" autocomplete="current-password" aria-required="true"><button type="button" class="pwt" data-for="liPw" aria-label="Show password">Show</button></div><div class="err" aria-live="polite"></div></div>
           <div class="formerr" id="liErr" role="alert"></div>
@@ -433,7 +433,7 @@ textarea.input{resize:vertical;min-height:96px}
           </div>
         </form>
 
-        <form id="fSignup" novalidate hidden aria-label="Create an account">
+       <div id="fSignup" novalidate hidden aria-label="Create an account">
           <div class="field"><label for="suEmail">Email<span class="req" aria-hidden="true">*</span></label><input class="input" id="suEmail" name="email" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" aria-required="true"><div class="err" aria-live="polite"></div></div>
           <div class="field"><label for="suName">Display name</label><input class="input" id="suName" name="display" autocomplete="nickname" maxlength="32"><div class="err" aria-live="polite"></div></div>
           <div class="field"><label for="suUser">Username<span class="req" aria-hidden="true">*</span></label><input class="input" id="suUser" name="newusername" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="24" aria-required="true"><div class="err" aria-live="polite"></div></div>
@@ -920,7 +920,7 @@ document.addEventListener('click',e=>{
 });
 if(!storeOK)$('#storeWarn').hidden=false;
 
-$('#fLogin').addEventListener('submit',async e=>{
+$('#fLogin').addEventListener('click',async e=>{
   e.preventDefault();
   const f=e.target,idEl=$('#liId'),pwEl=$('#liPw');clearErrs(f);
   const id=idEl.value.trim().toLowerCase().replace(/^@/,''),pw=pwEl.value;
@@ -941,7 +941,7 @@ $('#fLogin').addEventListener('submit',async e=>{
   f.reset();enter(u);
 });
 
-$('#fSignup').addEventListener('submit',async e=>{
+$('#fSignup').addEventListener('click',async e=>{
   e.preventDefault();
   const f=e.target;clearErrs(f);await loadDB();
   const emEl=$('#suEmail'),dnEl=$('#suName'),unEl=$('#suUser'),pwEl=$('#suPw'),p2El=$('#suPw2');
