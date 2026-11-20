@@ -726,11 +726,12 @@ async function loadDB() {
 
 async function save() {
   try {
-    await fetch('/api/save', {
+    const res = await fetch('/api/save', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(db)
     });
+    if (!res.ok) throw new Error('Server error');
   } catch(e) {
     if(me) toast('Failed to save to server.');
   }
