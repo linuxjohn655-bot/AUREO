@@ -709,20 +709,33 @@ const I={
 };
 
 /* ---------- storage ---------- */
-const KEY='tuso.v1';
-let storeOK=true, mem=null;
-try{localStorage.setItem('tuso.t','1');localStorage.removeItem('tuso.t')}catch(e){storeOK=false}
-const blank=()=>({users:[],session:null,data:{},dms:{},servers:{}});
-function load(){
-  let o=null;
-  try{const s=localStorage.getItem(KEY);if(s)o=JSON.parse(s)}catch(e){}
-  if(!o||!Array.isArray(o.users))o=mem||blank();
-  o.data=o.data||{};o.dms=o.dms||{};o.servers=o.servers||{};
-  for(const id in o.data){const d=o.data[id];if(d){delete d.convos;d.prefs=d.prefs||{}}}
-  return o;
+let db = {users:[], session:null, data:{}, dms:{}, servers:{}};
+
+async function loadDB() {
+  try {
+    const res = await fetch('/api/load');
+    const data = await res.json();
+    if (data && Array.isArray(data.users)) db = data;
+  } catch(e) {
+    console.error('Failed to load DB', e);
+  }
+  db.data = db.data || {};
+  db.dms = db.dms || {};
+  db.servers = db.servers || {};
 }
-let db=load();
-function save(){mem=db;try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){if(me)toast('Storage is full. Free some space in Settings, Storage.')}}
+
+async function save() {
+  try {
+    await fetch('/api/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(db)
+    });
+  } catch(e) {
+    if(me) toast('Failed to save to server.');
+  }
+}
+
 const SS={get(){try{return sessionStorage.getItem('tuso.sess')}catch(e){return null}},set(v){try{v?sessionStorage.setItem('tuso.sess',v):sessionStorage.removeItem('tuso.sess')}catch(e){}}};
 
 /* ---------- crypto ---------- */
