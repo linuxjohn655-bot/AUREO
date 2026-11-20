@@ -690,13 +690,9 @@ textarea.input{resize:vertical;min-height:96px}
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-document.addEventListener('submit', e => {
-  e.preventDefault();
-  e.stopPropagation();
-}, true);
-
 (()=>{
 'use strict';
+
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36);
@@ -932,7 +928,10 @@ $('#fLogin').addEventListener('submit',async e=>{
   if(!pw){setErr(pwEl,'Enter your password.');ok=false}
   if(!ok){shake();return}
   const btn=$('#liBtn');busy(btn,true);
-  db=load();
+  
+  // THE FIX IS HERE: use await loadDB() instead of db=load()
+  await loadDB(); 
+  
   const u=db.users.find(x=>x.email===id||x.username===id);
   const h=u?await sha(pw,u.salt):null;
   await wait(260);
